@@ -8,6 +8,9 @@ if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 		cd $HOME/Dropbox/Sites;
 	fi
 
+	# make sure we have a good gamma for coding set
+	xgamma -gamma 0.85
+
 	# shortcuts
 	alias dot="cd ~/.dotfiles"
 	alias sublimedir="cd ~/.config/sublime-text-3/Packages/User"
