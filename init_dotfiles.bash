@@ -144,9 +144,9 @@ echo
 
 # Heroku
 # https://devcenter.heroku.com/articles/heroku-command-line#download-and-install
-echo "-------Setup Heroku-------"
 command -v ruby >/dev/null 2>&1 || { echo "Ruby is not installed. Please install it before proceeding." >&2; exit; }
-wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+command -v heroku >/dev/null 2>&1 || { echo "-------Setup Heroku-------" >&2; wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh; }
+
 
 echo
 echo "Software installed!!!! :)"

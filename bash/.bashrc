@@ -8,9 +8,6 @@ if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 		cd $HOME/Dropbox/Sites;
 	fi
 
-	# make sure we have a good gamma for coding set
-	xgamma -gamma 0.85
-
 	# shortcuts
 	alias dot="cd ~/.dotfiles"
 	alias sublimedir="cd ~/.config/sublime-text-3/Packages/User"
@@ -26,6 +23,11 @@ if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 	echo "s = cd ~/Dropbox/Sites"
 	echo "dot = cd ~/.dotfiles"
 	echo "sublimedir = Changes directory to the Sublime Text User directory." 
+	echo
+
+	# make sure we have a good gamma for coding set
+	echo "Setting screen gama..."
+	xgamma -gamma 0.85
 	echo
 
 	echo "Dropbox Status:"
