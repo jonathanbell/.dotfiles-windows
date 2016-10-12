@@ -65,3 +65,6 @@ shopt -s cdspell;
 
 # don't prompt for merge_msg in git
 export GIT_MERGE_AUTOEDIT=no
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

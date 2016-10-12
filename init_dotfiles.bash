@@ -32,7 +32,7 @@ case "$choice" in
 esac
 
 # install all these packages
-PACKAGES=( curl nodejs meld wget vim npm trimage virtualbox apache2 mysql-server mysql-client php libapache2-mod-php php-mcrypt php-mysql php-cli ruby )
+PACKAGES=( curl nodejs meld wget npm trimage virtualbox apache2 mysql-server mysql-client php libapache2-mod-php php-mcrypt php-mysql php-cli ruby )
 for i in "${PACKAGES[@]}"
 do
   installifnotinstalled "$i"
@@ -77,6 +77,8 @@ echo "-------Setup Sublime Text-------"
 rm -rf $HOME/.config/sublime-text-3/Packages/User
 # link the Sublime User directory to the dotfiles Sulime User directory
 ln -s "`pwd`/sublime/User" "$HOME/.config/sublime-text-3/Packages/User"
+echo "Linked Sublime Text config files to ~/.dotfiles/sublime/User"
+echo
 
 # Git
 # is Git installed? http://stackoverflow.com/a/4785518/1171790
@@ -140,22 +142,20 @@ git config --global mergetool.meld.keepTemporaries false
 echo "Setup Meld as the Git merge tool."
 echo
 
-# heroku
+# Heroku
 # https://devcenter.heroku.com/articles/heroku-command-line#download-and-install
 echo "-------Setup Heroku-------"
 command -v ruby >/dev/null 2>&1 || { echo "Ruby is not installed. Please install it before proceeding." >&2; exit; }
 wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
-# Ubuntu
-echo "-------Setup Ubuntu-------"
-cp "`pwd`/ubuntu/ubuntustartup.desktop" "$HOME/.config/autostart/"
-chmod +x "$HOME/.dotfiles/ubuntu/startup.bash"
-chmod +x "$HOME/.config/autostart/ubuntustartup.desktop"
-
+echo
 echo "Software installed!!!! :)"
+echo
 echo "Your NodeJS version is: $(node -v)"
 echo "Your npm version is: $(npm -v)"
 echo "Your Ruby version is: $(ruby -v)"
 echo "Your Heroku CLI version is: $(heroku --version)"
 echo "$ git config --list Will show your Git configuration."
-echo "Now do this stuff manually: https://github.com/jonathanbell/dotfiles/blob/master/README.md#tidy-up-stuff-to-do-manually"
+echo
+echo "Now do this stuff manually: https://github.com/jonathanbell/.dotfiles/blob/master/README.md#tidy-up-stuff-to-do-manually"
+echo
