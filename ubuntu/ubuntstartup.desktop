@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Exec="$HOME/.dotfiles/ubuntu/startup.bash"
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=Startup Script

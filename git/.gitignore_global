@@ -1,0 +1,94 @@
+# IDEs and editors
+*.pydevproject
+.project
+.metadata
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+.externalToolBuilders/
+*.launch
+.cproject
+.buildpath
+nbproject/
+sftp-config.json
+.remote-sync.json
+*.codekit
+dwsync.xml
+_notes/
+komodo.project
+save-commands.json
+.atom-build.json
+
+# OS stuff
+[Tt]humbs.db
+[Dd]esktop.ini
+*.DS_store
+.DS_store?
+.Trashes
+ehthumbs.db
+Icon?
+._*
+.Spotlight-V100
+
+# Web server
+error_log
+access_log
+cache/
+*.sql
+*.sqlite
+*.log
+
+# Workflow
+_TODOs.txt
+TODO*
+github.php
+post-receive.php
+*workfiles/
+temp/
+tmp/
+.ideas/
+*.tmp
+ideas.txt
+*.stackdump
+# bc gov uses 'logs' (not 'log') for webserver stuff
+log*
+# bower
+bower_components
+# grunt
+node_modules
+# heroku
+*.env
+# composer
+vendor/
+.unison/
+
+# Zipped files
+*.bak
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Source control stuff
+.svn/
+*.svn
+# http://stackoverflow.com/questions/12366150/how-to-delete-orig-files-after-merge-from-git-repository
+*.orig
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# SASS
+.sass-cache

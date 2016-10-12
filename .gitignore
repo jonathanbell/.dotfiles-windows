@@ -1,0 +1,6 @@
+# ideas and workflow
+ideas*
+*.pub
+.bash_history
+# just to be sure
+id_rsa

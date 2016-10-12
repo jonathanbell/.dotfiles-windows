@@ -1,0 +1,18 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Color Highlighter",
+		"DocBlockr",
+		"GitHub Flavored Markdown Preview",
+		"Jade",
+		"Markdown Preview",
+		"Modific",
+		"Package Control",
+		"SFTP",
+		"Syntax Highlighting for Sass"
+	]
+}
