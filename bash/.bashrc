@@ -16,17 +16,18 @@ if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 	alias d="cd ~/Dropbox"
 	alias s="cd ~/Dropbox/Sites"
 
-	echo "Some aliases that you can use are:"
+	echo "Hi, some aliases that you can use are:"
 	echo
-	echo "l = shows all of the files in a directory in detailed format."
+	echo "l = Shows all of the files in a directory in detailed format."
 	echo "d = cd ~/Dropbox"
 	echo "s = cd ~/Dropbox/Sites"
 	echo "dot = cd ~/.dotfiles"
-	echo "sublimedir = changes directory to the Sublime Text User directory." 
+	echo "sublimedir = Changes directory to the Sublime Text User directory." 
 	echo
 
 	echo "Dropbox Status:"
 	dropbox status
+	echo
 
 fi # end if Ubuntu/Mac
 
@@ -60,11 +61,8 @@ shopt -s histappend;
 # autocorrect typos in path names when using `cd`
 shopt -s cdspell;
 
-# added by the Heroku Toolbelt
-# export PATH="/usr/local/heroku/bin:$PATH"
-
 # don't prompt for merge_msg in git
 export GIT_MERGE_AUTOEDIT=no
 
-### Added by the Heroku Toolbelt
+# Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
