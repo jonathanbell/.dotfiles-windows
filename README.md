@@ -27,8 +27,8 @@ cd ~/.dotfiles && chmod +x init_dotfiles.bash
 ## Tidy Up (stuff to do manually)
 - Setup desktop preferences 
 - Setup folder preferences
-- Copy ```./ubuntu/ubuntustartup.desktop to ~/.config/autostart/``` and make ```ubuntustartup.desktop``` executable.
-    - ```chmod +x ./ubuntu/startup.bash```
+- Copy ```./ubuntu/ubuntustartup.desktop``` to ```~/.config/autostart/``` and make ```ubuntustartup.desktop``` executable.
+    - Make ```startup.bash``` executable: ```chmod +x ./ubuntu/startup.bash```
 - [Configure Apache, MySQL, and PHP](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04)
     - Setup PHP ini file to display errors
 - Install Grunt.js and Bower: ```sudo npm install -g grunt-cli && sudo npm install -g bower```
