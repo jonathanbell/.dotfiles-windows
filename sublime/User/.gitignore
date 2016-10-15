@@ -11,3 +11,5 @@ Package Control.ca-certs/
 *.cache
 *errors.log
 Color Highlighter/
+SFTP.sublime-settings
+SublimeLinter/

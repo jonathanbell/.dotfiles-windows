@@ -38,17 +38,6 @@ do
   installifnotinstalled "$i"
 done
 
-# install ruby and ruby gems if ruby is not installed
-# command -v ruby >/dev/null 2>&1 || {
-#   echo "Installing Ruby..." >&2;
-#   sudo apt-get install -y ruby-full;
-#   sudo apt-get install -y rubygems1.9.1;
-#   # install useful gems for ruby
-#   sudo gem install sass;
-#   sudo gem install scss_lint;
-#   sudo gem-install jslint;
-# }
-
 # make syslinks for dotfiles to the locations where they normally are kept.
 # remove the 'original file' if one exists.
 link() {
@@ -147,6 +136,8 @@ echo
 command -v ruby >/dev/null 2>&1 || { echo "Ruby is not installed. Please install it before proceeding." >&2; exit; }
 command -v heroku >/dev/null 2>&1 || { echo "-------Setup Heroku-------" >&2; wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh; }
 
+echo "-------Config NPM-------"
+npm install -g jshint
 
 echo
 echo "Software installed!!!! :)"

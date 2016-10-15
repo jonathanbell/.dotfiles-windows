@@ -27,7 +27,7 @@ if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 
 	# make sure we have a good gamma for coding set
 	echo "Setting screen gama..."
-	xgamma -gamma 0.85
+	xgamma -gamma 0.77
 	echo
 
 	echo "Dropbox Status:"

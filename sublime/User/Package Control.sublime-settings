@@ -13,6 +13,8 @@
 		"Modific",
 		"Package Control",
 		"SFTP",
+		"SublimeLinter",
+		"SublimeLinter-jshint",
 		"Syntax Highlighting for Sass"
 	]
 }
