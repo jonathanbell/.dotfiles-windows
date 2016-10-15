@@ -38,6 +38,9 @@ do
   installifnotinstalled "$i"
 done
 
+# https://github.com/nodejs/node-v0.x-archive/issues/3911#issuecomment-8956154
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+
 # make syslinks for dotfiles to the locations where they normally are kept.
 # remove the 'original file' if one exists.
 link() {
@@ -137,7 +140,8 @@ command -v ruby >/dev/null 2>&1 || { echo "Ruby is not installed. Please install
 command -v heroku >/dev/null 2>&1 || { echo "-------Setup Heroku-------" >&2; wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh; }
 
 echo "-------Config NPM-------"
-npm install -g jshint
+sudo npm install -g jshint
+sudo npm install -g sass-lint
 
 echo
 echo "Software installed!!!! :)"

@@ -31,7 +31,7 @@ cd ~/.dotfiles && chmod +x init_dotfiles.bash
     - Make ```startup.bash``` executable: ```chmod +x ./ubuntu/startup.bash```
 - [Configure Apache, MySQL, and PHP](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04)
     - Setup PHP ini file to display errors
-- Install Grunt.js and Bower: ```sudo npm install -g grunt-cli && sudo npm install -g bower```
+    - Configure your hosts file for development: ```sudo nano hosts```
 - Configure VirtualBox
 - Uninstall pre-packaged OS software that's not useful to you 
 - [Logon to Heroku](https://devcenter.heroku.com/articles/heroku-command-line#getting-started) via the Heroku CLI

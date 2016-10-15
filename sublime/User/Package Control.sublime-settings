@@ -7,14 +7,14 @@
 	[
 		"Color Highlighter",
 		"DocBlockr",
-		"GitHub Flavored Markdown Preview",
 		"Jade",
+		"JSHint Gutter",
 		"Markdown Preview",
 		"Modific",
 		"Package Control",
 		"SFTP",
 		"SublimeLinter",
-		"SublimeLinter-jshint",
+		"SublimeLinter-contrib-sass-lint",
 		"Syntax Highlighting for Sass"
 	]
 }
