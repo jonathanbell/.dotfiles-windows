@@ -32,7 +32,7 @@ case "$choice" in
 esac
 
 # install all these packages
-PACKAGES=( curl nodejs meld wget npm trimage virtualbox apache2 mysql-server mysql-client php libapache2-mod-php php-mcrypt php-mysql php-cli ruby )
+PACKAGES=( curl nodejs meld wget npm trimage apache2 mysql-server mysql-client php libapache2-mod-php php-mcrypt php-mysql php-cli ruby )
 for i in "${PACKAGES[@]}"
 do
   installifnotinstalled "$i"
