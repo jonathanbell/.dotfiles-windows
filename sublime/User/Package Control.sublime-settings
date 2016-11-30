@@ -9,13 +9,13 @@
 		"Color Highlighter",
 		"DocBlockr",
 		"Jade",
-		"JSHint Gutter",
 		"Markdown Preview",
 		"Modific",
 		"Package Control",
 		"SFTP",
 		"SublimeLinter",
 		"SublimeLinter-contrib-sass-lint",
+		"SublimeLinter-jshint",
 		"Syntax Highlighting for Sass"
 	]
 }

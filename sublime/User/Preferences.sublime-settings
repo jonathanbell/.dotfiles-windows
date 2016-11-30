@@ -1,10 +1,9 @@
 {
 	"color_scheme": "Packages/User/SublimeLinter/Cobalt (SL).tmTheme",
-	"detect_slow_plugins": false,
+	"detect_slow_plugins": true,
 	"font_size": 10,
 	"ignored_packages":
 	[
-		"JSHint Gutter",
 		"Vintage"
 	],
 	"rulers":
