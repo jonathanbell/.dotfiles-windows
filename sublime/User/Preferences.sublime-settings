@@ -4,6 +4,7 @@
 	"font_size": 10,
 	"ignored_packages":
 	[
+		"JSHint Gutter",
 		"Vintage"
 	],
 	"rulers":

@@ -15,6 +15,7 @@ if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 	alias l="ls -laF ${colorflag}"
 	alias d="cd ~/Dropbox"
 	alias s="cd ~/Dropbox/Sites"
+	alias small="export PS1=\"\$ \""
 
 	echo "Hi, some aliases that you can use are:"
 	echo
@@ -22,7 +23,8 @@ if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 	echo "d = cd ~/Dropbox"
 	echo "s = cd ~/Dropbox/Sites"
 	echo "dot = cd ~/.dotfiles"
-	echo "sublimedir = Changes directory to the Sublime Text User directory." 
+	echo "sublimedir = Changes directory to the Sublime Text User directory."
+	echo "small = Makes the command line display only $ at the prompt." 
 	echo
 
 	# make sure we have a good gamma for coding set
@@ -68,6 +70,16 @@ shopt -s cdspell;
 
 # don't prompt for merge_msg in git
 export GIT_MERGE_AUTOEDIT=no
+
+# show Git branch and current working directory in Bash
+parse_git_branch() {
+	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+# shows something like: jonathan@jonathan-thinkpad ~/Desktop/nodepwdmanager (master) $ 
+# export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+# shows something like: ~/.dotfiles (master) $  
+export PS1="\[\033[32m\]\W\[\033[33m\]\$(parse_git_branch)\[\033[00m\] \$ "
+# change \W to \w to show all parts of the current working directory
 
 # Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
