@@ -61,6 +61,11 @@ do
 done
 echo
 
+# LXTerminal
+echo "-------Setup Terminal-------"
+link "`pwd`/terminal/lxterminal.conf" "$HOME/.config/lxterminal/lxterminal.conf"
+echo
+
 # Sublime Text
 # if Sublime Text is installed then link config files to sublime directory
 command -v subl >/dev/null 2>&1 || { echo "Sublime Text is not installed. Please install it before proceeding." >&2; exit; }
