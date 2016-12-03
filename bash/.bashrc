@@ -11,23 +11,13 @@ if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 	# shortcuts
 	alias dot="cd ~/.dotfiles"
 	alias sublimedir="cd ~/.config/sublime-text-3/Packages/User"
-	alias apache="sudo service apache2 restart"
+	alias resartapache="sudo service apache2 restart"
 	alias l="ls -laF ${colorflag}"
 	alias d="cd ~/Dropbox"
 	alias s="cd ~/Dropbox/Sites"
 	alias small="export PS1=\"\$ \""
-        alias hosts="sudo nano /etc/hosts"
-
-	echo "Hi, some aliases that you can use are:"
-	echo
-	echo "l = Shows all of the files in a directory in detailed format."
-	echo "d = cd ~/Dropbox"
-	echo "s = cd ~/Dropbox/Sites"
-	echo "dot = cd ~/.dotfiles"
-	echo "sublimedir = Changes directory to the Sublime Text User directory."
-	echo "small = Makes the command line display only $ at the prompt."
-        echo "hosts = Edit the hosts file." 
-	echo
+  alias hosts="sudo nano /etc/hosts"
+  alias configapache="sudo subl /etc/apache2/apache2.conf"
 
 	# make sure we have a good gamma for coding set
 	echo "Setting screen gama..."
