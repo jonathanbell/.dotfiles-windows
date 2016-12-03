@@ -16,6 +16,7 @@ if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 	alias d="cd ~/Dropbox"
 	alias s="cd ~/Dropbox/Sites"
 	alias small="export PS1=\"\$ \""
+        alias hosts="sudo nano /etc/hosts"
 
 	echo "Hi, some aliases that you can use are:"
 	echo
@@ -24,7 +25,8 @@ if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 	echo "s = cd ~/Dropbox/Sites"
 	echo "dot = cd ~/.dotfiles"
 	echo "sublimedir = Changes directory to the Sublime Text User directory."
-	echo "small = Makes the command line display only $ at the prompt." 
+	echo "small = Makes the command line display only $ at the prompt."
+        echo "hosts = Edit the hosts file." 
 	echo
 
 	# make sure we have a good gamma for coding set
