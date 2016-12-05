@@ -6,10 +6,12 @@
 	"installed_packages":
 	[
 		"ApacheConf.tmLanguage",
+		"AutomaticFullscreen",
 		"Babel",
 		"Color Highlighter",
 		"DocBlockr",
-		"Jade",
+		"Dracula Color Scheme",
+		"INI",
 		"Markdown Preview",
 		"Modific",
 		"Package Control",
@@ -17,6 +19,7 @@
 		"SublimeLinter",
 		"SublimeLinter-contrib-sass-lint",
 		"SublimeLinter-jshint",
-		"Syntax Highlighting for Sass"
+		"Syntax Highlighting for Sass",
+		"Theme - Cobalt2"
 	]
 }
