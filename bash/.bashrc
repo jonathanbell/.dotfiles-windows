@@ -4,14 +4,14 @@
 if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 
 	# change directory to working folder for web projects
-	if [ -d "$HOME/Dropbox/Sites" ]; then
-		cd $HOME/Dropbox/Sites;
+	if [ -d "$HOME/Dropbox/Sites/_devel" ]; then
+		cd $HOME/Dropbox/Sites/_devel;
 	fi
 
 	# shortcuts
 	alias dot="cd ~/.dotfiles"
 	alias sublimedir="cd ~/.config/sublime-text-3/Packages/User"
-	alias resartapache="sudo service apache2 restart"
+	alias restartapache="sudo service apache2 restart"
 	alias l="ls -laF ${colorflag}"
 	alias d="cd ~/Dropbox"
 	alias s="cd ~/Dropbox/Sites"
