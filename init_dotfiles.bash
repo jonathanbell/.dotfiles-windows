@@ -145,8 +145,11 @@ command -v ruby >/dev/null 2>&1 || { echo "Ruby is not installed. Please install
 command -v heroku >/dev/null 2>&1 || { echo "-------Setup Heroku-------" >&2; wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh; }
 
 echo "-------Config NPM-------"
-sudo npm install -g jshint
-sudo npm install -g sass-lint
+sudo npm install -g eslint
+sudo npm install -g eslint-plugin-standard
+sudo npm install -g eslint-plugin-promise
+sudo npm install -g eslint-config-standard
+sudo npm install -g babel-eslint
 
 echo
 echo "Software installed!!!! :)"
