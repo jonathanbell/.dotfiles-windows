@@ -31,7 +31,7 @@
 	[
 		80
 	],
-	"show_definitions": false,
+	"show_definitions": true,
 	"sidebar_font_big": true,
 	"tab_size": 2,
 	"theme": "Cobalt2.sublime-theme",

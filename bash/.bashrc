@@ -1,5 +1,4 @@
 # determine the system OS: http://stackoverflow.com/a/8597411/1171790
-
 # stuff to do on a Linux/Ubuntu or Mac system...
 if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 
@@ -19,7 +18,10 @@ if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
   alias hosts="sudo nano /etc/hosts"
   alias configapache="sudo subl /etc/apache2/apache2.conf"
 
-	# make sure we have a good gamma for coding set
+  # colored output when using ls
+	ls --color=al > /dev/null 2>&1 && alias ls='ls -F --color=al' || alias ls='ls -G'
+
+	# make sure we have a good screen gamma setup for long hours of staring at the screen
 	echo "Setting screen gama..."
 	xgamma -gamma 0.91
 	echo
@@ -29,17 +31,6 @@ if [ "$OSTYPE" = "linux-gnu" ] || [ "$OSTYPE" = "darwin"* ]; then
 	echo
 
 fi # end if Ubuntu/Mac
-
-# if [ $(which ssh-agent) ]; then
-# 	echo
-# 	echo "Starting SSH Agent: $(which ssh-agent)"
-# 	# http://stackoverflow.com/questions/5727555/remember-password-git-bash-under-windows
-# 	eval `ssh-agent -s`
-# 	ssh-add
-# 	echo
-# else
-# 	echo "No SSH Agent found. You should install one."
-# fi
 
 # make sublime text the default editor
 export EDITOR='subl';
@@ -67,11 +58,12 @@ export GIT_MERGE_AUTOEDIT=no
 parse_git_branch() {
 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
-# shows something like: jonathan@jonathan-thinkpad ~/Desktop/nodepwdmanager (master) $ 
-# export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
-# shows something like: ~/.dotfiles (master) $  
-export PS1="\[\033[32m\]\W\[\033[33m\]\$(parse_git_branch)\[\033[00m\] \$ "
-# change \W to \w to show all parts of the current working directory
 
-# Added by the Heroku Toolbelt
+# this PS1 shows something like: ~/.dotfiles (master) $  
+# export PS1="\[\033[31m\]\W\[\033[33m\]\$(parse_git_branch)\[\033[00m\] \$ "
+
+# shows something like (with colored backgrounds): .dotfiles (master) $ 
+export PS1="\[$(tput bold)\]\[\033[46m\]\W\[$(tput bold)\]\[\033[101m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+# added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
