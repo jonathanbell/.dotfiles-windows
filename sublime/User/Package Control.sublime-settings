@@ -5,12 +5,13 @@
 	],
 	"installed_packages":
 	[
+		"AdvancedNewFile",
+		"Agila Theme",
 		"ApacheConf.tmLanguage",
 		"AutomaticFullscreen",
 		"Babel",
 		"Color Highlighter",
 		"DocBlockr",
-		"Dracula Color Scheme",
 		"ESLint",
 		"INI",
 		"Laravel Blade Highlighter",
@@ -19,7 +20,6 @@
 		"Package Control",
 		"Pug",
 		"SFTP",
-		"Syntax Highlighting for Sass",
-		"Theme - Cobalt2"
+		"Syntax Highlighting for Sass"
 	]
 }
