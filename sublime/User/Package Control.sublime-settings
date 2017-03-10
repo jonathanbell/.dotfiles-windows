@@ -7,6 +7,7 @@
 	[
 		"AdvancedNewFile",
 		"Agila Theme",
+		"All Autocomplete",
 		"ApacheConf.tmLanguage",
 		"AutomaticFullscreen",
 		"Babel",
@@ -20,6 +21,7 @@
 		"Package Control",
 		"Pug",
 		"SFTP",
-		"Syntax Highlighting for Sass"
+		"Syntax Highlighting for Sass",
+		"TrailingSpaces"
 	]
 }
