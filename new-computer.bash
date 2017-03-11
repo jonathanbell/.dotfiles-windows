@@ -170,7 +170,7 @@ echo "Do: 'git config --list' to view your Git configuration."
 echo
 read -p "But wait! There's still a little bit more to do manually! Open the README? (Y/n?) " choice
 case "$choice" in
-  y|Y ) xdg-open "https://github.com/jonathanbell/.dotfiles"; echo;;
+  y|Y ) xdg-open "https://github.com/jonathanbell/.dotfiles#after-running-the-new-computer-setup-script"; echo;;
   * ) echo "A reboot may be in order. Enjoy your new computer! :)";;
 esac
 echo
