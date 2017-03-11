@@ -54,7 +54,7 @@ tmp/
 ideas.txt
 *.stackdump
 # bc gov uses 'logs' (not 'log') for webserver stuff
-log*
+logs*
 # bower
 bower_components
 # grunt

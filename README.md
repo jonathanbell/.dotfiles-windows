@@ -1,34 +1,39 @@
 # .dotfiles
 
-My config files and setup procedures for a new computer. Fork them if you wish. Inspired by: [https://dotfiles.github.io/](https://dotfiles.github.io/)
+These are my config files and setup procedures for a new computer. They'll work best on a computer with [Lubuntu](http://lubuntu.net/) installed because that's what I use. Fork them if you wish.
 
-## Setting up a New Computer: Install the Softwares First
+Inspired by: [https://dotfiles.github.io/](https://dotfiles.github.io/)
 
-- [Install Dropbox](https://www.linuxbabe.com/cloud-storage/install-dropbox-ubuntu-16-04)
-- Setup ~/.ssh (manual process for best security)
-    - Copy (or [generate](https://help.github.com/articles/generating-ssh-keys/)) server keys from your secret hiding place to ~/.ssh (such as ~/ssh/id_rsa)
-    - Ensure correct permissions: ```chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa```
-    - For help with GitHub keys see: [https://help.github.com/articles/generating-ssh-keys/](https://help.github.com/articles/generating-ssh-keys/)
-- Install Git: ```sudo apt-get install git```
-- [Install Sublime Text 3](https://www.google.ca/search?q=install+sublime+text+3+ubuntu)
-    - [Install Package Control](https://packagecontrol.io/installation)
-- Clone this repo into your home folder: ```cd ~ && git clone git@github.com:jonathanbell/.dotfiles.git && cd ~/.dotfiles```
+## Setup a New Computer: Install all the Softwares
 
-### Run the Init Script
+1. Install Lubuntu
+1. [Install Dropbox](https://www.linuxbabe.com/cloud-storage/install-dropbox-ubuntu-16-04)
+1. Setup SSH keys
+    - Copy (or [generate](https://help.github.com/articles/generating-ssh-keys/)) server keys from your secret hiding place to ~/.ssh (example: ```cd secret/path && cp id_rsa ~/ssh/id_rsa```)
+    - Ensure correct permissions on your .ssh directory and your keys: ```chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa```
+    - For help with GitHub SSH keys see: [https://help.github.com/articles/generating-ssh-keys/](https://help.github.com/articles/generating-ssh-keys/)
+1. Install Git: ```sudo apt-get install git```
+1. [Install Sublime Text 3](https://www.google.ca/search?q=install+sublime+text+3+ubuntu)
+    - [Install Sublime Text Package Control](https://packagecontrol.io/installation)
+1. Clone this repo into your home folder: ```cd ~ && git clone git@github.com:jonathanbell/.dotfiles.git && cd ~/.dotfiles```
+
+### Run the New Computer Script
 
 ```
-# make init_dotfiles.bash script executable
-# then install and configure a *shwack* of software
+# Make the new-computer.bash script executable.
+cd ~/.dotfiles && chmod +x init_dotfiles.bash
 
-cd ~/.dotfiles && chmod +x init_dotfiles.bash 
-./init_dotfiles.bash
+# Install and configure *a lot* of software.
+./new-computer.bash
 ```
 
-## Tidy Up (stuff to do manually)
-- Setup desktop preferences 
-- Setup folder preferences
-- [Configure Apache, MySQL, and PHP](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04)
-    - Setup PHP ini file to display errors
-    - Configure your hosts file for development: ```sudo nano /etc/hosts```
-- Uninstall pre-packaged OS software that's not useful to you 
-- [Logon to Heroku](https://devcenter.heroku.com/articles/heroku-command-line#getting-started) via the Heroku CLI
+### After Running the New Computer Setup Script
+
+Now tidy up, by doing the following:
+
+1. Set desktop preferences
+1. Set folder and file browser preferences
+1. [Configure Apache, MySQL, and PHP](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04)
+    - Setup PHP ini file to display errors (```php --ini```)
+    - Configure your hosts file for local development: ```sudo nano /etc/hosts```
+1. Uninstall pre-packaged OS software that's not useful (such as games, but keep Chess!)

@@ -1,6 +1,9 @@
-# ideas and workflow
+# Ideas.
 ideas*
+
+# SSH keys. Just in case... :)
 *.pub
-.bash_history
-# just to be sure
 id_rsa
+
+# Bash history.
+.bash_history

@@ -12,7 +12,7 @@
 		".DS_Store"
 	],
 	"font_face": "Droid Sans Mono",
-	"font_size": 10,
+	"font_size": 11,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"hot_exit": false,
@@ -25,6 +25,7 @@
 		"draw_normal",
 		"draw_active"
 	],
+	"indent_to_bracket": true,
 	"line_padding_bottom": 1,
 	"line_padding_top": 1,
 	"remember_open_files": false,
@@ -37,6 +38,7 @@
 	"tab_size": 2,
 	"theme": "Agila Monokai.sublime-theme",
 	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true,
 	"update_check": false,
 	"wide_caret": true,
 	"word_wrap": "true"
