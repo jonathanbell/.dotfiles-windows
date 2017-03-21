@@ -66,6 +66,21 @@ webmify() {
   fi
 }
 
+mkvtomp4() {
+  COUNTER=`ls -1 *.mkv 2>/dev/null | wc -l`
+  if [ $COUNTER != 0 ]; then
+    for filename in *.mkv; do
+      ffmpeg -i "$filename" -c:v libx264 -c:a libvo_aacenc -b:a 128k "${filename%.mkv}.mp4"
+      echo "Converted: $filename to ${filename%.mkv}.mp4"
+      # Now delete the mkv file.
+      rm "$filename"
+    done
+  else
+    echo "No mkv files were found in this directory."
+    echo "mkvtomp4 Usage: 'cd' to the directory where the mkv video files are located and run 'mkvtomp4' (then go grab a coffee)."
+  fi
+}
+
 # Make an animated gif from any video file.
 # http://gist.github.com/SlexAxton/4989674
 # Requires gifsicle. sudo apt-get install gifsicle
@@ -126,6 +141,10 @@ alias ...="cd ../../../"
 # List files in detail.
 alias l="ls -laF"
 
+# Show diskspace usage on main volume.
+alias diskspace="df -h | grep /dev/sda1"
+# Run personal backup script.
+alias backup="~/Dropbox/Documents/personal-backup-script.bash"
 # Shutdown.
 alias done="sudo shutdown now"
 
@@ -136,8 +155,6 @@ alias updateubuntu="sudo apt-get update -y && sudo apt-get autoclean -y && sudo 
 alias c="clear"
 # Minimal output at the command prompt.
 alias minterm="export PS1=\"\$ \""
-# Show diskspace usage on main volume.
-alias diskspace="df -h | grep /dev/sda1"
 
 # Open Apache's main config file.
 alias configapache="sudo subl /etc/apache2/apache2.conf"
@@ -149,7 +166,7 @@ alias hosts="sudo nano /etc/hosts"
 # Pretty print Git's history.
 alias gitlog="git log --graph --oneline --all --decorate"
 
-# Open an emoji cheat sheet!
+# Open an emoji cheat sheet! Useful for fun commit messages on GitHub.
 alias emojis="xdg-open http://www.emoji-cheat-sheet.com/"
 
 # Copy a shuggie guy to the clipboard.
