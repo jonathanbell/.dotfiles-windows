@@ -66,6 +66,7 @@ webmify() {
   fi
 }
 
+# Convert all mkv video files in a directory into mp4's.
 mkvtomp4() {
   COUNTER=`ls -1 *.mkv 2>/dev/null | wc -l`
   if [ $COUNTER != 0 ]; then
@@ -79,6 +80,24 @@ mkvtomp4() {
     echo "No mkv files were found in this directory."
     echo "mkvtomp4 Usage: 'cd' to the directory where the mkv video files are located and run 'mkvtomp4' (then go grab a coffee)."
   fi
+}
+
+# List all PPA's (third-party packages) installed on the system.
+listppa() {
+  echo
+  echo "Installed PPAs:"
+  echo "==============="
+  echo
+  for APT in `find /etc/apt/ -name \*.list`; do
+    grep -o "^deb http://ppa.launchpad.net/[a-z0-9\-]\+/[a-z0-9\-]\+" $APT | while read ENTRY; do
+      USER=`echo $ENTRY | cut -d/ -f4`
+      PPA=`echo $ENTRY | cut -d/ -f5`
+      echo $USER/$PPA
+    done
+  done
+  echo
+  echo "To remove a PPA do: sudo add-apt-repository --remove ppa:<USER>/<PPA>"
+  echo
 }
 
 # Make an animated gif from any video file.
@@ -140,6 +159,8 @@ alias ...="cd ../../../"
 
 # List files in detail.
 alias l="ls -laF"
+# A leftover from my Macintosh days..
+alias finder="pcmanfm"
 
 # Show diskspace usage on main volume.
 alias diskspace="df -h | grep /dev/sda1"
