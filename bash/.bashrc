@@ -56,13 +56,14 @@ trim-video() {
   fi
 }
 
-# Turn that video into webm!
+# Turn that video into webm format and make a poster image for it!
 webmify() {
   if [ $# -eq 0 ]; then
     echo "Oops. Please enter a filename. Usage: webmify <filename>"
   else
     ffmpeg -i "$1" -vcodec libvpx -acodec libvorbis -isync -copyts -aq 80 -threads 3 -qmax 30 -y "$1.webm"
-    google-chrome "$1.webm"
+    ffmpeg -ss 00:00:15 -i "$1.webm" -vframes 1 -q:v 2 "$1.jpg"
+    # google-chrome "$1.webm"
   fi
 }
 
@@ -110,13 +111,14 @@ gifify() {
       ffmpeg -i "$1" -pix_fmt rgb24 -r 24 -f gif -vf scale=500:-1 - | gifsicle --optimize=2 > "$1.gif"
     elif [[ $2 == '--best' ]]; then
       ffmpeg -i "$1" -pix_fmt rgb24 -f gif -vf scale=700:-1 - | gifsicle > "$1.gif"
+    elif [[ $2 == '--tumblr' ]]; then
+      ffmpeg -i "$1" -pix_fmt rgb24 -f gif -vf scale=400:-1 - | gifsicle -i --optimize=3 > "$1.gif"
     else
-      # --delay=3 will speed up video.
-      ffmpeg -i "$1" -pix_fmt rgb24 -r 10 -f gif -vf scale=400:-1 - | gifsicle --optimize=3 --delay=2 > "$1.gif"
+      ffmpeg -i "$1" -pix_fmt rgb24 -r 10 -f gif -vf scale=400:-1 - | gifsicle --optimize=3 --delay=7 > "$1.gif"
     fi
     google-chrome "$1.gif"
   else
-    echo "Ops. Please enter a filename. Usage: gifify <input_movie.mov> [ --better | --best ]"
+    echo "Ops. Please enter a filename. Usage: gifify <input_movie.mov> [ --better | --best | --tumblr ]"
   fi
 }
 
