@@ -10,7 +10,7 @@ fi
 
 # Displays current Git branch, if there is one.
 parse-git-branch() {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1) /'
 }
 
 # Downloads mp3 audio file from YouTube video.
@@ -217,7 +217,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 # ------------------------------------------------------------------------------
 
 # Colorize git branch and current directory in the command prompt.
-export PS1="\[$(tput bold)\]\[\033[46m\]\W\[$(tput bold)\]\[\033[101m\]\$(parse-git-branch)\[\033[00m\] $ "
+export PS1="\[$(tput bold)\]\[\033[31m\]→ \[\033[0m\]\[\033[105m\]\$(parse-git-branch)\[\033[0m\]\[$(tput bold)\]\[\033[36m\] \W\[\033[0m\] \[\033[2m\]$\[\033[0m\] "
 
 # Colorize 'grep'.
 alias grep='grep --color=auto'
