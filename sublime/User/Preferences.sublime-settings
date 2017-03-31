@@ -4,14 +4,15 @@
 	"caret_extra_top": 1,
 	"caret_extra_width": 2,
 	"caret_style": "wide",
-	"color_scheme": "Packages/Agila Theme/Agila Monokai Extended.tmTheme",
+	"color_scheme": "Packages/Agila Theme/Agila Dracula.tmTheme",
 	"detect_slow_plugins": true,
+	"dpi_scale": 1.125,
 	"fade_fold_buttons": false,
 	"file_exclude_patterns":
 	[
 		".DS_Store"
 	],
-	"font_face": "Droid Sans Mono",
+	"font_face": "Ubuntu Mono",
 	"font_size": 11,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
@@ -36,10 +37,10 @@
 	"show_definitions": true,
 	"sidebar_font_big": true,
 	"tab_size": 2,
-	"theme": "Agila Monokai.sublime-theme",
+	"theme": "Spacegray.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"update_check": false,
 	"wide_caret": true,
-	"word_wrap": "true"
+	"word_wrap": true
 }

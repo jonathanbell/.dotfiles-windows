@@ -10,7 +10,7 @@ fi
 
 # Displays current Git branch, if there is one.
 parse-git-branch() {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1) /'
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1] /'
 }
 
 # Downloads mp3 audio file from YouTube video.
@@ -259,11 +259,11 @@ xgamma -q -gamma 0.90
 date
 
 # Show Dropbox status.
-echo "Dropbox status: $(dropbox status | sed -e 's/[\r\n]//g')."
+echo "Dropbox: $(dropbox status | sed -e 's/[\r\n]//g')."
 echo
 
 # Instructions.
-echo "Use \"lsaliases\" to list aliases and \"lsfunctions\" to list functions."
+echo "Type \"lsaliases\" to list aliases and \"lsfunctions\" to list functions."
 
 # New line.
 echo
