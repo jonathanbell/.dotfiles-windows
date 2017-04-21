@@ -188,6 +188,8 @@ alias hosts="sudo nano /etc/hosts"
 
 # Pretty print Git's history.
 alias gitlog="git log --graph --oneline --all --decorate"
+# When you just want to commit some changes to a personal project. Not useful for "real" projects.
+alias lazycommit="git commit -a --allow-empty-message -m '' && git push"
 
 # Open an emoji cheat sheet! Useful for fun commit messages on GitHub.
 alias emojis="xdg-open http://www.emoji-cheat-sheet.com/"
