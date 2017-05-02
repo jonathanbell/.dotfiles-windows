@@ -6,15 +6,16 @@
 	"installed_packages":
 	[
 		"AdvancedNewFile",
-		"Agila Theme",
 		"All Autocomplete",
 		"ApacheConf.tmLanguage",
 		"AutomaticFullscreen",
 		"Babel",
+		"Boxy Theme",
 		"Color Highlighter",
 		"DocBlockr",
 		"ESLint",
 		"INI",
+		"Jade",
 		"Laravel Blade Highlighter",
 		"Markdown Preview",
 		"Modific",
