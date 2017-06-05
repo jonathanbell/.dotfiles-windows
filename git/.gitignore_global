@@ -35,11 +35,14 @@ Icon?
 
 # Web server
 error_log
+error.log
 access_log
+access.log
 cache/
 *.sql
 *.sqlite
 *.log
+.well-known/
 
 # Workflow
 _TODOs.txt

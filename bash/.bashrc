@@ -164,6 +164,8 @@ alias l="ls -laF"
 # A leftover from my Macintosh days..
 alias finder="pcmanfm"
 
+# SSH to your favorite server.
+alias connect="ssh ec2-35-164-14-201.us-west-2.compute.amazonaws.com"
 # Show diskspace usage on main volume.
 alias diskspace="df -h | grep /dev/sda1"
 # Run personal backup script.
