@@ -193,6 +193,9 @@ alias gitlog="git log --graph --oneline --all --decorate"
 # When you just want to commit some changes to a personal project. Not useful for "real" projects.
 alias lazycommit="git add . && git commit -a --allow-empty-message -m '' && git push"
 
+# Add a WTFP Licence to a directory/project.
+alias addwtfpl="wget -O LICENCE http://www.wtfpl.net/txt/copying/"
+
 # Open an emoji cheat sheet! Useful for fun commit messages on GitHub.
 alias emojis="xdg-open http://www.emoji-cheat-sheet.com/"
 
