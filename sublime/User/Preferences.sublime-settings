@@ -4,7 +4,7 @@
 	"caret_extra_top": 1,
 	"caret_extra_width": 2,
 	"caret_style": "wide",
-	"color_scheme": "Packages/Agila Theme/Agila Dracula.tmTheme",
+	"color_scheme": "Packages/Agila Theme/Markdown/Dracula Markdown.tmTheme",
 	"detect_slow_plugins": true,
 	"dpi_scale": 1.125,
 	"enable_tab_scrolling": false,
