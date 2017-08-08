@@ -4,7 +4,7 @@
 	"caret_extra_top": 1,
 	"caret_extra_width": 2,
 	"caret_style": "wide",
-	"color_scheme": "Packages/Agila Theme/Markdown/Dracula Markdown.tmTheme",
+	"color_scheme": "Packages/Agila Theme/Agila Dracula.tmTheme",
 	"detect_slow_plugins": true,
 	"dpi_scale": 1.125,
 	"enable_tab_scrolling": false,
@@ -13,8 +13,8 @@
 	[
 		".DS_Store"
 	],
-	"font_face": "Ubuntu Mono",
-	"font_size": 11,
+	"font_face": "Source Code Pro",
+	"font_size": 10,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"hot_exit": false,

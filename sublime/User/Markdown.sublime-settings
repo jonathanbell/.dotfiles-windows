@@ -1,5 +1,5 @@
-// These settings override both User and Default settings for the Markdown syntax
 {
-  "spell_check": true,
-  "dictionary": "Packages/Language - English/en_US.dic",
+	"dictionary": "Packages/Language - English/en_US.dic",
+	"spell_check": false,
+  "font_face": "Ubuntu"
 }

@@ -13,3 +13,7 @@ Package Control.ca-certs/
 Color Highlighter/
 SFTP.sublime-settings
 SublimeLinter/
+
+# Normally, I would want to source control this file.
+# But, in this case, I'm OK with setting up this file on a new install of Sublime Text.
+MarkdownLight.sublime-settings
