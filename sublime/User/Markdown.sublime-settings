@@ -1,7 +1,7 @@
 {
 	"dictionary": "Packages/Language - English/en_US.dic",
 	"spell_check": false,
-  "font_face": "Ubuntu",
+  "font_face": "DejaVu Sans Mono",
   "color_scheme": "Packages/Agila Theme/Markdown/Monokai Markdown.tmTheme",
   "line_padding_bottom": 3,
   "line_padding_top": 3

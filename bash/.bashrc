@@ -147,6 +147,8 @@ lsfunctions() {
 
 # Change directory to your dotfiles directory.
 alias dot="cd ~/.dotfiles"
+# Change directory to your code notes && open them.
+alias notes="cd ~/Dropbox/Notes && subl ."
 # Change directory to the Desktop.
 alias desk="cd ~/Desktop"
 # Quickly switch to Sublime's config directory.
@@ -263,14 +265,16 @@ shopt -s nocaseglob;
 xgamma -q -gamma 0.90
 
 # Show the date on login/new Bash window.
-date
+#date
 
 # Show Dropbox status.
-echo "Dropbox: $(dropbox status | sed -e 's/[\r\n]//g')."
-echo
+#echo "Your Dropbox is: $(dropbox status | sed -e 's/[\r\n]//g')."
 
 # Instructions.
-echo "Type \"lsaliases\" to list aliases and \"lsfunctions\" to list functions."
+#echo "Type \"lsaliases\" to list aliases and \"lsfunctions\" to list functions."
+#echo
+
+echo "Life passes most people by while they're making plans for it."
 
 # New line.
 echo

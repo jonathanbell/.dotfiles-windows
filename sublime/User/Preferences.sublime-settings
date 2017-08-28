@@ -38,7 +38,7 @@
 	],
 	"show_definitions": true,
 	"sidebar_font_big": false,
-	"tab_size": 2,
+	"tab_size": 4,
 	"theme": "Agila Dracula.sublime-theme",
 	"theme_agila_auto_complete_yellow": true,
 	"theme_agila_compact_sidebar": true,

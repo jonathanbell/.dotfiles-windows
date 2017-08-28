@@ -1,0 +1,6 @@
+{
+    "default_depth": 0,
+    "default_autolink": true,
+    "default_bracket": "round",
+    "default_lowercase_only_ascii": true
+}
