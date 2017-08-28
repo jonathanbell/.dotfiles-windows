@@ -83,6 +83,22 @@ mkvtomp4() {
   fi
 }
 
+# Convert all mov video files in a directory into mp4's.
+movtomp4() {
+  COUNTER=`ls -1 *.mov 2>/dev/null | wc -l`
+  if [ $COUNTER != 0 ]; then
+    for filename in *.mov; do
+      ffmpeg -i "$filename" -vcodec h264 -acodec aac -strict -2 "${filename%.mov}.mp4"
+      echo "Converted: $filename to ${filename%.mkv}.mp4"
+      # Now delete the mov file.
+      rm "$filename"
+    done
+  else
+    echo "No mkv files were found in this directory."
+    echo "mkvtomp4 Usage: 'cd' to the directory where the mkv video files are located and run 'mkvtomp4' (then go grab a coffee)."
+  fi
+}
+
 # List all PPA's (third-party packages) installed on the system.
 listppa() {
   echo
