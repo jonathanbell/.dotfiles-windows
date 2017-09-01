@@ -45,7 +45,6 @@ cache/
 .well-known/
 
 # Workflow
-_TODOs.txt
 TODO*
 github.php
 post-receive.php
@@ -54,17 +53,17 @@ temp/
 tmp/
 .ideas/
 *.tmp
-ideas.txt
 *.stackdump
-# bc gov uses 'logs' (not 'log') for webserver stuff
+# BC Gov uses 'logs' (not 'log') for webserver stuff
 logs*
-# bower
-bower_components
-# grunt
+
+# Node
 node_modules
-# heroku
+
+# Environment Variables
 *.env
-# composer
+
+# Composer
 vendor/
 .unison/
 

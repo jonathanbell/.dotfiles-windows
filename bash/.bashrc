@@ -280,17 +280,29 @@ shopt -s nocaseglob;
 # If we have Bash open, we are probably coding. Set a deeper screen contrast.
 xgamma -q -gamma 0.90
 
-# Show the date on login/new Bash window.
+# Show the date.
 #date
 
 # Show Dropbox status.
 #echo "Your Dropbox is: $(dropbox status | sed -e 's/[\r\n]//g')."
 
-# Instructions.
+# Show instructions how to list custom functionality.
 #echo "Type \"lsaliases\" to list aliases and \"lsfunctions\" to list functions."
 #echo
 
-echo "Life passes most people by while they're making plans for it."
+QUOTES=(
+  "Life passes most people by while they're making plans for it."
+  "Hello.\nWorld."
+  "Lower your expectations; raise your standards."
+  "Travel is the only thing you buy that can make you richer."
+  "Have enough by desiring less."
+)
+
+QUOTESLENGTH={#QUOTES[@]}
+SELECTEDQUOTE=$(shuf -i 0-3 -n 1)
+
+# https://stackoverflow.com/a/10618140/1171790
+printf "${QUOTES[SELECTEDQUOTE]}"
 
 # New line.
 echo
