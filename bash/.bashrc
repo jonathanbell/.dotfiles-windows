@@ -296,6 +296,7 @@ QUOTES=(
   "Lower your expectations; raise your standards."
   "Travel is the only thing you buy that can make you richer."
   "Have enough by desiring less."
+  "I have loved the stars too fondly to be fearful of the night."
 )
 
 QUOTESLENGTH={#QUOTES[@]}
