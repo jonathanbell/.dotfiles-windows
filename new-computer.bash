@@ -26,7 +26,7 @@ link() {
 
 # Check if this script is running on a Linux system.
 if ! [ "$OSTYPE" = "linux-gnu" ]; then
-  echo "You are not using a Linux computer. Bro, run this script on Linux with Ubuntu please."
+  echo "You are not using a Linux computer. Bro, run this script on Linux with Ubuntu or Lubuntu, please."
   exit
 else
   # OK, the script is running on Linux.
@@ -76,17 +76,6 @@ echo
 echo "-------Setup Terminal-------"
 # Link LXTerminal's config to our dotfiles copy.
 link "`pwd`/terminal/lxterminal.conf" "$HOME/.config/lxterminal/lxterminal.conf"
-echo
-
-# Setup Sublime Text.
-# Make sure Sublime Text is installed. It should be installed if you read the README first.
-command -v subl >/dev/null 2>&1 || { echo "Sublime Text is not installed. Please install it before proceeding." >&2; echo "Exiting..."; exit; }
-echo "-------Setup Sublime Text-------"
-# Remove the existing sublime user folder.
-rm -rf $HOME/.config/sublime-text-3/Packages/User
-# Link the whole Sublime User directory to .dotfiles/sublime/User
-ln -s "`pwd`/sublime/User" "$HOME/.config/sublime-text-3/Packages/User"
-echo "Linked Sublime Text config files to ~/.dotfiles/sublime/User"
 echo
 
 # Setup Git.
