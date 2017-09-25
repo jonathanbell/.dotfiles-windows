@@ -164,7 +164,7 @@ lsfunctions() {
 # Change directory to your dotfiles directory.
 alias dot="cd ~/.dotfiles"
 # Change directory to your code notes && open them.
-alias notes="cd ~/Dropbox/Notes && subl ."
+alias notes="cd ~/Dropbox/Notes && code ."
 # Change directory to the Desktop.
 alias desk="cd ~/Desktop"
 # Quickly switch to Sublime's config directory.

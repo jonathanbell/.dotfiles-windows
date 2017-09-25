@@ -154,14 +154,6 @@ echo
 # https://devcenter.heroku.com/articles/heroku-command-line#download-and-install
 command -v heroku >/dev/null 2>&1 || { echo "-------Setup Heroku-------" >&2; wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh; }
 
-echo "-------Config NPM Global Packages-------"
-# ESLint Airbnb setup.
-# https://www.themarketingtechnologist.co/eslint-with-airbnb-javascript-style-guide-in-webstorm/
-sudo npm install -g eslint eslint-plugin-standard eslint-plugin-promise eslint-config-standard eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react babel-eslint eslint-config-airbnb
-# Linkup a global .eslintrc file.
-# A .eslintrc file at the root of a project will override these settings.
-ln -s "`pwd`/node/.eslintrc" "$HOME/.eslintrc"
-
 echo
 echo "All done. Software is installed! :)"
 echo
