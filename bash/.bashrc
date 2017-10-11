@@ -286,6 +286,9 @@ shopt -s nocaseglob;
 # If we have Bash open, we are probably coding. Set a deeper screen contrast.
 xgamma -q -gamma 0.90
 
+# Change the title of the Bash terminal to show the User@Hostname connection.
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
+
 # Show Dropbox status.
 #echo "Your Dropbox is: $(dropbox status | sed -e 's/[\r\n]//g')."
 
