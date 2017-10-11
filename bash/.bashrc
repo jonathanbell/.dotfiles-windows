@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Check if Linux/Ubuntu.
 if ! [ "$OSTYPE" = "linux-gnu" ]; then
   echo "***ALERT: Attempting to load your .bashrc on a non-Ubuntu/Linux system. Some things may not work well.***"
@@ -48,7 +50,7 @@ trim-video() {
   if [ $# -ne 3 ]; then
     echo "Ops. Please enter the new video start time and the total duration in seconds."
     echo "Usage: trim-video <input_movie.mov> <time in seconds from start> <duration of new clip>"
-    echo 'Example: "trim-video myvideo.mov 3 10" Produces and 10 second video begining from 3 seconds inside the original clip.'
+    echo 'Example: "trim-video myvideo.mov 3 10" Produces a 10 second video begining from 3 seconds inside of the original clip.'
   else
     echo "Begining to trim video length..."
     ffmpeg -i $1 -ss $2 -c copy -t $3 trimmed_$1
@@ -79,7 +81,7 @@ mkvtomp4() {
     done
   else
     echo "No mkv files were found in this directory."
-    echo "mkvtomp4 Usage: 'cd' to the directory where the mkv video files are located and run 'mkvtomp4' (then go grab a coffee)."
+    echo "mkvtomp4 Usage: \"cd\" to the directory where the mkv video files are located and run \"mkvtomp4\" (and then go grab a coffee)."
   fi
 }
 
@@ -95,7 +97,7 @@ movtomp4() {
     done
   else
     echo "No mkv files were found in this directory."
-    echo "mkvtomp4 Usage: 'cd' to the directory where the mkv video files are located and run 'mkvtomp4' (then go grab a coffee)."
+    echo "mkvtomp4 Usage: \"cd\" to the directory where the mkv video files are located and run \"mkvtomp4\" (then go grab a coffee)."
   fi
 }
 
@@ -175,6 +177,7 @@ alias d="cd ~/Dropbox"
 alias s="cd ~/Dropbox/Sites"
 # For when you make the typ-o that you *will* make.
 alias cd..="cd .."
+alias ..="cd .."
 alias ...="cd ../../../"
 
 # List files in detail.
@@ -200,7 +203,7 @@ alias c="clear"
 alias minterm="export PS1=\"\$ \""
 
 # Open Apache's main config file.
-alias configapache="sudo subl /etc/apache2/apache2.conf"
+alias configapache="sudo code /etc/apache2/apache2.conf"
 # Restart Apache.
 alias restartapache="sudo service apache2 restart"
 # Edit hosts file quickly.
@@ -220,6 +223,9 @@ alias emojis="xdg-open http://www.emoji-cheat-sheet.com/"
 # Copy a shuggie guy to the clipboard.
 alias shruggie='printf "¯\_(ツ)_/¯" | xclip -selection c && echo "¯\_(ツ)_/¯"'
 alias smilely='printf "ツ" | xclip -selection c && echo "ツ"'
+
+# Notepad. Just like Windows ;)
+alias notepad="leafpad"
 
 # Prep high-res images for upload to log.jonathanbell.ca or other blog-like things.
 alias blogimages='echo "Converting images to lo-res..." && mkdir loRes > /dev/null 2>&1 && mogrify -resize 900 -quality 79 -path ./loRes *.jpg && echo "Done!"'
@@ -267,8 +273,8 @@ export HISTCONTROL='ignoreboth';
 # Append to the Bash history file, rather than overwriting it.
 shopt -s histappend;
 
-# Make sublime text the default editor.
-export EDITOR='subl';
+# Make VS Code the default editor.
+export EDITOR='code';
 
 # Prefer US English and use UTF-8.
 export LANG='en_US.UTF-8';
@@ -280,30 +286,8 @@ shopt -s nocaseglob;
 # If we have Bash open, we are probably coding. Set a deeper screen contrast.
 xgamma -q -gamma 0.90
 
-# Show the date.
-#date
-
 # Show Dropbox status.
 #echo "Your Dropbox is: $(dropbox status | sed -e 's/[\r\n]//g')."
 
-# Show instructions how to list custom functionality.
-#echo "Type \"lsaliases\" to list aliases and \"lsfunctions\" to list functions."
-#echo
-
-QUOTES=(
-  "Life passes most people by while they're making plans for it."
-  "Hello.\nWorld."
-  "Lower your expectations; raise your standards."
-  "Travel is the only thing you buy that can make you richer."
-  "Have enough by desiring less."
-  "I have loved the stars too fondly to be fearful of the night."
-)
-
-QUOTESLENGTH={#QUOTES[@]}
-SELECTEDQUOTE=$(shuf -i 0-3 -n 1)
-
-# https://stackoverflow.com/a/10618140/1171790
-printf "${QUOTES[SELECTEDQUOTE]}"
-
-# New line.
-echo
+# Show a random quote at Bash startup.
+echo $(shuf -n 1 "$HOME/.dotfiles/bash/quotes.txt")
