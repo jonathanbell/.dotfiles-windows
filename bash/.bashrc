@@ -261,33 +261,75 @@ export LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40
 # | Misc
 # ------------------------------------------------------------------------------
 
+# Update window size after every command.
+shopt -s checkwinsize
+
 # Add tab completion for SSH hostnames based on ~/.ssh/config (ignoring wildcards).
 [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
 
+# Automatically trim long paths in the prompt (requires Bash 4.x)
+PROMPT_DIRTRIM=2
+
 # Autocorrect typos in path names when using 'cd'.
-shopt -s cdspell;
+shopt -s cdspell
+
+# Prepend cd to directory names automatically.
+shopt -s autocd 2> /dev/null
+
+# Correct spelling errors during tab-completion.
+shopt -s dirspell 2> /dev/null
 
 # Omit duplicates from bash history and commands that begin with a space.
-export HISTCONTROL='ignoreboth';
+export HISTCONTROL='ignoreboth'
 
 # Append to the Bash history file, rather than overwriting it.
-shopt -s histappend;
+shopt -s histappend
+
+# Save multi-line commands as one command.
+shopt -s cmdhist
+
+# Huge history. Doesn't appear to slow things down, so why not?
+HISTSIZE=50000
+HISTFILESIZE=1000
+
+# Avoid duplicate entries.
+HISTCONTROL="erasedups:ignoreboth"
+
+# Don't record some commands.
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
+
+# Use standard ISO 8601 timestamp
+# %F equivalent to %Y-%m-%d
+# %T equivalent to %H:%M:%S (24-hours format)
+HISTTIMEFORMAT='%F %T '
 
 # Make VS Code the default editor.
-export EDITOR='code';
+export EDITOR='code'
 
 # Prefer US English and use UTF-8.
-export LANG='en_US.UTF-8';
-export LC_ALL='en_US.UTF-8';
+export LANG='en_US.UTF-8'
+export LC_ALL='en_US.UTF-8'
 
 # Case-insensitive globbing (used in pathname expansion).
-shopt -s nocaseglob;
+shopt -s nocaseglob
 
-# If we have Bash open, we are probably coding. Set a deeper screen contrast.
-xgamma -q -gamma 0.90
+# Perform file completion in a case insensitive fashion.
+bind "set completion-ignore-case on"
+
+# Treat hyphens and underscores as equivalent.
+bind "set completion-map-case on"
+
+# Display matches for ambiguous patterns at first tab press.
+bind "set show-all-if-ambiguous on"
+
+# Immediately add a trailing slash when autocompleting symlinks to directories.
+bind "set mark-symlinked-directories on"
 
 # Change the title of the Bash terminal to show the User@Hostname connection.
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
+
+# If we have Bash open, we are probably coding. Set a deeper screen contrast.
+xgamma -q -gamma 0.90
 
 # Show Dropbox status.
 #echo "Your Dropbox is: $(dropbox status | sed -e 's/[\r\n]//g')."
