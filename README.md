@@ -35,4 +35,5 @@ Now tidy up, by doing the following:
 1. [Configure Apache and/or Nginx, MySQL, and PHP](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04)
     - Setup PHP ini file to display errors (`php --ini`)
     - Configure your hosts file for local development: `sudo nano /etc/hosts`
+1. [Install Composer](https://getcomposer.org/download/)
 1. Uninstall pre-packaged OS software that's not useful (such as games, but keep Chess!)

@@ -52,7 +52,7 @@ case "$choice" in
 esac
 
 # Install all the softwares.
-PACKAGES=( curl nodejs meld youtube-dl imagemagick xclip wget npm trimage ffmpeg apache2 mysql-server mysql-client php mysql-workbench sqlite3 sqlitebrowser libapache2-mod-php php-mcrypt php-mysql php-cli ruby rubygems )
+PACKAGES=( gnome-terminal curl nodejs meld youtube-dl imagemagick xclip wget npm trimage ffmpeg apache2 mysql-server mysql-client php mysql-workbench sqlite3 sqlitebrowser libapache2-mod-php php-mcrypt php-mysql php-cli ruby rubygems python-pip )
 for i in "${PACKAGES[@]}"
 do
   installifnotinstalled "$i"
@@ -67,6 +67,8 @@ echo
 sudo add-apt-repository ppa:numix/ppa
 sudo apt-get update
 sudo apt-get install numix-gtk-theme numix-icon-theme numix-icon-theme-square
+
+# TODO: Remove/uninstall packages that come with (L)ubuntu that we don't want.
 
 # Setup Bash.
 echo "-------Setup Bash-------"
