@@ -136,7 +136,9 @@ echo "Set Meld as the Git difftool."
 # Set Meld as the Git mergetool.
 git config --global merge.tool meld
 git config --global mergetool.meld.keepBackup false
+git config --global mergetool.keepBackup false
 git config --global mergetool.meld.keepTemporaries false
+git config --global mergetool.keepTemporaries false
 echo "Set Meld as the Git mergetool."
 echo
 
