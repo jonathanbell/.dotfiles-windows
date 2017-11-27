@@ -52,7 +52,7 @@ case "$choice" in
 esac
 
 # Install all the softwares.
-PACKAGES=( gnome-terminal curl nodejs meld pgadmin3 youtube-dl imagemagick xclip wget npm trimage ffmpeg apache2 mysql-server mysql-client php mysql-workbench sqlite3 sqlitebrowser libapache2-mod-php php-mcrypt php-mysql php-cli ruby rubygems python-pip )
+PACKAGES=( gnome-terminal curl nodejs meld pgadmin3 skypeforlinux youtube-dl imagemagick xclip wget npm trimage ffmpeg apache2 mysql-server mysql-client php mysql-workbench sqlite3 sqlitebrowser libapache2-mod-php php-mcrypt php-mysql php-cli ruby rubygems python-pip )
 for i in "${PACKAGES[@]}"
 do
   installifnotinstalled "$i"
