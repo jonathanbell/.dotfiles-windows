@@ -64,9 +64,11 @@ sudo ln -s /usr/bin/nodejs /usr/bin/node
 echo
 
 # Setup Numix theme for use on Ubuntu.
+echo "-------Setup Ubuntu-------"
 sudo add-apt-repository ppa:numix/ppa
 sudo apt-get update
 sudo apt-get install numix-gtk-theme numix-icon-theme numix-icon-theme-square
+echo
 
 # TODO: Remove/uninstall packages that come with (L)ubuntu that we don't want.
 
