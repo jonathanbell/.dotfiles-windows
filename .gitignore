@@ -7,3 +7,6 @@ id.*
 
 # Bash history.
 .bash_history
+
+# Testing
+test.ps1
