@@ -77,7 +77,7 @@ Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataC
 ### Devices, Power, and Startup                                                #
 ################################################################################
 
-Write-Host "Configuring Devices, Power, and Startup..." -ForegroundColor "Yellow"
+Write-Host "Configuring Startup..." -ForegroundColor "Yellow"
 
 # Sound: Disable Startup Sound
 Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "DisableStartupSound" 1
@@ -119,10 +119,10 @@ Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explo
 Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" "BingSearchEnabled" 0
 
 # Disable Cortana
-#Set-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows\Windows Search" "AllowCortana" 0
+Set-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows\Windows Search" "AllowCortana" 0
 
 # Show colors on Taskbar, Start, and SysTray: Disabled: 0, Taskbar, Start, & SysTray: 1, Taskbar Only: 2
-Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" "ColorPrevalence" 1
+Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" "ColorPrevalence" 0
 
 # Disable Recylce Bin Delete Confirmation Dialog
 Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" "ConfirmFileDelete" 0
@@ -341,16 +341,16 @@ Set-MpPreference -MAPSReporting 2
 ### MS Edge                                                                    #
 ################################################################################
 
-Write-Host "Configuring Internet Explorer..." -ForegroundColor "Yellow"
+Write-Host "Configuring Edge..." -ForegroundColor "Yellow"
 
 # Set home page to `about:blank` for faster loading
 Set-ItemProperty "HKCU:\Software\Microsoft\Internet Explorer\Main" "Start Page" "about:blank"
 
 # Disable 'Default Browser' check: "yes" or "no"
-#Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Internet Explorer\Main" "Check_Associations" "no"
+Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Internet Explorer\Main" "Check_Associations" "no"
 
-# Disable Password Caching [Disable Remember Password]
-#Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings" "DisablePasswordCaching" 1
+# Disable Password Caching
+Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings" "DisablePasswordCaching" 1
 
 ################################################################################
 ### Hyper                                                                      #
@@ -376,6 +376,7 @@ if (Test-Path "$HOME\.ssh\config") { Remove-Item "$HOME\.ssh\config" }
 New-Item -Path "$HOME\.ssh\config" -ItemType SymbolicLink -Value "$HOME\Dropbox\Sites\.ssh\config"
 
 # Bash, brought to you by Git!
+# The first time you open GitBash, it'll complain after linking .bashrc to the above location but after that, it'll calm down.
 if (Test-Path "$HOME\.bashrc") { Remove-Item "$HOME\.bashrc" }
 New-Item -Path "$HOME\.bashrc" -ItemType SymbolicLink -Value "$HOME\.dotfiles\bash\.bashrc"
 
@@ -394,7 +395,7 @@ git config --global core.attributesfile "$HOME\.dotfiles\git\.gitattributes_glob
 # http://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#Your-Identity
 git config --global user.name "Jonathan Bell"
 # https://gist.github.com/trey/2722934#bonus
-git config --global user.email jonathanbell.ca@gmail.com
+git config --global user.email "jonathanbell.ca@gmail.com"
 # Set VS Code as the core text editor.
 git config --global core.editor code
 # http://stackoverflow.com/q/3206843/1171790

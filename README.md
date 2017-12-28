@@ -1,6 +1,6 @@
 # .dotfiles
 
-These are my config files and setup procedures for a new computer. This is the Windows branch, so use these instructions on Windows. For Ubuntu, see the Ubuntu branch. Fork if you wish but know that some of these configurations are pretty personalized to me.
+These are my config files and setup procedures for a new Windows 10 computer. This is the Windows branch, so use these instructions on Windows. For Ubuntu, [see the Ubuntu branch](https://github.com/jonathanbell/.dotfiles/tree/ubuntu). Fork if you wish but know that some of these configurations are pretty personalized to me.
 
 Inspired by: <https://dotfiles.github.io/> and <https://github.com/jayharris/dotfiles-windows>
 
@@ -14,8 +14,8 @@ Inspired by: <https://dotfiles.github.io/> and <https://github.com/jayharris/dot
 1. [Install Git](https://git-scm.com/download/win)
 1. [Install Meld](http://meldmerge.org/)
    1. Set `meld` in your `PATH` (by editing your Enviroment Variables)
-1. [Install C++](https://www.microsoft.com/en-us/download/details.aspx?id=48145)
-1. [Install cUrl](https://curl.haxx.se/download.html)
+1. [Install 7-Zip](http://www.7-zip.org/download.html)
+1. [Install VLC](https://www.videolan.org/vlc/download-windows.html)
 1. [Install VS Code](https://code.visualstudio.com)
    1. [Install Settings Sync](https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync)
    1. Get Gist Token from secret hiding place
@@ -24,6 +24,16 @@ Inspired by: <https://dotfiles.github.io/> and <https://github.com/jayharris/dot
 1. [Enable the Linux Subsystem for Windows 10](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
    1. Restart computer
    1. From the Windows store, search for and install Ubuntu
+1. [Install C++](https://www.microsoft.com/en-us/download/details.aspx?id=48145)
+1. [Install cUrl](https://curl.haxx.se/download.html)
+1. Create `~/bin` and add that directory to your PATH enviroment variable, then place the following `.exe` files into `~/bin`
+   1. [FFMpeg](https://ffmpeg.zeranoe.com/builds/)
+   1. [youtube-dl](https://rg3.github.io/youtube-dl/download.html)
+   1. [gifsicle](https://eternallybored.org/misc/gifsicle/)
+1. Install `rsync` from storage into the `~/bin` directory
+1. [Instal ImageMagick](https://www.imagemagick.org/script/download.php)
+   1. Ensure that the "legacy" option is selected at install (this allows the use of `convert`)
+   1. Do not install `ffmpeg` since you installed it above.
 1. [Install Heroku Command Line](https://devcenter.heroku.com/articles/heroku-command-line#download-and-install)
 1. [Install NodeJS](https://nodejs.org/en/download/)
 1. Clone this repo into your home folder and checkout the `windows` branch: `cd ~ && git clone git@github.com:jonathanbell/.dotfiles.git && cd ~/.dotfiles && git checkout windows`
@@ -43,3 +53,8 @@ Post installation things to do (optional):
    1. Setup PHP ini file to display errors (`php --ini`)
    1. [Configure your hosts file](https://www.petri.com/easily-edit-hosts-file-windows-10) for local development
 1. [Install Composer](https://getcomposer.org/download/)
+
+## TODOs
+
+* Port this entire process over to [Chocolatey](https://chocolatey.org/packages)! See: <https://github.com/jayharris/dotfiles-windows/blob/master/deps.ps1>
+* Create PowerShell aliases: <https://github.com/jayharris/dotfiles-windows/blob/master/aliases.ps1>
