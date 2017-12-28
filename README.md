@@ -53,6 +53,8 @@ Post installation things to do (optional):
    1. Setup PHP ini file to display errors (`php --ini`)
    1. [Configure your hosts file](https://www.petri.com/easily-edit-hosts-file-windows-10) for local development
 1. [Install Composer](https://getcomposer.org/download/)
+1. Uninstall OneDrive
+1. Uninstall apps by right-clicking them in the Start Menu
 
 ## TODOs
 
