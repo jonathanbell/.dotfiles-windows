@@ -435,6 +435,22 @@ git config --global mergetool.meld.keepTemporaries false
 git config --global mergetool.keepTemporaries false
 
 ################################################################################
+### PowerShell                                                                 #
+################################################################################
+
+# Link Profile to the one inside this repo.
+if (Test-Path "$profile") { Remove-Item "$profile" }
+New-Item -Path "$profile" -ItemType SymbolicLink -Value "$HOME\.dotfiles\powershell\Microsoft.PowerShell_profile.ps1" -Force
+
+#
+# PowerShell Providers and modules:
+#
+
+# Emojis in PowerShell: https://artofshell.com/2016/04/emojis-in-powershell-yes/
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+Install-Module -Name Emojis -Scope CurrentUser -Force
+
+################################################################################
 ### Done! Holy shit!                                                           #
 ################################################################################
 
