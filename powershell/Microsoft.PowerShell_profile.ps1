@@ -19,7 +19,8 @@ function prompt {
 function meh() {
   # All emojis here: https://unicode.org/emoji/charts/full-emoji-list.html
   # Not all emojis listed above are supported in the module yet though..
-  $upsideDownFace = Get-Emoji 'UPSIDE-DOWN FACE'
+  #$upsideDownFace = Get-Emoji 'UPSIDE-DOWN FACE'
+  $upsideDownFace = Get-Emoji 'PERSON SHRUGGING'
   $upsideDownFace | Set-Clipboard
   Write-Host 'Upsidedown face copied to clipboard.' -foregroundcolor yellow
 }
