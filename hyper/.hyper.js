@@ -9,11 +9,10 @@ module.exports = {
     updateChannel: "stable",
 
     // default font size in pixels for all tabs
-    fontSize: 16,
+    fontSize: 14,
 
     // font family with optional fallbacks
-    fontFamily:
-      '"Source Code Pro", "Operator Mono", "Inconsolata for Powerline", monospace',
+    fontFamily: '"Source Code Pro", "Operator Mono", monospace',
 
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
     cursorColor: "rgba(248,28,229,0.8)",
@@ -81,45 +80,48 @@ module.exports = {
     // - Remove `--login` in shellArgs
     //
     // Bash on Windows
-    // - Example: `C:\\Windows\\System32\\bash.exe`
+    // - `C:\\Windows\\System32\\bash.exe`
     //
     // Powershell on Windows
-    // - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
+    // - `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
     //
     // GitBash on Windows
-    // - Example: `C:\\Program Files\\Git\\git-cmd.exe`
+    // - `C:\\Program Files\\Git\\git-cmd.exe`
+    //
+    // Default
+    // - `""`
     shell: "C:\\Program Files\\Git\\git-cmd.exe",
-    // shell: "",
 
     // for setting shell arguments (i.e. for using interactive shellArgs: ['-i'])
-    // by default ['--login'] will be used
     //
     // GitBash on Windows
-    // - Example: `shellArgs: ['--command=usr/bin/bash.exe', '-l', '-i']`
+    // - `["--command=usr/bin/bash.exe", "-l", "-i"]`
+    //
+    // Default
+    // - `["--login"]`
     shellArgs: ["--command=usr/bin/bash.exe", "-l", "-i"],
-    // shellArgs: ["--login"],
 
     // for environment variables
     //
     // GitBash on Windows
     // - Example: `env: { TERM: 'cygwin'}`
+    //
+    // Default
+    // - `{}`
     env: { TERM: "cygwin" },
-    // env: {},
 
     // set to false for no bell
     bell: "SOUND",
 
     // if true, selected text will automatically be copied to the clipboard
-    copyOnSelect: false
+    copyOnSelect: true,
 
     // if true, on right click selected text will be copied or pasted if no
     // selection is present (true by default on Windows)
-    // quickEdit: true
+    quickEdit: true
 
     // URL to custom bell
     // bellSoundURL: 'http://example.com/bell.mp3',
-
-    // for advanced config flags please refer to https://hyper.is/#cfg
   },
 
   // a list of plugins to fetch and install from npm
@@ -137,6 +139,6 @@ module.exports = {
 
   keymaps: {
     // Example
-    // 'window:devtools': 'cmd+alt+o',
+    // - `'window:devtools': 'cmd+alt+o',`
   }
 };
