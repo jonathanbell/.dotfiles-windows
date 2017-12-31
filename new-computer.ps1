@@ -12,6 +12,9 @@ Write-Host "Configuring the basic system my homie..." -ForegroundColor "Yellow"
 # Enable Developer Mode
 Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" "AllowDevelopmentWithoutDevLicense" 1
 
+# Enable Linux sub-system
+Enable-WindowsOptionalFeature -Online -All -FeatureName "Microsoft-Windows-Subsystem-Linux" -NoRestart -WarningAction SilentlyContinue | Out-Null
+
 ################################################################################
 ### Privacy                                                                    #
 ################################################################################
@@ -74,7 +77,7 @@ Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" "NumberOfSIUFInPeriod" 0
 Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" "AllowTelemetry" 1
 
 ################################################################################
-### Devices, Power, and Startup                                                #
+### Devices and Power                                                          #
 ################################################################################
 
 Write-Host "Configuring Startup..." -ForegroundColor "Yellow"
@@ -113,7 +116,7 @@ Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Cabin
 Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" "DisableThumbnailsOnNetworkFolders" 1
 
 # Enable small icons in Taskbar
-#Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" "TaskbarSmallIcons" 1
+Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" "TaskbarSmallIcons" 1
 
 # Disable Bing Search on Taskbar
 Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" "BingSearchEnabled" 0
@@ -149,10 +152,6 @@ Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\SettingSync\Gr
 ################################################################################
 
 Write-Host "Configuring Default Windows Applications..." -ForegroundColor "Yellow"
-
-# Uninstall 3D Builder
-#Get-AppxPackage "Microsoft.3DBuilder" -AllUsers | Remove-AppxPackage
-#Get-AppXProvisionedPackage -Online | Where DisplayNam -like "Microsoft.3DBuilder" | Remove-AppxProvisionedPackage -Online
 
 # Uninstall Bing Finance
 Get-AppxPackage "Microsoft.BingFinance" -AllUsers | Remove-AppxPackage
@@ -205,14 +204,6 @@ Get-AppXProvisionedPackage -Online | Where DisplayNam -like "Microsoft.Office.On
 # Uninstall People
 Get-AppxPackage "Microsoft.People" -AllUsers | Remove-AppxPackage
 Get-AppXProvisionedPackage -Online | Where DisplayNam -like "Microsoft.People" | Remove-AppxProvisionedPackage -Online
-
-# Uninstall Photos
-Get-AppxPackage "Microsoft.Windows.Photos" -AllUsers | Remove-AppxPackage
-Get-AppXProvisionedPackage -Online | Where DisplayNam -like "Microsoft.Windows.Photos" | Remove-AppxProvisionedPackage -Online
-
-# Uninstall Skype
-#Get-AppxPackage "Microsoft.SkypeApp" -AllUsers | Remove-AppxPackage
-#Get-AppXProvisionedPackage -Online | Where DisplayNam -like "Microsoft.SkypeApp" | Remove-AppxProvisionedPackage -Online
 
 # Uninstall SlingTV
 Get-AppxPackage "*.SlingTV" -AllUsers | Remove-AppxPackage
@@ -341,7 +332,7 @@ Set-MpPreference -MAPSReporting 2
 ### MS Edge                                                                    #
 ################################################################################
 
-Write-Host "Configuring Edge..." -ForegroundColor "Yellow"
+Write-Host "Configuring MS Edge..." -ForegroundColor "Yellow"
 
 # Set home page to `about:blank` for faster loading
 Set-ItemProperty "HKCU:\Software\Microsoft\Internet Explorer\Main" "Start Page" "about:blank"
@@ -390,9 +381,9 @@ if (Test-Path "$HOME\.gitignore_global") { Remove-Item "$HOME\.gitignore_global"
 git config --global core.excludesfile "$HOME\.dotfiles\git\.gitignore_global"
 if (Test-Path "$HOME\.gitattributes") { Remove-Item "$HOME\.gitattributes" }
 git config --global core.attributesfile "$HOME\.dotfiles\git\.gitattributes_global"
-# Using the --global option will write the values to a global file (~/.gitconfig).
+# Using the --global option will write the values to the global `.gitconfig` file (~/.gitconfig).
 # Alternatively, I guess we could syslink a .gitconfig file to a .gitconfig file in this repo (such as `.dotfiles/git/.gitgonfig`).
-# http://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#Your-Identity
+# However, this prevents absolute paths that get written to `.gitconfig` ending up in this repo.
 git config --global user.name "Jonathan Bell"
 # https://gist.github.com/trey/2722934#bonus
 git config --global user.email "jonathanbell.ca@gmail.com"
@@ -438,6 +429,8 @@ git config --global mergetool.keepTemporaries false
 ### PowerShell                                                                 #
 ################################################################################
 
+Write-Host "Configuring Powershell. You may be asked some questions..." -ForegroundColor "Yellow"
+
 # Link Profile to the one inside this repo.
 if (Test-Path "$profile") { Remove-Item "$profile" }
 New-Item -Path "$profile" -ItemType SymbolicLink -Value "$HOME\.dotfiles\powershell\Microsoft.PowerShell_profile.ps1" -Force
@@ -447,12 +440,48 @@ New-Item -Path "$profile" -ItemType SymbolicLink -Value "$HOME\.dotfiles\powersh
 #
 
 # Emojis in PowerShell: https://artofshell.com/2016/04/emojis-in-powershell-yes/
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Install-Module -Name Emojis -Scope CurrentUser -Force
+
+################################################################################
+### All the software! (Brought to you by Chocolatey)                           #
+################################################################################
+
+Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yellow"
+
+[string[]] $packages = 
+'meld', 
+'droidsansmono',
+'7zip',
+'SourceCodePro',
+'vlc', 
+'curl',
+'Wget',
+'ffmpeg',
+'youtube-dl',
+'gifsicle',
+'rsync',
+'imagemagick',
+'GoogleChrome',
+'nodejs',
+'heroku-cli',
+'pgadmin3',
+'FileOptimizer',
+'sqlite',
+'sqlitebrowser',
+'hyper';
+
+foreach ($package in $packages) {
+  choco install $package -y
+}
+
+Write-Host "Finished installing Chocolatey packages..." -ForegroundColor "Yellow"
 
 ################################################################################
 ### Done! Holy shit!                                                           #
 ################################################################################
 
-Write-Output ""
+refreshenv
+
+Write-Output ''
 Write-Output "All done! Please restart the computer in order for all of these changes to take effect."
+Write-Output ''
