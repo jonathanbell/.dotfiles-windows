@@ -1,4 +1,4 @@
-# SSH keys. Just in case... :)
+# SSH keys. Just in case... : )
 *.pub
 id_rsa
 *.ppk
@@ -7,6 +7,3 @@ id.*
 
 # Bash history.
 .bash_history
-
-# Testing
-test.ps1
