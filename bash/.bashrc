@@ -1,17 +1,13 @@
 #!/bin/bash
 
-# Check if Linux/Ubuntu.
-# if ! [ "$OSTYPE" = "linux-gnu" ]; then
-#   echo "***ALERT: Attempting to load your .bashrc on a non-Ubuntu/Linux system. Some things may not work well.***"
-#   echo
-# fi
-
-if [ "$OSTYPE" = "linux-gnu" ]; then
-  cd /mnt/c/Users/jonat/Dropbox/
+if [ "$OSTYPE" = "linux-gnu" ] && [ -d "/mnt/c/Users/jonat/Dropbox/Sites/" ]; then
+  # Assume we are using Bash inside Windows.
+  cd /mnt/c/Users/jonat/Dropbox/Sites/
 fi
 
 if [ "$OSTYPE" = "msys" ]; then
-  cd "$HOME/Dropbox/"
+  # Assume we are using Cygwin [inside GitBash]
+  cd "$HOME/Dropbox/Sites/"
 fi
 
 # ------------------------------------------------------------------------------
@@ -24,12 +20,12 @@ parse-git-branch() {
 }
 
 # Downloads mp3 audio file from YouTube video.
-# Requires youtube-dl: http://www.tecmint.com/install-youtube-dl-command-line-video-download-tool/
 yt-getaudio() {
   if [ $# -eq 0 ]; then
-    echo "Oops. Please enter a url. Usage: yt-getaudio <youtube-link>"
+    echo "Oops. Pass me a url."
+    echo "Usage: yt-getaudio <youtube-link>"
   else
-    echo "Starting YouTube download. Hit Enter after metadata added."
+    echo "Starting YouTube download. Hit Enter if prompted after metadata is added."
     # --audio-quality [0-9]; 0 is best, 9 is worst.
     youtube-dl --extract-audio --audio-format mp3 --audio-quality 1 --embed-thumbnail --add-metadata $1
   fi
@@ -38,38 +34,41 @@ yt-getaudio() {
 # Just a quick function to reduce an image's size in order to upload it faster or whatever.
 shrink-image() {
   if [ $# -eq 0 ]; then
-    echo "Oops. Please enter a filename. Usage: shrink-image <filename>"
+    echo "Oops. Please give me a filename."
+    echo "Usage: shrink-image <filename>"
   else
-    convert -resize 50% $1 $1
+    magick $1 -resize 50% $1
   fi
 }
 
 # Quickly resize an image to a given width.
 resize-image-width() {
   if [ $# -ne 2 ]; then
-    echo "Oops. Please enter filename and desired width. Usage: resize-image-width <filename> <width in pixels>"
+    echo "Oops. Please give me a filename and desired width."
+    echo "Usage: resize-image-width <filename> <width in pixels>"
   else
-    convert -resize $2 $1 $1
+    magick $1 -resize $2 $1
   fi
 }
 
 # Trim video to time parameters.
 trim-video() {
   if [ $# -ne 3 ]; then
-    echo "Ops. Please enter the new video start time and the total duration in seconds."
-    echo "Usage: trim-video <input_movie.mov> <time in seconds from start> <duration of new clip>"
+    echo "Ops. Please pass in the new video start time and the total duration in seconds."
+    echo "Usage: trim-video <input_movie.mov> <time in seconds from start> <duration of new clip in seconds>"
     echo 'Example: "trim-video myvideo.mov 3 10" Produces a 10 second video begining from 3 seconds inside of the original clip.'
   else
-    echo "Begining to trim video length..."
+    echo "Begining to trim video..."
     ffmpeg -i $1 -ss $2 -c copy -t $3 trimmed_$1
-    echo "Complete."
+    echo "Complete. Video trimmed."
   fi
 }
 
 # Turn that video into webm format and make a poster image for it!
 webmify() {
   if [ $# -eq 0 ]; then
-    echo "Oops. Please enter a filename. Usage: webmify <filename>"
+    echo "Oops. Please tell me the filename."
+    echo "Usage: webmify <filename>"
   else
     ffmpeg -i "$1" -vcodec libvpx -acodec libvorbis -isync -copyts -aq 80 -threads 3 -qmax 30 -y "$1.webm"
     ffmpeg -ss 00:00:15 -i "$1.webm" -vframes 1 -q:v 2 "$1.jpg"
@@ -127,7 +126,8 @@ gifify() {
     fi
     google-chrome "$1.gif"
   else
-    echo "Ops. Please enter a filename. Usage: gifify <input_movie.mov> [ --better | --best | --tumblr ]"
+    echo "Ops. Please enter a filename."
+    echo "Usage: gifify <input_movie.mov> [ --better | --best | --tumblr ]"
   fi
 }
 
@@ -176,41 +176,46 @@ lsfunctions() {
 # | Aliases
 # ------------------------------------------------------------------------------
 
-if [ "$OSTYPE" = "msys" ]; then
-
+if ! [ -d "/mnt/c/Users/jonat/Dropbox/Sites/" ]; then
   # Change directory to your dotfiles directory.
   alias dot="cd ~/.dotfiles"
-  # Change directory to your code notes && open them.
-  alias notes="cd ~/Dropbox/Notes && code ."
+  # Open your notes in code editor.
+  alias notes="code ~/Dropbox/Notes"
   # Dropbox directory. : )
   alias d="cd ~/Dropbox"
   # Sites folder.
   alias s="cd ~/Dropbox/Sites"
-
 fi
 
-# For when you make the typ-o that you *will* make.
-alias cd..="cd .."
-alias ..="cd .."
-alias ...="cd ../../../"
-
-# Run personal backup script.
-#alias backup="~/Dropbox/Documents/personal-backup-script.bash"
+if [ "$OSTYPE" = "msys" ]; then
+  # Personal backup script.
+  alias backup="~/Dropbox/Documents/personal-backup-script.bash"
+fi
 
 if [ "$OSTYPE" = "linux-gnu" ]; then
+  # Show diskspace usage on main volume.
+  alias diskspace="df -h | grep /dev/sda1"
+  # Shutdown.
+  alias done="sudo shutdown now"
+
+  # Edit hosts file quickly.
+  alias hosts="sudo nano /etc/hosts"
 
   # Update Ubuntu.
   alias updateubuntu="sudo apt-get update -y && sudo apt-get autoclean -y && sudo apt-get clean -y && sudo apt-get upgrade -y && sudo apt-get autoremove --purge -y"
-
-  # TODO: Make this work in Windows.
-  # Copy a shuggie guy to the clipboard.
-  # alias shruggie='printf "¯\_(ツ)_/¯" | xclip -selection c && echo "¯\_(ツ)_/¯"'
-  # alias smilely='printf "ツ" | xclip -selection c && echo "ツ"'
-
-  # Prep high-res images for upload to log.jonathanbell.ca or other blog-like things.
-  alias blogimages='echo "Converting images to lo-res..." && mkdir loRes > /dev/null 2>&1 && mogrify -resize 900 -quality 79 -path ./loRes *.jpg && echo "Done!"'
-
 fi
+
+# Prep high-res images for upload to log.jonathanbell.ca or other blog-like things.
+alias blogimages='echo "Converting images to lo-res..." && mkdir loRes > /dev/null 2>&1 && mogrify -resize 900 -quality 79 -path ./loRes *.jpg && echo "Done!"'
+
+# Copy a shuggie guy to the clipboard.
+alias shruggie='printf "¯\_(ツ)_/¯" > /dev/clipboard && echo "¯\_(ツ)_/¯"'
+alias smilely='printf "ツ" > /dev/clipboard && echo "ツ"'
+
+# For when you make that typ-o that you *will* make.
+alias cd..="cd .."
+alias ..="cd .."
+alias ...="cd ../../../"
 
 # Quickly clear the Terminal window.
 alias c="clear"
@@ -223,7 +228,7 @@ alias gitlog="git log --graph --oneline --all --decorate"
 alias lazycommit="git add . && git commit -a --allow-empty-message -m '' && git push"
 
 # Add a WTFP Licence to a directory/project.
-#alias addwtfpl="wget -O LICENCE http://www.wtfpl.net/txt/copying/"
+alias addwtfpl="wget -O LICENCE http://www.wtfpl.net/txt/copying/"
 
 # ------------------------------------------------------------------------------
 # | Colorize Things
@@ -235,14 +240,29 @@ export PS1="\[$(tput bold)\]\[\033[31m\]→ \[\033[0m\]\[\033[105m\]\$(parse-git
 # Colorize 'grep'.
 alias grep='grep --color=auto'
 
+# Colors to differentiate various file types with 'ls'.
+alias ls="command ls --color"
+export LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:"
+
+# ------------------------------------------------------------------------------
+# | Git
+# ------------------------------------------------------------------------------
+
+# Don't prompt for merge_msg in Git.
+export GIT_MERGE_AUTOEDIT=no
+
 # ------------------------------------------------------------------------------
 # | Misc
 # ------------------------------------------------------------------------------
 
+# Update window size after every command.
+shopt -s checkwinsize
+
 # Add tab completion for SSH hostnames based on ~/.ssh/config (ignoring wildcards).
-if [ "$OSTYPE" = "msys" ]; then
-  [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
-fi
+[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
+
+# Automatically trim long paths in the prompt (requires Bash 4.x)
+#PROMPT_DIRTRIM=2
 
 # Autocorrect typos in path names when using 'cd'.
 shopt -s cdspell
@@ -300,9 +320,9 @@ bind "set show-all-if-ambiguous on"
 bind "set mark-symlinked-directories on"
 
 # Change the title of the Bash terminal to show the User@Hostname connection.
-PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
+#PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
 
-# Show a random quote at Bash startup.
-if [ "$OSTYPE" = "msys" ]; then
+if ! [ -d "/mnt/c/Users/jonat/" ]; then
+  # Show a random quote at Bash startup.
   echo $(shuf -n 1 "$HOME/.dotfiles/bash/quotes.txt")
 fi

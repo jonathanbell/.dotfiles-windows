@@ -15,8 +15,13 @@ if ([Environment]::OSVersion.Platform -eq 'Win32NT') {
 }
 
 # ------------------------------------------------------------------------------
-# | Prompt with Git branch
+# | Git and the PowerShell prompt
 # ------------------------------------------------------------------------------
+
+# This helps with SSH'ing to a Git server.
+# However, I can't get it to listing to my ~/.ssh/config file. 
+# So, for now, it is commented out.
+#Import-Module posh-git
 
 function Write-BranchName () {
   try {
