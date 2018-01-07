@@ -17,7 +17,7 @@ Inspired by: <https://dotfiles.github.io/> and <https://github.com/jayharris/dot
    1. Get Gist Token from secret hiding place
    1. Type `sync` in the Command Palette in VS Code and copy/paste your GitHub token and Gist ID
    1. Wait for all your extensions and themes to sync up and then close VS Code
-1. Using GitBash, clone this repo into your home folder: `cd ~ && git clone git@github.com:jonathanbell/.dotfiles.git && cd ~/.dotfiles && git checkout windows`
+1. Using GitBash, clone this repo into your home folder: `cd ~ && git clone git@github.com:jonathanbell/.dotfiles.git && cd ~/.dotfiles`
 
 ### Run the `new-computer.ps1` script
 
@@ -33,7 +33,6 @@ The following installations require special params during installation thus they
 
 1. [Install Ubuntu](https://www.microsoft.com/en-CA/store/p/ubuntu/9nblggh4msv6?rtc=1) from the Windows App Store
 1. Open Bash (in Windows 10) and symlink Ubuntu's `.bashrc` to the `.bashrc` in this repo. It'll be something like: `ln -s /mnt/c/Users/jonat/.dotfiles/bash/.bashrc /home/jonathan/.bashrc`
-1. [Install Ruby](https://chocolatey.org/packages/ruby)
 1. Install Photoshop manually
 1. Install Lightroom manually
 1. Install Premier manually
@@ -45,9 +44,8 @@ The following installations require special params during installation thus they
 1. Install Lubuntu
 1. [Install Dropbox](https://www.linuxbabe.com/cloud-storage/install-dropbox-ubuntu-16-04)
 1. Setup SSH keys
-   * Copy (or [generate](https://help.github.com/articles/generating-ssh-keys/)) server keys from your secret hiding place to ~/.ssh (example: `cd secret/path && cp id_rsa ~/ssh/id_rsa`)
-   * Ensure correct permissions on your .ssh directory and your keys: `chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa`
-   * For help with GitHub SSH keys see: [https://help.github.com/articles/generating-ssh-keys/](https://help.github.com/articles/generating-ssh-keys/)
+   1. Copy (or [generate](https://help.github.com/articles/generating-ssh-keys/)) server keys from your secret hiding place to ~/.ssh (example: `cd secret/path && cp id_rsa ~/ssh/id_rsa`)
+   1. Ensure correct permissions on your .ssh directory and your keys: `chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa` For help with GitHub SSH keys see: [https://help.github.com/articles/generating-ssh-keys/](https://help.github.com/articles/generating-ssh-keys/)
 1. Install Git: `sudo apt-get install git`
 1. [Install VS Code](https://code.visualstudio.com/docs/setup/linux)
 1. Clone this repo into your home folder: `cd ~ && git clone git@github.com:jonathanbell/.dotfiles.git && cd ~/.dotfiles`
@@ -75,17 +73,38 @@ cd ~/.dotfiles && chmod +x new-computer.bash
 
 Run the `git-config.bash` script with Git Bash on Windows or Bash on Ubuntu: `chmod +x ~/.dotfiles/git/git-config.bash && ~/.dotfiles/git/git-config.bash`
 
-### Install Apache, PHP, MySQL and Composer
+### Config Apache, PHP, MySQL
 
-1. Install Apache
-   * [Windows](https://chocolatey.org/packages/apache-httpd): `choco install apache-httpd --params '"/installLocation:C:\HTTPD /port:433"'`
-   * [Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04): `sudo apt-get install apache2`
-1. Install PHP (`php --ini` displays current PHP configuration)
-   * [Windows](https://chocolatey.org/packages/php): `choco install php --params '"/ThreadSafe ""/InstallDir:C:\PHP"""'`
-   * [Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04): `sudo apt-get install php libapache2-mod-php php-mcrypt php-mysql`
-1. Install MySQL
-   * [Windows](https://chocolatey.org/packages/mysql): `choco install mysql`
-   * [Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04): `sudo apt-get install mysql-server`
-1. Install Composer
-   * [Windows](https://chocolatey.org/packages/composer): `choco install composer`
-   * [Ubuntu](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
+#### Apache
+
+Make these changes to `httpd.conf`:
+
+1. [`Listen 127.0.0.1:8080`](https://serverfault.com/a/276968/325456)
+1. `ServerName localhost:8080`
+1. Edit `DocumentRoot` section and the first `<Directory>` entry to point to your projects root folder.
+1. Make sure this line is uncommented: `Include conf/extra/httpd-vhosts.conf`
+1. Ensure `DirectoryIndex` has `index.php` as a value
+1. [_Windows_](https://brian.teeman.net/joomla/install-amp-on-windows-with-chocolatey): Copy/paste the following code block to the bottom of `httpd.conf` in order to ensure that Apache calls PHP when a request is made.
+
+```apache
+AddHandler application/x-httpd-php .php
+AddType application/x-httpd-php .php .html
+LoadModule php7_module "C:/tools/php72/php7apache2_4.dll"
+PHPIniDir "C:/tools/php72"
+```
+
+Then:
+
+1. Add your virtual hosts to `httpd-vhosts.conf` (See `Sites` folder for a list)
+1. Edit your `hosts` file (_Windows_: `C:\Windows\System32\drivers\etc\hosts`; _Linux_: `/etc/hosts`)
+
+#### PHP
+
+`php --ini` displays the current PHP configuration (`.ini`) file and `php -m` will show you all of the loaded modules.
+
+#### MySQL
+
+1. [Set the root password for MySQL](https://brian.teeman.net/joomla/install-amp-on-windows-with-chocolatey)
+   1. Logon to MySQL: `mysql -u root`
+   1. Once logged in, set the root password: `ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';`
+1. Log into MySQL again (`mysql -u root -p`) in order to confirm that everything is running as expected (`show databases`).

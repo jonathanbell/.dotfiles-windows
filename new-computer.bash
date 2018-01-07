@@ -80,6 +80,11 @@ PACKAGES=(
   ruby
   rubygems
   python-pip
+  apache2
+  php
+  libapache2-mod-php
+  php-mcrypt
+  php-mysql
 )
 
 for i in "${PACKAGES[@]}"

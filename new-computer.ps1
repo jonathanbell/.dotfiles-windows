@@ -41,7 +41,7 @@ Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Input\TIPC" "Enabled" 0
 # Disable SmartGlass over BlueTooth: Enable: 1, Disable: 0
 #Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\SmartGlass" "BluetoothPolicy" 0
 
-# Don't let apps access notifications (Build 1607): Allow, Deny 
+# Don't let apps access notifications (Build 1607): Allow, Deny
 #Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{52079E78-A92B-413F-B213-E8FE35712E72}" "Value" "Deny"
 
 # Contacts: Don't let apps access contacts: Allow, Deny
@@ -329,6 +329,21 @@ Write-Host "Configuring Windows Defender..." -ForegroundColor "Yellow"
 Set-MpPreference -MAPSReporting 2
 
 ################################################################################
+### OneDrive Removal                                                           #
+################################################################################
+
+#taskkill /f /im OneDrive.exe
+Stop-Process -processname OneDrive, onedrive, 'Microsoft OneDrive' -ErrorAction SilentlyContinue
+& 'C:\Windows\SysWOW64\OneDriveSetup.exe' /uninstall
+Remove-Item -Recurse -Force $env:APPDATA'\Microsoft\OneDrive' -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force $env:USERPROFILE'\OneDrive' -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force $env:PROGRAMDATA'\Microsoft OneDrive' -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force 'C:\OneDriveTemp' -ErrorAction SilentlyContinue
+
+Remove-Item -Path 'HKCU:/CLSID/{018D5C66-4533-4307-9B53-224DE2ED1FE6}' -ErrorAction SilentlyContinue
+Remove-Item -Path 'HKCU:/Wow6432Node/CLSID/{018D5C66-4533-4307-9B53-224DE2ED1FE6}' -ErrorAction SilentlyContinue
+
+################################################################################
 ### MS Edge                                                                    #
 ################################################################################
 
@@ -362,9 +377,6 @@ New-Item -Path "$HOME\.hyper.js" -ItemType SymbolicLink -Value "$HOME\.dotfiles\
 
 Write-Host "Configuring Git and Meld..." -ForegroundColor "Yellow"
 
-# SSH configuration
-Install-Module Posh-SSH
-Install-Module posh-git
 if (Test-Path "$HOME\.ssh\config") { Remove-Item "$HOME\.ssh\config" }
 New-Item -Path "$HOME\.ssh\config" -ItemType SymbolicLink -Value "$HOME\Dropbox\Sites\.ssh\config"
 
@@ -406,18 +418,19 @@ Install-Module -Name Emojis -Scope CurrentUser -Force
 
 Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yellow"
 
-[string[]] $packages = 
-'meld', 
+[string[]] $packages =
+'meld',
 'droidsansmono',
 '7zip',
 'SourceCodePro',
-'vlc', 
+'vlc',
 'curl',
 'Wget',
 'ffmpeg',
 'youtube-dl',
 'gifsicle',
 'rsync',
+'ruby',
 'imagemagick',
 'GoogleChrome',
 'nodejs',
@@ -426,10 +439,48 @@ Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yel
 'FileOptimizer',
 'sqlite',
 'sqlitebrowser',
-'hyper';
+'hyper',
+'mysql',
+'apache-httpd';
 
 foreach ($package in $packages) {
   choco install $package -y
+}
+
+choco install php -y --params '"/ThreadSafe"'
+
+refreshenv
+
+choco install composer -y
+
+refreshenv
+
+Copy-Item "C:\tools\php72\php.ini" "C:\tools\php72\php.ini.bak"
+
+# https://brian.teeman.net/joomla/install-amp-on-windows-with-chocolatey
+(Get-Content "C:\tools\php72\php.ini").replace('date.timezone = UTC', 'date.timezone = "America/Los_Angele
+s"') | Set-Content "C:\tools\php72\php.ini"
+(Get-Content "C:\tools\php72\php.ini").replace('memory_limit = 128M', 'memory_limit = 512M') | Set-Content "C:\tools\php72\php.ini"
+(Get-Content "C:\tools\php72\php.ini").replace('upload_max_filesize = 2M', 'upload_max_filesize = 16M') | Set-Content "C:\tools\php72\php.ini"
+(Get-Content "C:\tools\php72\php.ini").replace('display_errors = Off', 'display_errors = On') | Set-Content "C:\tools\php72\php.ini"
+(Get-Content "C:\tools\php72\php.ini").replace('display_startup_errors = Off', 'display_startup_errors = On') | Set-Content "C:\tools\php72\php.ini"
+(Get-Content "C:\tools\php72\php.ini").replace('post_max_size = 8M', 'post_max_size = 16M') | Set-Content "C:\tools\php72\php.ini"
+
+[string[]] $extensions =
+'curl',
+'gd2',
+'fileinfo',
+'mbstring',
+'exif',
+'mysqli',
+'pdo_mysql',
+'pdo_sqlite',
+'pdo_pgsql',
+'sqlite3',
+'openssl';
+
+foreach ($extension in $extensions) {
+  (Get-Content "C:\tools\php72\php.ini").replace(";extension=$extension", "extension=$extension") | Set-Content "C:\tools\php72\php.ini"
 }
 
 Write-Host "Finished installing Chocolatey packages..." -ForegroundColor "Yellow"

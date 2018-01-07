@@ -1,13 +1,6 @@
-﻿# Ensure UTF-8 encoding
+# Ensure UTF-8 encoding
 # https://stackoverflow.com/a/48029600/1171790
 $PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'
-#$OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
-
-# This file's encoding is UTF-8 with BOM
-# Why? https://stackoverflow.com/questions/48016113/how-to-pass-utf-8-characters-to-clip-exe-with-powershell-without-conversion-to-a/48017565#comment83004132_48016113
-
-# When you update to PowerShell version 6, change the encoding of this file to UTF-8 *without* BOM:
-# https://stackoverflow.com/a/40098904/1171790
 
 # Check if script is running on Windows
 if ([Environment]::OSVersion.Platform -eq 'Win32NT') {
@@ -17,11 +10,6 @@ if ([Environment]::OSVersion.Platform -eq 'Win32NT') {
 # ------------------------------------------------------------------------------
 # | Git and the PowerShell prompt
 # ------------------------------------------------------------------------------
-
-# This helps with SSH'ing to a Git server.
-# However, I can't get it to listing to my ~/.ssh/config file. 
-# So, for now, it is commented out.
-#Import-Module posh-git
 
 function Write-BranchName () {
   try {
@@ -45,7 +33,7 @@ function Write-BranchName () {
 }
 
 function prompt {
-  $base = '→ ' # Base promt string
+  $base = 'PS ' # Base promt string
   $path = (Get-Item -Path ".\" -Verbose).Name
   $userPrompt = "$(' $' * ($nestedPromptLevel + 1)) "
 
@@ -55,14 +43,15 @@ function prompt {
   if (Test-Path .git) {
     Write-BranchName
   }
-  
+
   Write-Host $path -NoNewline -ForegroundColor 'Cyan'
 
   return $userPrompt
 }
 
 # ------------------------------------------------------------------------------
-# | Functions
+# | Functions and Aliases
+# | https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/set-alias?view=powershell-5.1
 # ------------------------------------------------------------------------------
 
 function shruggie() {
@@ -72,6 +61,15 @@ function shruggie() {
   $outputEmoji = Get-Emoji 'PERSON SHRUGGING'
   $outputEmoji | Set-Clipboard
   Write-Host '*shrug*'
+}
+
+function restartapache() {
+  if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -Command `"net stop Apache; net start Apache;`"" -Verb RunAs
+    # Backtick usage above: https://stackoverflow.com/a/18313593/1171790
+    # Use `-NoExit` param above if you don't want the PowerShell window to close automatically.
+    exit
+  }
 }
 
 # ------------------------------------------------------------------------------

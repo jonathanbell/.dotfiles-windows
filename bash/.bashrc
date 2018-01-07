@@ -1,14 +1,23 @@
 #!/bin/bash
 
-if [ "$OSTYPE" = "linux-gnu" ] && [ -d "/mnt/c/Users/jonat/Dropbox/Sites/" ]; then
+# TODO:
+# 1. Tidy: Use correct single/double quotes in this file.
+
+windowsC='/mnt/c/'
+
+# Assume we are using a Linux only computer.
+startDir="$HOME/Dropbox/"
+
+if [ "$OSTYPE" = 'linux-gnu' ] && [ -d $windowsC ]; then
   # Assume we are using Bash inside Windows.
-  cd /mnt/c/Users/jonat/Dropbox/Sites/
+  startDir="${windowsC}Users/jonat/Dropbox/"
 fi
 
-if [ "$OSTYPE" = "msys" ]; then
-  # Assume we are using Cygwin [inside GitBash]
-  cd "$HOME/Dropbox/Sites/"
-fi
+# if [ "$OSTYPE" = 'msys' ]; then
+#   # Assume we are using Cygwin [inside GitBash].
+# fi
+
+cd "${startDir}Sites/"
 
 # ------------------------------------------------------------------------------
 # | Functions
@@ -72,7 +81,15 @@ webmify() {
   else
     ffmpeg -i "$1" -vcodec libvpx -acodec libvorbis -isync -copyts -aq 80 -threads 3 -qmax 30 -y "$1.webm"
     ffmpeg -ss 00:00:15 -i "$1.webm" -vframes 1 -q:v 2 "$1.jpg"
-    # google-chrome "$1.webm"
+
+    if [ "$OSTYPE" = "msys" ]; then
+      start chrome "$1.webm"
+    fi
+
+    if [ "$OSTYPE" = "linux-gnu" ]; then
+      google-chrome "$1.webm"
+    fi
+
   fi
 }
 
@@ -131,28 +148,6 @@ gifify() {
   fi
 }
 
-if [ "$OSTYPE" = "linux-gnu" ]; then
-
-  # List all PPA's (third-party packages) installed on the system.
-  listppa() {
-    echo
-    echo "Installed PPAs:"
-    echo "==============="
-    echo
-    for APT in `find /etc/apt/ -name \*.list`; do
-      grep -o "^deb http://ppa.launchpad.net/[a-z0-9\-]\+/[a-z0-9\-]\+" $APT | while read ENTRY; do
-        USER=`echo $ENTRY | cut -d/ -f4`
-        PPA=`echo $ENTRY | cut -d/ -f5`
-        echo $USER/$PPA
-      done
-    done
-    echo
-    echo "To remove a PPA do: sudo add-apt-repository --remove ppa:<USER>/<PPA>"
-    echo
-  }
-
-fi
-
 # List available aliases.
 lsaliases() {
   echo
@@ -172,11 +167,34 @@ lsfunctions() {
   echo
 }
 
+if [ "$OSTYPE" = "linux-gnu" ]; then
+
+  # List all PPA's (third-party packages) installed on the system.
+  listppa() {
+    echo
+    echo "Installed PPAs:"
+    echo "==============="
+    echo
+    for APT in `find /etc/apt/ -name \*.list`; do
+      grep -o "^deb http://ppa.launchpad.net/[a-z0-9\-]\+/[a-z0-9\-]\+" $APT | while read ENTRY; do
+        USER=`echo $ENTRY | cut -d/ -f4`
+        PPA=`echo $ENTRY | cut -d/ -f5`
+        echo $USER/$PPA
+      done
+    done
+    echo
+    echo 'To remove a PPA do: sudo add-apt-repository --remove ppa:<USER>/<PPA>'
+    echo
+  }
+
+fi
+
 # ------------------------------------------------------------------------------
 # | Aliases
 # ------------------------------------------------------------------------------
 
-if ! [ -d "/mnt/c/Users/jonat/Dropbox/Sites/" ]; then
+if ! [ -d $windowsC ]; then
+
   # Change directory to your dotfiles directory.
   alias dot="cd ~/.dotfiles"
   # Open your notes in code editor.
@@ -185,25 +203,50 @@ if ! [ -d "/mnt/c/Users/jonat/Dropbox/Sites/" ]; then
   alias d="cd ~/Dropbox"
   # Sites folder.
   alias s="cd ~/Dropbox/Sites"
+
 fi
 
-if [ "$OSTYPE" = "msys" ]; then
-  # Personal backup script.
-  alias backup="~/Dropbox/Documents/personal-backup-script.bash"
+if [ "$OSTYPE" = "msys" ] && ! [ -d $windowsC ]; then
+
+  # Restart Apache.
+  alias restartapache='powershell restartapache'
+  # Configure VirtualHosts.
+  alias configvhosts="code $HOME/AppData/Roaming/Apache24/conf/extra/httpd-vhosts.conf"
+  # Configure httpd.conf.
+  alias configapache="code $HOME/AppData/Roaming/Apache24/conf/httpd.conf"
+
+  # Edit hosts file quickly.
+  alias hosts='start chrome "https://support.rackspace.com/how-to/modify-your-hosts-file/#windows"'
+
+  # Show diskspace usage on main volume.
+  alias diskspace="df -h"
+
 fi
 
 if [ "$OSTYPE" = "linux-gnu" ]; then
-  # Show diskspace usage on main volume.
-  alias diskspace="df -h | grep /dev/sda1"
-  # Shutdown.
-  alias done="sudo shutdown now"
+
+  # Restart Apache.
+  alias restartapache='echo "TODO: Add restartapache instructions for Linux/Ubuntu."'
+  # Configure VirtualHosts
+  alias configvhosts='echo "TODO: Add configvhosts instructions for Linux/Ubuntu."'
+  # Configure httpd.conf.
+  alias configapache='echo "TODO: Add configapache instructions for Linux/Ubuntu."'
 
   # Edit hosts file quickly.
   alias hosts="sudo nano /etc/hosts"
 
+  # Show diskspace usage on main volume.
+  alias diskspace="df -h | grep /dev/sda1"
+
+  # Shutdown.
+  alias done="sudo shutdown now"
+
   # Update Ubuntu.
   alias updateubuntu="sudo apt-get update -y && sudo apt-get autoclean -y && sudo apt-get clean -y && sudo apt-get upgrade -y && sudo apt-get autoremove --purge -y"
+
 fi
+
+alias backup="${startDir}Documents/personal-backup-script.bash"
 
 # Prep high-res images for upload to log.jonathanbell.ca or other blog-like things.
 alias blogimages='echo "Converting images to lo-res..." && mkdir loRes > /dev/null 2>&1 && mogrify -resize 900 -quality 79 -path ./loRes *.jpg && echo "Done!"'
@@ -218,7 +261,7 @@ alias ..="cd .."
 alias ...="cd ../../../"
 
 # Quickly clear the Terminal window.
-alias c="clear"
+alias c='clear'
 # Minimal output at the command prompt.
 alias minterm="export PS1=\"\$ \""
 
@@ -234,15 +277,19 @@ alias addwtfpl="wget -O LICENCE http://www.wtfpl.net/txt/copying/"
 # | Colorize Things
 # ------------------------------------------------------------------------------
 
-# Colorize git branch and current directory in the command prompt.
-export PS1="\[$(tput bold)\]\[\033[31m\]→ \[\033[0m\]\[\033[105m\]\$(parse-git-branch)\[\033[0m\]\[$(tput bold)\]\[\033[36m\] \W\[\033[0m\] \[\033[2m\]$\[\033[0m\] "
+if ! [ -d $windowsC ]; then
+
+  # Colorize git branch and current directory in the command prompt.
+  export PS1="\[$(tput bold)\]\[\033[31m\]→ \[\033[0m\]\[\033[105m\]\$(parse-git-branch)\[\033[0m\]\[$(tput bold)\]\[\033[36m\] \W\[\033[0m\] \[\033[2m\]$\[\033[0m\] "
+
+  # Colors to differentiate various file types with 'ls'.
+  #alias ls="command ls --color"
+  export LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:"
+
+fi
 
 # Colorize 'grep'.
 alias grep='grep --color=auto'
-
-# Colors to differentiate various file types with 'ls'.
-alias ls="command ls --color"
-export LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:"
 
 # ------------------------------------------------------------------------------
 # | Git
@@ -255,17 +302,33 @@ export GIT_MERGE_AUTOEDIT=no
 # | Misc
 # ------------------------------------------------------------------------------
 
+#
+# Sensible Bash: https://github.com/mrzool/bash-sensible/blob/master/sensible.bash
+#
+
+if ((BASH_VERSINFO[0] < 4)); then
+  echo "Looks like you're running an older version of Bash."
+  echo "You need at least bash-4.0 or some options will not work correctly."
+  echo "Keep your software up-to-date, man!"
+fi
+
+# Automatically trim long paths in the prompt (requires Bash 4.x).
+PROMPT_DIRTRIM=2
+
+# Enable history expansion with space
+# E.g. typing !!<space> will replace the !! with your last command
+bind Space:magic-space
+
 # Update window size after every command.
 shopt -s checkwinsize
 
-# Add tab completion for SSH hostnames based on ~/.ssh/config (ignoring wildcards).
-[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
-
-# Automatically trim long paths in the prompt (requires Bash 4.x)
-#PROMPT_DIRTRIM=2
+if ! [ -d $windowsC ]; then
+  # Add tab completion for SSH hostnames based on ~/.ssh/config (ignoring wildcards).
+  [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
+fi
 
 # Autocorrect typos in path names when using 'cd'.
-shopt -s cdspell
+shopt -s cdspell 2> /dev/null
 
 # Prepend cd to directory names automatically.
 shopt -s autocd 2> /dev/null
@@ -319,10 +382,12 @@ bind "set show-all-if-ambiguous on"
 # Immediately add a trailing slash when autocompleting symlinks to directories.
 bind "set mark-symlinked-directories on"
 
-# Change the title of the Bash terminal to show the User@Hostname connection.
-#PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
+if [ "$OSTYPE" = 'linux-gnu' ]; then
+  # Change the title of the Bash terminal to show the User@Hostname connection.
+  PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
+fi
 
-if ! [ -d "/mnt/c/Users/jonat/" ]; then
+if ! [ -d $windowsC ]; then
   # Show a random quote at Bash startup.
   echo $(shuf -n 1 "$HOME/.dotfiles/bash/quotes.txt")
 fi
