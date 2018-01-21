@@ -36,6 +36,7 @@ The following installations require special params during installation thus they
 1. Install Photoshop manually
 1. Install Lightroom manually
 1. Install Premier manually
+1. [Install MovesLink](http://www.movescount.com/connect/download?type=moveslink) manually
 1. Uninstall OneDrive
 1. Uninstall unwanted apps by right-clicking them in the Start Menu
 

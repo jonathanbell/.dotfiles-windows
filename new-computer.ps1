@@ -413,7 +413,7 @@ New-Item -Path "$profile" -ItemType SymbolicLink -Value "$HOME\.dotfiles\powersh
 Install-Module -Name Emojis -Scope CurrentUser -Force
 
 ################################################################################
-### All the software! (Brought to you by Chocolatey)                           #
+### All the softwares! (Brought to you by Chocolatey)                          #
 ################################################################################
 
 Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yellow"
@@ -421,6 +421,7 @@ Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yel
 [string[]] $packages =
 'meld',
 'droidsansmono',
+'transmission',
 '7zip',
 'SourceCodePro',
 'vlc',
@@ -452,6 +453,10 @@ choco install php -y --params '"/ThreadSafe"'
 refreshenv
 
 choco install composer -y
+
+#
+# Now config PHP:
+#
 
 refreshenv
 
