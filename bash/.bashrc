@@ -60,6 +60,16 @@ resize-image-width() {
   fi
 }
 
+# Prep high-res images for upload to log.jonathanbell.ca or other blog-like things.
+blogimages() {
+  echo "Converting images to lo-res..."
+  for i in *.jpg; do
+    printf "Resizing $i\n"
+    magick $i -resize 900 $i
+  done
+  echo "Done."
+}
+
 # Trim video to time parameters.
 trim-video() {
   if [ $# -ne 3 ]; then
@@ -221,6 +231,11 @@ if [ "$OSTYPE" = "msys" ] && ! [ -d $windowsC ]; then
   # Show diskspace usage on main volume.
   alias diskspace="df -h"
 
+  UBUNTUHOMEDIR="/c/Users/$USERNAME/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/home/jonathan"
+
+  # Change directory to the Ubuntu user `jonathan` home directory.
+  alias ubuntuhome="echo \"Ubuntu home dir is: $UBUNTUHOMEDIR\" && cd $UBUNTUHOMEDIR"
+
 fi
 
 if [ "$OSTYPE" = "linux-gnu" ]; then
@@ -247,9 +262,6 @@ if [ "$OSTYPE" = "linux-gnu" ]; then
 fi
 
 alias backup="${startDir}Documents/personal-backup-script.bash"
-
-# Prep high-res images for upload to log.jonathanbell.ca or other blog-like things.
-alias blogimages='echo "Converting images to lo-res..." && mkdir loRes > /dev/null 2>&1 && mogrify -resize 900 -quality 79 -path ./loRes *.jpg && echo "Done!"'
 
 # Copy a shuggie guy to the clipboard.
 alias shruggie='printf "¯\_(ツ)_/¯" > /dev/clipboard && echo "¯\_(ツ)_/¯"'

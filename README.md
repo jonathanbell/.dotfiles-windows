@@ -39,6 +39,7 @@ The following installations require special params during installation thus they
 1. [Install MovesLink](http://www.movescount.com/connect/download?type=moveslink) manually
 1. Uninstall OneDrive
 1. Uninstall unwanted apps by right-clicking them in the Start Menu
+1. Setup SSH/Rsync on the Linux subsystem by copying your SSH config file to the home directory of your Linux subsytem. To find out that path, run `ubuntuhome` from the GitBash command line.
 
 ## (L)ubuntu
 

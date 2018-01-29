@@ -80,7 +80,7 @@ module.exports = {
     // - Remove `--login` in shellArgs
     //
     // Bash on Windows
-    // - `C:\\Windows\\System32\\bash.exe`
+    // - `ubuntu.exe`
     //
     // Powershell on Windows
     // - `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
@@ -94,6 +94,9 @@ module.exports = {
 
     // for setting shell arguments (i.e. for using interactive shellArgs: ['-i'])
     //
+    // Bash on Windows
+    // - `[]`
+    //
     // GitBash on Windows
     // - `["--command=usr/bin/bash.exe", "-l", "-i"]`
     //
@@ -103,8 +106,11 @@ module.exports = {
 
     // for environment variables
     //
+    // Bash on Windows
+    // - `{}`
+    //
     // GitBash on Windows
-    // - Example: `env: { TERM: 'cygwin'}`
+    // - `{ TERM: 'cygwin'}`
     //
     // Default
     // - `{}`
