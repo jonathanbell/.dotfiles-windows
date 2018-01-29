@@ -424,6 +424,7 @@ Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yel
 'transmission',
 '7zip',
 'SourceCodePro',
+'openssl.light',
 'filezilla',
 'vlc',
 'curl',
@@ -444,6 +445,7 @@ Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yel
 'sqlite',
 'sqlitebrowser',
 'awscli',
+'Firefox',
 'hyper',
 'mysql',
 'apache-httpd';
@@ -492,6 +494,18 @@ foreach ($extension in $extensions) {
   (Get-Content "C:\tools\php72\php.ini").replace(";extension=$extension", "extension=$extension") | Set-Content "C:\tools\php72\php.ini"
 }
 
+# Enable these Apache modules.
+[string[]] $modules =
+'expires',
+'rewrite';
+
+foreach ($module in $modules) {
+  (Get-Content "$env:USERPROFILE\AppData\Roaming\Apache24\conf\httpd.conf").replace("#LoadModule $module`_module modules/mod_$module.so", "LoadModule $module`_module modules/mod_$module.so") | Set-Content "$env:USERPROFILE\AppData\Roaming\Apache24\conf\httpd.conf"
+}
+
+(Get-Content "$env:USERPROFILE\AppData\Roaming\Apache24\conf\httpd.conf").replace("#Include conf/extra/httpd-vhosts.conf", "Include conf/extra/httpd-vhosts.conf") | Set-Content "$env:USERPROFILE\AppData\Roaming\Apache24\conf\httpd.conf"
+(Get-Content "$env:USERPROFILE\AppData\Roaming\Apache24\conf\httpd.conf").replace("#Include conf/extra/httpd-default.conf", "Include conf/extra/httpd-default.conf") | Set-Content "$env:USERPROFILE\AppData\Roaming\Apache24\conf\httpd.conf"
+
 Write-Host "Finished installing Chocolatey packages..." -ForegroundColor "Yellow"
 
 ################################################################################
@@ -501,5 +515,5 @@ Write-Host "Finished installing Chocolatey packages..." -ForegroundColor "Yellow
 refreshenv
 
 Write-Output ''
-Write-Output "All done! Please restart the computer in order for all of these changes to take effect."
+Write-Output "All done!!! Please restart the computer in order for all of these changes to take effect."
 Write-Output ''

@@ -83,10 +83,12 @@ Make these changes to `httpd.conf`:
 
 1. [`Listen 127.0.0.1:8080`](https://serverfault.com/a/276968/325456)
 1. `ServerName localhost:8080`
-1. Edit `DocumentRoot` section and the first `<Directory>` entry to point to your projects root folder.
+1. Edit `DocumentRoot` section and the first `<Directory>` entry to point to your projects root folder
 1. Make sure this line is uncommented: `Include conf/extra/httpd-vhosts.conf`
 1. Ensure `DirectoryIndex` has `index.php` as a value
+1. _Optional_: Ensure that `mod_rewrite` and `mod_expires` are enabled/uncommented in `httpd.conf`
 1. [_Windows_](https://brian.teeman.net/joomla/install-amp-on-windows-with-chocolatey): Copy/paste the following code block to the bottom of `httpd.conf` in order to ensure that Apache calls PHP when a request is made.
+1. [Setup localhost to use an SSL certificate](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-ubuntu-16-04)
 
 ```apache
 AddHandler application/x-httpd-php .php
@@ -95,10 +97,10 @@ LoadModule php7_module "C:/tools/php72/php7apache2_4.dll"
 PHPIniDir "C:/tools/php72"
 ```
 
-Then:
+##### And then...
 
-1. Add your virtual hosts to `httpd-vhosts.conf` (See `Sites` folder for a list)
-1. Edit your `hosts` file (_Windows_: `C:\Windows\System32\drivers\etc\hosts`; _Linux_: `/etc/hosts`)
+1. Add your virtual hosts to `httpd-vhosts.conf` (See `~/Dropbox/Sites` folder for a list)
+1. Edit your `hosts` file (_Windows_: `C:\Windows\System32\drivers\etc\hosts`; _Linux_: `/etc/hosts`) in order to point local dev sites to `127.0.0.1`
 
 #### PHP
 
