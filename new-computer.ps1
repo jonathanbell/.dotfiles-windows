@@ -490,6 +490,7 @@ s"') | Set-Content "C:\tools\php72\php.ini"
 'pdo_sqlite',
 'pdo_pgsql',
 'sqlite3',
+'ldap'
 'openssl';
 
 foreach ($extension in $extensions) {
