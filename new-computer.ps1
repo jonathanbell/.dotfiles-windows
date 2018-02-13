@@ -437,6 +437,8 @@ Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yel
 'rsync',
 'ruby',
 'imagemagick',
+'make',
+'cmake',
 'GoogleChrome',
 'nodejs',
 'heroku-cli',
