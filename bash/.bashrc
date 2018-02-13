@@ -235,6 +235,9 @@ if [ "$OSTYPE" = "msys" ] && ! [ -d $windowsC ]; then
 
   # Change directory to the Ubuntu user `jonathan` home directory.
   alias ubuntuhome="echo \"Ubuntu home dir is: $UBUNTUHOMEDIR\" && cd $UBUNTUHOMEDIR"
+  
+  # Serve a Jekyll site.
+  alias jekyllserve="bundle exec jekyll serve"
 
 fi
 
