@@ -380,15 +380,12 @@ Write-Host "Configuring Git and Meld..." -ForegroundColor "Yellow"
 if (Test-Path "$HOME\.ssh\config") { Remove-Item "$HOME\.ssh\config" }
 New-Item -Path "$HOME\.ssh\config" -ItemType SymbolicLink -Value "$HOME\Dropbox\Sites\.ssh\config"
 
-# Bash, brought to you by Git!
+# Bash, brought to you by GitBash!
 # The first time you open GitBash, it'll complain after linking .bashrc to the above location but after that, it'll calm down.
 if (Test-Path "$HOME\.bashrc") { Remove-Item "$HOME\.bashrc" }
 New-Item -Path "$HOME\.bashrc" -ItemType SymbolicLink -Value "$HOME\.dotfiles\bash\.bashrc"
 
-#
-# Git configuration:
-#
-
+# Git configuration
 if (Test-Path "$HOME\.gitignore_global") { Remove-Item "$HOME\.gitignore_global" }
 # Instead of syslinking the files, we simply tell git directly where our global config files are located.
 git config --global core.excludesfile "$HOME\.dotfiles\git\.gitignore_global"
