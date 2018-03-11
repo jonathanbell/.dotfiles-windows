@@ -72,8 +72,10 @@ module.exports = {
       lightWhite: "#ffffff"
     },
 
-    // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
-    // if left empty, your system's login shell will be used by default
+    // The shell to run when spawning a new session (i.e. /usr/local/bin/fish)
+    // If left empty, your system's login shell will be used by default
+    //
+    // See more about getting Hyper to work with GitBash on Windows here: https://gist.github.com/coco-napky/404220405435b3d0373e37ec43e54a23
     //
     // Windows
     // - Make sure to use a full path if the binary name doesn't work
