@@ -454,15 +454,23 @@ foreach ($package in $packages) {
   choco install $package -y
 }
 
+refreshenv
+
+#
+# Now config node:
+#
+
+npm install --global --production windows-build-tools
+
+#
+# Now config PHP:
+#
+
 choco install php -y --params '"/ThreadSafe"'
 
 refreshenv
 
 choco install composer -y
-
-#
-# Now config PHP:
-#
 
 refreshenv
 
