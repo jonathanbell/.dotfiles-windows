@@ -458,6 +458,7 @@ refreshenv
 'vagrant',
 'hyper',
 'mysql',
+# 'mysql.workbench',
 'apache-httpd';
 
 foreach ($package in $packages) {
