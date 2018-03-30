@@ -446,6 +446,8 @@ Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yel
 'sqlitebrowser',
 'awscli',
 'Firefox',
+'virtualbox',
+'vagrant',
 'hyper',
 'mysql',
 'apache-httpd';
