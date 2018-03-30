@@ -415,6 +415,14 @@ Install-Module -Name Emojis -Scope CurrentUser -Force
 
 Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yellow"
 
+choco install dotnet4.5 -y
+
+refreshenv
+
+choco install vcredist2015 -y
+
+refreshenv
+
 [string[]] $packages =
 'meld',
 'droidsansmono',
