@@ -415,6 +415,14 @@ Install-Module -Name Emojis -Scope CurrentUser -Force
 
 Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yellow"
 
+choco install dotnet4.5 -y
+
+refreshenv
+
+choco install vcredist2015 -y
+
+refreshenv
+
 [string[]] $packages =
 'meld',
 'droidsansmono',
@@ -446,23 +454,34 @@ Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yel
 'sqlitebrowser',
 'awscli',
 'Firefox',
+'virtualbox',
+'vagrant',
 'hyper',
 'mysql',
+# 'mysql.workbench',
 'apache-httpd';
 
 foreach ($package in $packages) {
   choco install $package -y
 }
 
+refreshenv
+
+#
+# Now config node:
+#
+
+npm install --global --production windows-build-tools
+
+#
+# Now config PHP:
+#
+
 choco install php -y --params '"/ThreadSafe"'
 
 refreshenv
 
 choco install composer -y
-
-#
-# Now config PHP:
-#
 
 refreshenv
 
