@@ -158,6 +158,19 @@ gifify() {
   fi
 }
 
+# Upload that file to https://s3-us-west-2.amazonaws.com/static-jonathanbell-ca/<filename>
+# Requires awscli be setup and configured.
+static() {
+  if [ $# -eq 0 ]; then
+    echo "Oops. Please give me a filename."
+    echo "Usage: static <filename>"
+  else
+    aws s3 cp $1 s3://static-jonathanbell-ca --acl public-read --cache-control max-age=7776000
+    printf "https://s3-us-west-2.amazonaws.com/static-jonathanbell-ca/$1" > /dev/clipboard
+    echo "File available at: https://s3-us-west-2.amazonaws.com/static-jonathanbell-ca/$1 (copied to clipboard)"
+  fi
+}
+
 # List available aliases.
 lsaliases() {
   echo
