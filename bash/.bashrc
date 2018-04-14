@@ -1,23 +1,20 @@
 #!/bin/bash
 
 # TODO:
-# 1. Tidy: Use correct single/double quotes in this file.
+# 1. Tidy up: Use correct single/double quotes in this file.
 
 windowsC='/mnt/c/'
-
-# Assume we are using a Linux only computer.
 startDir="$HOME/Dropbox/"
 
 if [ "$OSTYPE" = 'linux-gnu' ] && [ -d $windowsC ]; then
-  # Assume we are using Bash inside Windows.
+  # Assuming we are using Bash inside Windows.
   startDir="${windowsC}Users/jonat/Dropbox/"
+  cd "${startDir}Sites/"
 fi
 
 # if [ "$OSTYPE" = 'msys' ]; then
 #   # Assume we are using Cygwin [inside GitBash].
 # fi
-
-cd "${startDir}Sites/"
 
 # ------------------------------------------------------------------------------
 # | Functions

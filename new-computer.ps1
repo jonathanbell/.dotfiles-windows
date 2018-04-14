@@ -36,13 +36,10 @@ Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppHost" "Enab
 Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Input\TIPC" "Enabled" 0
 
 # Disable SmartGlass: Enable: 1, Disable: 0
-#Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\SmartGlass" "UserAuthPolicy" 0
+Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\SmartGlass" "UserAuthPolicy" 0
 
 # Disable SmartGlass over BlueTooth: Enable: 1, Disable: 0
-#Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\SmartGlass" "BluetoothPolicy" 0
-
-# Don't let apps access notifications (Build 1607): Allow, Deny
-#Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{52079E78-A92B-413F-B213-E8FE35712E72}" "Value" "Deny"
+Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\SmartGlass" "BluetoothPolicy" 0
 
 # Contacts: Don't let apps access contacts: Allow, Deny
 if (!(Test-Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{7D7E8402-7C54-4821-A34E-AEEFD62DED93}")) {New-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{7D7E8402-7C54-4821-A34E-AEEFD62DED93}" -Type Folder | Out-Null}
@@ -86,11 +83,8 @@ Write-Host "Configuring Startup..." -ForegroundColor "Yellow"
 Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "DisableStartupSound" 1
 Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation" "DisableStartupSound" 1
 
-# Power: Disable Hibernation
-#powercfg /hibernate off
-
-# Power: Set standby delay to 24 hours
-#powercfg /change /standby-timeout-ac 1440
+# Power: Set standby delay to 1 hour
+powercfg /change /standby-timeout-ac 60
 
 ################################################################################
 ### Explorer, Taskbar, and System Tray                                         #
@@ -253,17 +247,6 @@ if (!(Test-Path "HKLM:\Software\Policies\Microsoft\Windows\CloudContent")) {New-
 Set-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows\CloudContent" "DisableWindowsConsumerFeatures" 1
 
 ################################################################################
-### Lock Screen                                                                #
-################################################################################
-
-#Write-Host "Configuring Lock Screen..." -ForegroundColor "Yellow"
-
-# Enable Custom Background on the Login / Lock Screen
-# Example background file: C:\someDirectory\someImage.jpg
-# File Size Limit: 256Kb
-#Set-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows\Personalization" "LockScreenImage" "C:\someDirectory\someImage.jpg"
-
-################################################################################
 ### Accessibility and Ease of Use                                              #
 ################################################################################
 
@@ -332,7 +315,6 @@ Set-MpPreference -MAPSReporting 2
 ### OneDrive Removal                                                           #
 ################################################################################
 
-#taskkill /f /im OneDrive.exe
 Stop-Process -processname OneDrive, onedrive, 'Microsoft OneDrive' -ErrorAction SilentlyContinue
 & 'C:\Windows\SysWOW64\OneDriveSetup.exe' /uninstall
 Remove-Item -Recurse -Force $env:APPDATA'\Microsoft\OneDrive' -ErrorAction SilentlyContinue
