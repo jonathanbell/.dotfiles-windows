@@ -82,7 +82,7 @@ module.exports = {
     // - Remove `--login` in shellArgs
     //
     // Bash on Windows
-    // - `ubuntu.exe`
+    // - `ubuntu.exe` || `C:\\Windows\\System32\\bash.exe`
     //
     // Powershell on Windows
     // - `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
@@ -94,10 +94,10 @@ module.exports = {
     // - `""`
     shell: "C:\\Program Files\\Git\\git-cmd.exe",
 
-    // for setting shell arguments (i.e. for using interactive shellArgs: ['-i'])
+    // For setting shell arguments (i.e. for using interactive shellArgs: ['-i'])
     //
-    // Bash on Windows
-    // - `[]`
+    // Bash/Ubuntu on Windows
+    // - `[]` || ["-i"]
     //
     // GitBash on Windows
     // - `["--command=usr/bin/bash.exe", "-l", "-i"]`
@@ -106,7 +106,7 @@ module.exports = {
     // - `["--login"]`
     shellArgs: ["--command=usr/bin/bash.exe", "-l", "-i"],
 
-    // for environment variables
+    // For environment variables
     //
     // Bash on Windows
     // - `{}`
@@ -138,10 +138,7 @@ module.exports = {
   //   `hyperpower`
   //   `@company/project`
   //   `project#1.0.1`
-  plugins: [
-    "hyperterm-cobalt2-theme",
-    "hypercwd"
-  ],
+  plugins: ["hyperterm-cobalt2-theme", "hypercwd"],
 
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
