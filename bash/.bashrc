@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# TODO:
-# 1. Tidy up: Use correct single/double quotes in this file.
-
 windowsC='/mnt/c/'
 startDir="$HOME/Dropbox/"
 
@@ -28,10 +25,10 @@ parse-git-branch() {
 # Downloads mp3 audio file from YouTube video.
 yt-getaudio() {
   if [ $# -eq 0 ]; then
-    echo "Oops. Pass me a url."
-    echo "Usage: yt-getaudio <youtube-link>"
+    echo 'Oops. Pass me a url.'
+    echo 'Usage: yt-getaudio <youtube-link>'
   else
-    echo "Starting YouTube download. Hit Enter if prompted after metadata is added."
+    echo 'Starting YouTube download. Hit Enter if prompted after metadata is added.'
     # --audio-quality [0-9]; 0 is best, 9 is worst.
     youtube-dl --extract-audio --audio-format mp3 --audio-quality 1 --embed-thumbnail --add-metadata $1
   fi
@@ -40,8 +37,8 @@ yt-getaudio() {
 # Just a quick function to reduce an image's size in order to upload it faster or whatever.
 shrink-image() {
   if [ $# -eq 0 ]; then
-    echo "Oops. Please give me a filename."
-    echo "Usage: shrink-image <filename>"
+    echo 'Oops. Please give me a filename.'
+    echo 'Usage: shrink-image <filename>'
   else
     magick $1 -resize 50% $1
   fi
@@ -50,8 +47,8 @@ shrink-image() {
 # Quickly resize an image to a given width.
 resize-image-width() {
   if [ $# -ne 2 ]; then
-    echo "Oops. Please give me a filename and desired width."
-    echo "Usage: resize-image-width <filename> <width in pixels>"
+    echo 'Oops. Please give me a filename and desired width.'
+    echo 'Usage: resize-image-width <filename> <width in pixels>'
   else
     magick $1 -resize $2 $1
   fi
@@ -59,32 +56,32 @@ resize-image-width() {
 
 # Prep high-res images for upload to log.jonathanbell.ca or other blog-like things.
 blogimages() {
-  echo "Converting images to lo-res..."
+  echo 'Converting images to lo-res...'
   for i in *.jpg; do
     printf "Resizing $i\n"
     magick $i -resize 900 $i
   done
-  echo "Done."
+  echo 'Done.'
 }
 
 # Trim video to time parameters.
 trim-video() {
   if [ $# -ne 3 ]; then
-    echo "Ops. Please pass in the new video start time and the total duration in seconds."
-    echo "Usage: trim-video <input_movie.mov> <time in seconds from start> <duration of new clip in seconds>"
+    echo 'Ops. Please pass in the new video start time and the total duration in seconds.'
+    echo 'Usage: trim-video <input_movie.mov> <time in seconds from start> <duration of new clip in seconds>'
     echo 'Example: "trim-video myvideo.mov 3 10" Produces a 10 second video begining from 3 seconds inside of the original clip.'
   else
-    echo "Begining to trim video..."
+    echo 'Begining to trim video...'
     ffmpeg -i $1 -ss $2 -c copy -t $3 trimmed_$1
-    echo "Complete. Video trimmed."
+    echo 'Complete. Video trimmed.'
   fi
 }
 
 # Turn that video into webm format and make a poster image for it!
 webmify() {
   if [ $# -eq 0 ]; then
-    echo "Oops. Please tell me the filename."
-    echo "Usage: webmify <filename>"
+    echo 'Oops. Please tell me the filename.'
+    echo 'Usage: webmify <filename>'
   else
     ffmpeg -i "$1" -vcodec libvpx -acodec libvorbis -isync -copyts -aq 80 -threads 3 -qmax 30 -y "$1.webm"
     ffmpeg -ss 00:00:15 -i "$1.webm" -vframes 1 -q:v 2 "$1.jpg"
@@ -111,8 +108,8 @@ mkvtomp4() {
       rm "$filename"
     done
   else
-    echo "No mkv files were found in this directory."
-    echo "mkvtomp4 Usage: \"cd\" to the directory where the mkv video files are located and run \"mkvtomp4\" (and then go grab a coffee)."
+    echo 'No mkv files were found in this directory.'
+    echo 'mkvtomp4 Usage: "cd" to the directory where the mkv video files are located and run "mkvtomp4" (and then go grab a coffee).'
   fi
 }
 
@@ -127,8 +124,8 @@ movtomp4() {
       rm "$filename"
     done
   else
-    echo "No mkv files were found in this directory."
-    echo "mkvtomp4 Usage: \"cd\" to the directory where the mkv video files are located and run \"mkvtomp4\" (then go grab a coffee)."
+    echo 'No mkv files were found in this directory.'
+    echo 'mkvtomp4 Usage: "cd" to the directory where the mkv video files are located and run "mkvtomp4" (then go grab a coffee).'
   fi
 }
 
@@ -150,8 +147,8 @@ gifify() {
     fi
     google-chrome "$1.gif"
   else
-    echo "Ops. Please enter a filename."
-    echo "Usage: gifify <input_movie.mov> [ --better | --best | --tumblr ]"
+    echo 'Ops. Please enter a filename.'
+    echo 'Usage: gifify <input_movie.mov> [ --better | --best | --tumblr ]'
   fi
 }
 
@@ -159,8 +156,8 @@ gifify() {
 # Requires awscli be setup and configured.
 static() {
   if [ $# -eq 0 ]; then
-    echo "Oops. Please give me a filename."
-    echo "Usage: static <filename>"
+    echo 'Oops. Please give me a filename.'
+    echo 'Usage: static <filename>'
   else
     aws s3 cp $1 s3://static-jonathanbell-ca --acl public-read --cache-control max-age=7776000
     printf "https://s3-us-west-2.amazonaws.com/static-jonathanbell-ca/$1" > /dev/clipboard
@@ -171,8 +168,8 @@ static() {
 # List available aliases.
 lsaliases() {
   echo
-  echo "Available aliases:"
-  echo "=================="
+  echo 'Available aliases:'
+  echo '=================='
   echo
   alias | awk -F'=' '{print $1}' | grep "alias" | awk '{gsub("alias ", ""); print}'
   echo
@@ -181,8 +178,8 @@ lsaliases() {
 # List available functions.
 lsfunctions() {
   echo
-  echo "Available functions:"
-  echo "===================="
+  echo 'Available functions:'
+  echo '===================='
   typeset -f | awk '/ \(\) $/ && !/^main / {print $1}' | awk '{gsub("command_not_found_handle", ""); print}'
   echo
 }
@@ -192,8 +189,8 @@ if [ "$OSTYPE" = "linux-gnu" ]; then
   # List all PPA's (third-party packages) installed on the system.
   listppa() {
     echo
-    echo "Installed PPAs:"
-    echo "==============="
+    echo 'Installed PPAs:'
+    echo '==============='
     echo
     for APT in `find /etc/apt/ -name \*.list`; do
       grep -o "^deb http://ppa.launchpad.net/[a-z0-9\-]\+/[a-z0-9\-]\+" $APT | while read ENTRY; do
@@ -216,13 +213,13 @@ fi
 if ! [ -d $windowsC ]; then
 
   # Change directory to your dotfiles directory.
-  alias dot="cd ~/.dotfiles"
+  alias dot='cd ~/.dotfiles'
   # Open your notes in code editor.
   alias notes="code ~/Dropbox/Notes"
   # Dropbox directory. : )
-  alias d="cd ~/Dropbox"
+  alias d='cd ~/Dropbox'
   # Sites folder.
-  alias s="cd ~/Dropbox/Sites"
+  alias s='cd ~/Dropbox/Sites'
 
 fi
 
@@ -239,7 +236,7 @@ if [ "$OSTYPE" = "msys" ] && ! [ -d $windowsC ]; then
   alias hosts='start chrome "https://support.rackspace.com/how-to/modify-your-hosts-file/#windows"'
 
   # Show diskspace usage on main volume.
-  alias diskspace="df -h"
+  alias diskspace='df -h'
 
   UBUNTUHOMEDIR="/c/Users/$USERNAME/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/home/jonathan"
 
@@ -247,7 +244,7 @@ if [ "$OSTYPE" = "msys" ] && ! [ -d $windowsC ]; then
   alias ubuntuhome="echo \"Ubuntu home dir is: $UBUNTUHOMEDIR\" && cd $UBUNTUHOMEDIR"
 
   # Serve a Jekyll site.
-  alias servejekyll="bundle exec jekyll serve --watch"
+  alias servejekyll='bundle exec jekyll serve --watch'
 
 fi
 
@@ -261,16 +258,16 @@ if [ "$OSTYPE" = "linux-gnu" ]; then
   alias configapache='echo "TODO: Add configapache instructions for Linux/Ubuntu."'
 
   # Edit hosts file quickly.
-  alias hosts="sudo nano /etc/hosts"
+  alias hosts='sudo nano /etc/hosts'
 
   # Show diskspace usage on main volume.
-  alias diskspace="df -h | grep /dev/sda1"
+  alias diskspace='df -h | grep /dev/sda1'
 
   # Shutdown.
-  alias done="sudo shutdown now"
+  alias done='sudo shutdown now'
 
   # Update Ubuntu.
-  alias updateubuntu="sudo apt-get update -y && sudo apt-get autoclean -y && sudo apt-get clean -y && sudo apt-get upgrade -y && sudo apt-get autoremove --purge -y"
+  alias updateubuntu='sudo apt-get update -y && sudo apt-get autoclean -y && sudo apt-get clean -y && sudo apt-get upgrade -y && sudo apt-get autoremove --purge -y'
 
 fi
 
@@ -281,9 +278,9 @@ alias shruggie='printf "¯\_(ツ)_/¯" > /dev/clipboard && echo "¯\_(ツ)_/¯"'
 alias smilely='printf "ツ" > /dev/clipboard && echo "ツ"'
 
 # For when you make that typ-o that you *will* make.
-alias cd..="cd .."
-alias ..="cd .."
-alias ...="cd ../../../"
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../../../'
 
 # Quickly clear the Terminal window.
 alias c='clear'
@@ -291,12 +288,12 @@ alias c='clear'
 alias minterm="export PS1=\"\$ \""
 
 # Pretty print Git's history.
-alias gitlog="git log --graph --oneline --all --decorate"
+alias gitlog='git log --graph --oneline --all --decorate'
 # When you just want to commit some changes to a personal project. Not useful for "real" projects.
 alias lazycommit="git add . && git commit -a --allow-empty-message -m '' && git push"
 
 # Add a WTFP Licence to a directory/project.
-alias addwtfpl="wget -O LICENCE http://www.wtfpl.net/txt/copying/"
+alias addwtfpl='wget -O LICENCE http://www.wtfpl.net/txt/copying/'
 
 # ------------------------------------------------------------------------------
 # | Colorize Things
@@ -333,8 +330,7 @@ export GIT_MERGE_AUTOEDIT=no
 
 if ((BASH_VERSINFO[0] < 4)); then
   echo "Looks like you're running an older version of Bash."
-  echo "You need at least bash-4.0 or some options will not work correctly."
-  echo "Keep your software up-to-date, man!"
+  echo 'You need at least bash-4.0 or some options will not work correctly.'
 fi
 
 # Automatically trim long paths in the prompt (requires Bash 4.x).
@@ -399,16 +395,16 @@ export LC_ALL='en_US.UTF-8'
 shopt -s nocaseglob
 
 # Perform file completion in a case insensitive fashion.
-bind "set completion-ignore-case on"
+bind 'set completion-ignore-case on'
 
 # Treat hyphens and underscores as equivalent.
-bind "set completion-map-case on"
+bind 'set completion-map-case on'
 
 # Display matches for ambiguous patterns at first tab press.
-bind "set show-all-if-ambiguous on"
+bind 'set show-all-if-ambiguous on'
 
 # Immediately add a trailing slash when autocompleting symlinks to directories.
-bind "set mark-symlinked-directories on"
+bind 'set mark-symlinked-directories on'
 
 if [ "$OSTYPE" = 'linux-gnu' ]; then
   # Change the title of the Bash terminal to show the User@Hostname connection.
