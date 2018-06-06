@@ -33,7 +33,7 @@ function Write-BranchName () {
 }
 
 function prompt {
-  $base = 'PS ' # Base promt string
+  $base = '-> ' # Base prompt string
   $path = (Get-Item -Path ".\" -Verbose).Name
   $userPrompt = "$(' $' * ($nestedPromptLevel + 1)) "
 
@@ -57,7 +57,6 @@ function prompt {
 function shruggie() {
   # All emojis here: https://unicode.org/emoji/charts/full-emoji-list.html
   # Not all emojis listed above are supported in the module yet though..
-  #$outputEmoji = Get-Emoji 'UPSIDE-DOWN FACE'
   $outputEmoji = Get-Emoji 'PERSON SHRUGGING'
   $outputEmoji | Set-Clipboard
   Write-Host '*shrug*'
@@ -66,8 +65,8 @@ function shruggie() {
 function restartapache() {
   if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -Command `"net stop Apache; net start Apache;`"" -Verb RunAs
-    # Backtick usage above: https://stackoverflow.com/a/18313593/1171790
-    # Use `-NoExit` param above if you don't want the PowerShell window to close automatically.
+    # Backtick usage above explained: https://stackoverflow.com/a/18313593/1171790
+    # Use the `-NoExit` param above if you don't want the PowerShell window to close automatically.
     exit
   }
 }

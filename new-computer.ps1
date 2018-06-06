@@ -4,10 +4,10 @@
 ### Basic Stuff                                                                #
 ################################################################################
 
-Write-Host "Configuring the basic system my homie..." -ForegroundColor "Yellow"
+Write-Host "Let's go! Configuring the basic system my homie..." -ForegroundColor "Yellow"
 
 # Set Computer Name
-(Get-WmiObject Win32_ComputerSystem).Rename("HERBERT") | Out-Null
+(Get-WmiObject Win32_ComputerSystem).Rename("HERBERT-$(get-date -Format yyyy)") | Out-Null
 
 # Enable Developer Mode
 Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" "AllowDevelopmentWithoutDevLicense" 1
@@ -269,7 +269,7 @@ Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advan
 Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" "JointResize" 0
 
 # Disable auto-correct
-#Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\TabletTip\1.7" "EnableAutocorrection" 0
+Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\TabletTip\1.7" "EnableAutocorrection" 0
 
 ################################################################################
 ### Windows Update & Application Updates                                       #
@@ -363,9 +363,9 @@ if (Test-Path "$HOME\.ssh\config") { Remove-Item "$HOME\.ssh\config" }
 New-Item -Path "$HOME\.ssh\config" -ItemType SymbolicLink -Value "$HOME\Dropbox\Sites\.ssh\config"
 
 # Bash, brought to you by GitBash!
-# The first time you open GitBash, it'll complain after linking .bashrc to the above location but after that, it'll calm down.
 if (Test-Path "$HOME\.bashrc") { Remove-Item "$HOME\.bashrc" }
 New-Item -Path "$HOME\.bashrc" -ItemType SymbolicLink -Value "$HOME\.dotfiles\bash\.bashrc"
+Write-Host "The first time you open GitBash, it will complain after linking .bashrc to the .bashrc in your dotfiles but after that, it will calm down." -ForegroundColor "Yellow"
 
 if (Test-Path "$HOME\.minttyrc") { Remove-Item "$HOME\.minttyrc" }
 New-Item -Path "$HOME\.minttyrc" -ItemType SymbolicLink -Value "$HOME\.dotfiles\bash\.minttyrc"
@@ -376,6 +376,59 @@ if (Test-Path "$HOME\.gitignore_global") { Remove-Item "$HOME\.gitignore_global"
 git config --global core.excludesfile "$HOME\.dotfiles\git\.gitignore_global"
 if (Test-Path "$HOME\.gitattributes") { Remove-Item "$HOME\.gitattributes" }
 git config --global core.attributesfile "$HOME\.dotfiles\git\.gitattributes_global"
+
+Write-Host "Installing Meld..." -ForegroundColor "Yellow"
+choco install meld -y
+refreshenv
+
+# Using the --global option will write the values to the global `.gitconfig` file, `~/.gitconfig`.
+# Alternatively, I guess we could syslink a .gitconfig file to a .gitconfig file in this repo (such as `.dotfiles/git/.gitgonfig`).
+# However, this prevents absolute paths that get written to `.gitconfig` ending up in this repo.
+git config --global user.name "Jonathan Bell"
+# https://gist.github.com/trey/2722934#bonus
+git config --global user.email "jonathanbell.ca@gmail.com"
+# Set VS Code as the core text editor.
+git config --global core.editor code
+# http://stackoverflow.com/q/3206843/1171790
+git config --global core.autocrlf input
+# Fix whitespace isssues. http://stackoverflow.com/a/2948167/1171790
+git config --global core.whitespace fix
+# But don't warn about whitespace, thanks.
+git config --global apply.whitespace nowarn
+# Allow all Git commands to use colored output.
+git config --global color.ui true
+# https://gist.github.com/trey/2722934
+git config --global color.branch auto
+git config --global color.diff auto
+git config --global color.status auto
+git config --global color.interactive auto
+git config --global color.ui true
+git config --global color.pager true
+# Push only the current branch to remote (same as what a `git pull` would use).
+# Note that the remote branch *could* possibly have a different name than your local branch.
+# https://git-scm.com/docs/git-config.html#git-config-branchltnamegtremote
+git config --global push.default current
+# Accept the auto-generated merge message.
+# https://git-scm.com/docs/merge-options#merge-options---no-edit
+git config --global core.mergeoptions --no-edit
+
+# Setup Meld as our difftool and mergetool.
+git config --global diff.guitool meld
+git config --global diff.tool meld
+git config --global diff.external $HOME/.dotfiles/meld/git-diff.sh
+# Don't prompt after saving the file(s) in Meld.
+git config --global difftool.meld.prompt false
+# Set Meld as the Git mergetool.
+git config --global merge.tool meld
+git config --global mergetool.meld.keepBackup false
+git config --global mergetool.keepBackup false
+git config --global mergetool.meld.keepTemporaries false
+git config --global mergetool.keepTemporaries false
+
+# Global .gitignore
+git config --global core.excludesfile $HOME/.dotfiles/git/.gitignore_global
+# Global attributes
+git config --global core.attributesfile $HOME/.dotfiles/git/.gitattributes_global
 
 ################################################################################
 ### PowerShell                                                                 #
@@ -401,50 +454,48 @@ Install-Module -Name Emojis -Scope CurrentUser -Force
 Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yellow"
 
 choco install dotnet4.5 -y
-
 refreshenv
 
-choco install vcredist2015 -y
-
-refreshenv
+# choco install vcredist2015 -y
+# refreshenv
 
 [string[]] $packages =
-'meld',
-'droidsansmono',
-'transmission',
 '7zip',
-'SourceCodePro',
-'openssl.light',
-'filezilla',
-'vlc',
+'apache-httpd',
+'awscli',
+'cmake',
 'curl',
-'Wget',
-'ffmpeg',
-'youtube-dl',
-'gifsicle',
 'discord',
-'telegram',
-'rsync',
-'ruby',
+'droidsansmono',
+'ffmpeg',
+'FileOptimizer',
+'filezilla',
+'firacode',
+'Firefox',
+'gifsicle',
+'GoogleChrome',
+'heroku-cli',
+'hyper',
 'imagemagick',
 'make',
-'cmake',
-'slack',
-'GoogleChrome',
+'mysql.workbench',
+'mysql',
 'nodejs',
-'heroku-cli',
+'openssl.light',
 'pgadmin3',
-'FileOptimizer',
+'rsync',
+'ruby',
+'slack',
+'SourceCodePro',
 'sqlite',
 'sqlitebrowser',
-'awscli',
-'Firefox',
-'virtualbox',
+'telegram',
+'transmission',
 'vagrant',
-'hyper',
-'mysql',
-# 'mysql.workbench',
-'apache-httpd';
+'virtualbox',
+'vlc',
+'Wget',
+'youtube-dl';
 
 foreach ($package in $packages) {
   choco install $package -y
@@ -463,11 +514,9 @@ npm install --global --production windows-build-tools
 #
 
 choco install php -y --params '"/ThreadSafe"'
-
 refreshenv
 
 choco install composer -y
-
 refreshenv
 
 Copy-Item "C:\tools\php72\php.ini" "C:\tools\php72\php.ini.bak"
@@ -476,24 +525,24 @@ Copy-Item "C:\tools\php72\php.ini" "C:\tools\php72\php.ini.bak"
 (Get-Content "C:\tools\php72\php.ini").replace('date.timezone = UTC', 'date.timezone = "America/Los_Angele
 s"') | Set-Content "C:\tools\php72\php.ini"
 (Get-Content "C:\tools\php72\php.ini").replace('memory_limit = 128M', 'memory_limit = 512M') | Set-Content "C:\tools\php72\php.ini"
-(Get-Content "C:\tools\php72\php.ini").replace('upload_max_filesize = 2M', 'upload_max_filesize = 16M') | Set-Content "C:\tools\php72\php.ini"
+(Get-Content "C:\tools\php72\php.ini").replace('upload_max_filesize = 2M', 'upload_max_filesize = 32M') | Set-Content "C:\tools\php72\php.ini"
 (Get-Content "C:\tools\php72\php.ini").replace('display_errors = Off', 'display_errors = On') | Set-Content "C:\tools\php72\php.ini"
 (Get-Content "C:\tools\php72\php.ini").replace('display_startup_errors = Off', 'display_startup_errors = On') | Set-Content "C:\tools\php72\php.ini"
-(Get-Content "C:\tools\php72\php.ini").replace('post_max_size = 8M', 'post_max_size = 16M') | Set-Content "C:\tools\php72\php.ini"
+(Get-Content "C:\tools\php72\php.ini").replace('post_max_size = 8M', 'post_max_size = 32M') | Set-Content "C:\tools\php72\php.ini"
 
 [string[]] $extensions =
 'curl',
-'gd2',
-'fileinfo',
-'mbstring',
 'exif',
+'fileinfo',
+'gd2',
+'ldap',
+'mbstring',
 'mysqli',
+'openssl',
 'pdo_mysql',
-'pdo_sqlite',
 'pdo_pgsql',
-'sqlite3',
-'ldap'
-'openssl';
+'pdo_sqlite',
+'sqlite3';
 
 foreach ($extension in $extensions) {
   (Get-Content "C:\tools\php72\php.ini").replace(";extension=$extension", "extension=$extension") | Set-Content "C:\tools\php72\php.ini"
@@ -520,5 +569,5 @@ Write-Host "Finished installing Chocolatey packages..." -ForegroundColor "Yellow
 refreshenv
 
 Write-Output ''
-Write-Output "All done!!! Please restart the computer in order for all of these changes to take effect."
+Write-Output 'All done!!! Please restart the computer in order for all of these changes to take effect.'
 Write-Output ''

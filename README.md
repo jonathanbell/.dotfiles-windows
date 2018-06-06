@@ -6,18 +6,18 @@ Inspired by: <https://dotfiles.github.io/> and <https://github.com/jayharris/dot
 
 <!-- TOC -->
 
-* [Setup Windows 10](#setup-windows-10)
-  * [Run the `new-computer.ps1` script](#run-the-new-computerps1-script)
-  * [Finish up](#finish-up)
-* [(L)ubuntu](#lubuntu)
-  * [Run the new computer script](#run-the-new-computer-script)
-  * [After running the new computer setup script](#after-running-the-new-computer-setup-script)
-* [All systems (finish setting up)](#all-systems-finish-setting-up)
-  * [Git config](#git-config)
-  * [Config Apache, PHP, MySQL](#config-apache-php-mysql)
-    * [Apache](#apache)
-    * [PHP](#php)
-    * [MySQL](#mysql)
+- [Setup Windows 10](#setup-windows-10)
+  - [Run the `new-computer.ps1` script](#run-the-new-computerps1-script)
+  - [Finish up](#finish-up)
+- [(L)ubuntu](#lubuntu)
+  - [Run the new computer script](#run-the-new-computer-script)
+  - [After running the new computer setup script](#after-running-the-new-computer-setup-script)
+- [All systems (finish setting up)](#all-systems-finish-setting-up)
+  - [Git config](#git-config)
+  - [Config Apache, PHP, MySQL](#config-apache-php-mysql)
+    - [Apache](#apache)
+    - [PHP](#php)
+    - [MySQL](#mysql)
 
 <!-- /TOC -->
 
@@ -25,10 +25,10 @@ Inspired by: <https://dotfiles.github.io/> and <https://github.com/jayharris/dot
 
 1.  Install Windows
 1.  Install addtional drivers (usually found on your backup drive)
-1.  [Install VeraCrypt](https://www.howtogeek.com/howto/6169/use-truecrypt-to-secure-your-data/) manually
 1.  [Install Dropbox](https://www.dropbox.com/install) manually
 1.  [Install Git](https://git-scm.com/download/win) manually
-1.  [Install C++ 2015](https://www.microsoft.com/en-us/download/details.aspx?id=48145) manually
+1.  Install Chocolatey
+1.  [Install C++ 2015](https://www.microsoft.com/en-us/download/details.aspx?id=48145) manually (VS Code dependency)
 1.  [Install VS Code](https://code.visualstudio.com) manually
     1.  [Install Settings Sync](https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync) for VS Code
     1.  Get Gist Token from secret hiding place
