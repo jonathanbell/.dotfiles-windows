@@ -388,6 +388,9 @@ HISTTIMEFORMAT='%F %T '
 # Make VS Code the default editor.
 export EDITOR='code'
 
+# Use PHP XDebug
+export XDEBUG_CONFIG='idekey=VSCODE'
+
 # Prefer US English and use UTF-8.
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
