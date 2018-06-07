@@ -476,6 +476,7 @@ refreshenv
 npm install --global --production windows-build-tools
 
 [string[]] $npmpackages =
+'cloudinary-cli',
 'create-react-app',
 'gatsby-cli',
 'gatsby',

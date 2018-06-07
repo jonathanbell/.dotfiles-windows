@@ -226,6 +226,9 @@ if [ "$OSTYPE" = "msys" ] && ! [ -d $windowsC ]; then
   # Show diskspace usage on main volume.
   alias diskspace='df -h'
 
+  # Open Windows Explorer from command line. Usage: `open .` (opens current dir)
+  alias open='start'
+
   # TODO: This changes with every new install of the Linux subsystem. Find a way
   # to alias this path dynamically.
   UBUNTUHOMEDIR="/c/Users/$USERNAME/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/home/jonathan"

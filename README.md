@@ -4,6 +4,8 @@ These are my configuration files and setup scripts for new computers. I primaril
 
 Inspired by: <https://dotfiles.github.io/> and <https://github.com/jayharris/dotfiles-windows>
 
+**Table of Contents**
+
 <!-- TOC -->
 
 - [Setup a Windows 10 computer](#setup-a-windows-10-computer)
@@ -13,10 +15,13 @@ Inspired by: <https://dotfiles.github.io/> and <https://github.com/jayharris/dot
   - [Run the `new-computer.bash` script](#run-the-new-computerbash-script)
   - [After running the new computer setup script](#after-running-the-new-computer-setup-script)
 - [Manual configurations (all systems)](#manual-configurations-all-systems)
+  - [Cloudinary](#cloudinary)
   - [Apache](#apache)
   - [MySQL](#mysql)
 
 <!-- /TOC -->
+
+---
 
 ## Setup a Windows 10 computer
 
@@ -98,6 +103,22 @@ TODO: Edit/update this section
 ---
 
 ## Manual configurations (all systems)
+
+### Cloudinary
+
+1.  Create a Cloudinary configuration file: `touch $HOME/.cloudinary`
+1.  Visit: <https://cloudinary.com/console> and copy your API key and secret
+1.  Add your Cloudinary credentials to `.cloudinary` in the following format:
+
+```json
+{
+  "cloud_name": "sample",
+  "api_key": "874837483274837",
+  "api_secret": "a676b67565c6767a6767d6767f676fe1"
+}
+```
+
+See: <https://www.npmjs.com/package/cloudinary-cli#global-config> for more information. You can now [upload images to Cloudinary](https://www.npmjs.com/package/cloudinary-cli#upload) with `cloudinary upload foo.png`
 
 ### Apache
 
