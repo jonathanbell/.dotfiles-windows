@@ -4,14 +4,14 @@ windowsC='/mnt/c/'
 startDir="$HOME/Dropbox/"
 
 if [ "$OSTYPE" = 'linux-gnu' ] && [ -d $windowsC ]; then
-  # Assuming we are using Bash inside Windows.
+  # Assume we are using Bash (Linux subsystem) inside Windows.
   startDir="${windowsC}Users/jonat/Dropbox/"
   cd "${startDir}Sites/"
 fi
 
-# if [ "$OSTYPE" = 'msys' ]; then
-#   # Assume we are using Cygwin [inside GitBash].
-# fi
+#if [ "$OSTYPE" = 'msys' ]; then
+  # Assume we are using Cygwin/GitBash.
+#fi
 
 # ------------------------------------------------------------------------------
 # | Functions
@@ -210,19 +210,7 @@ fi
 # | Aliases
 # ------------------------------------------------------------------------------
 
-if ! [ -d $windowsC ]; then
-
-  # Change directory to your dotfiles directory.
-  alias dot='cd ~/.dotfiles'
-  # Open your notes in code editor.
-  alias notes="code ~/Dropbox/Notes"
-  # Dropbox directory. : )
-  alias d='cd ~/Dropbox'
-  # Sites folder.
-  alias s='cd ~/Dropbox/Sites'
-
-fi
-
+# Windows specific
 if [ "$OSTYPE" = "msys" ] && ! [ -d $windowsC ]; then
 
   # Restart Apache.
@@ -238,6 +226,8 @@ if [ "$OSTYPE" = "msys" ] && ! [ -d $windowsC ]; then
   # Show diskspace usage on main volume.
   alias diskspace='df -h'
 
+  # TODO: This changes with every new install of the Linux subsystem. Find a way
+  # to alias this path dynamically.
   UBUNTUHOMEDIR="/c/Users/$USERNAME/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/home/jonathan"
 
   # Change directory to the Ubuntu user `jonathan` home directory.
@@ -248,6 +238,7 @@ if [ "$OSTYPE" = "msys" ] && ! [ -d $windowsC ]; then
 
 fi
 
+# L/Ubuntu specific
 if [ "$OSTYPE" = "linux-gnu" ]; then
 
   # Restart Apache.
@@ -271,6 +262,18 @@ if [ "$OSTYPE" = "linux-gnu" ]; then
 
 fi
 
+# Change directory to your dotfiles directory.
+alias dot='cd ~/.dotfiles'
+# Open your notes in code editor.
+alias notes="code ~/Dropbox/Notes"
+# Dropbox directory. : )
+alias d='cd ~/Dropbox'
+# Sites folder.
+alias s='cd ~/Dropbox/Sites'
+# Desktop
+alias desk='cd ~/Desktop'
+
+# Run a backup.
 alias backup="${startDir}Documents/personal-backup-script.bash"
 
 # Copy a shuggie guy to the clipboard.
@@ -280,7 +283,6 @@ alias smilely='printf "ツ" > /dev/clipboard && echo "ツ"'
 # For when you make that typ-o that you *will* make.
 alias cd..='cd ..'
 alias ..='cd ..'
-alias ...='cd ../../../'
 
 # Quickly clear the Terminal window.
 alias c='clear'
@@ -302,16 +304,12 @@ alias globalnpmpackages='npm list -g --depth 0'
 # | Colorize Things
 # ------------------------------------------------------------------------------
 
-if ! [ -d $windowsC ]; then
+# Colorize git branch and current directory in the command prompt.
+export PS1="\[$(tput bold)\]\[\033[31m\]→ \[\033[0m\]\[\033[105m\]\$(parse-git-branch)\[\033[0m\]\[$(tput bold)\]\[\033[36m\] \W\[\033[0m\] \[\033[2m\]$\[\033[0m\] "
 
-  # Colorize git branch and current directory in the command prompt.
-  export PS1="\[$(tput bold)\]\[\033[31m\]→ \[\033[0m\]\[\033[105m\]\$(parse-git-branch)\[\033[0m\]\[$(tput bold)\]\[\033[36m\] \W\[\033[0m\] \[\033[2m\]$\[\033[0m\] "
-
-  # Colors to differentiate various file types with 'ls'.
-  #alias ls="command ls --color"
-  export LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:"
-
-fi
+# Colors to differentiate various file types with 'ls'.
+#alias ls="command ls --color"
+export LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:"
 
 # Colorize 'grep'.
 alias grep='grep --color=auto'
@@ -328,7 +326,7 @@ export GIT_MERGE_AUTOEDIT=no
 # ------------------------------------------------------------------------------
 
 #
-# Sensible Bash: https://github.com/mrzool/bash-sensible/blob/master/sensible.bash
+# Mostly inspired by Sensible Bash: https://github.com/mrzool/bash-sensible/blob/master/sensible.bash
 #
 
 if ((BASH_VERSINFO[0] < 4)); then
@@ -346,10 +344,8 @@ bind Space:magic-space
 # Update window size after every command.
 shopt -s checkwinsize
 
-if ! [ -d $windowsC ]; then
-  # Add tab completion for SSH hostnames based on ~/.ssh/config (ignoring wildcards).
-  [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
-fi
+# Add tab completion for SSH hostnames based on ~/.ssh/config (ignoring wildcards).
+[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
 
 # Autocorrect typos in path names when using 'cd'.
 shopt -s cdspell 2> /dev/null
@@ -409,11 +405,13 @@ bind 'set show-all-if-ambiguous on'
 # Immediately add a trailing slash when autocompleting symlinks to directories.
 bind 'set mark-symlinked-directories on'
 
+# If L/Ubuntu or Windows Linux subsystem
 if [ "$OSTYPE" = 'linux-gnu' ]; then
   # Change the title of the Bash terminal to show the User@Hostname connection.
   PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
 fi
 
+# If not Windows Linux subsystem
 if ! [ -d $windowsC ]; then
   # Show a random quote at Bash startup.
   echo $(shuf -n 1 "$HOME/.dotfiles/bash/quotes.txt")
