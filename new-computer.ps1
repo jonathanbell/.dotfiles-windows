@@ -549,8 +549,6 @@ Write-Host "Finished installing Chocolatey packages..." -ForegroundColor "Yellow
 
 refreshenv
 
-cd powershell
-
 Write-Output ''
 Write-Output 'All done!!! Please restart the computer in order for all of these changes to take effect.'
 Write-Output ''
