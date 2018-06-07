@@ -26,7 +26,7 @@ link() {
 
 # Check if this script is running on a Linux system.
 if ! [ "$OSTYPE" = "linux-gnu" ]; then
-  echo "You are not using a Linux computer. Run this script on Linux with Ubuntu or Lubuntu."
+  echo "You are not using a Linux computer. Run this script on a Linux system with Ubuntu or Lubuntu installed."
   exit
 else
   # OK, the script is running on Linux.
@@ -53,38 +53,35 @@ esac
 
 # Install all the softwares.
 PACKAGES=(
-  gnome-terminal
-  curl
-  nodejs
-  npm # do we still need this? is npm included with nodjs nowadays?
-  meld
-  pgadmin3
-  skypeforlinux
-  youtube-dl
-  imagemagick
-  xclip
-  wget
-  trimage
-  ffmpeg
   apache2
-  mysql-server
-  mysql-client
-  php
-  mysql-workbench
-  sqlite3
-  sqlitebrowser
+  curl
+  ffmpeg
+  gnome-terminal
+  imagemagick
   libapache2-mod-php
+  libapache2-mod-php
+  meld
+  mysql-client
+  mysql-server
+  mysql-workbench
+  nodejs
+  npm # do we still need this? is npm included with nodejs nowadays?
+  pgadmin3
+  php
+  php
+  php-cli
   php-mcrypt
   php-mysql
-  php-cli
+  python-pip
   ruby
   rubygems
-  python-pip
-  apache2
-  php
-  libapache2-mod-php
-  php-mcrypt
-  php-mysql
+  skypeforlinux
+  sqlite3
+  sqlitebrowser
+  trimage
+  wget
+  xclip
+  youtube-dl
 )
 
 for i in "${PACKAGES[@]}"
@@ -118,10 +115,6 @@ echo
 # Setup Git.
 # Is Git installed?
 command -v git >/dev/null 2>&1 || { echo "Git is not installed. Please install it before proceeding." >&2; echo "Exiting..."; exit; }
-
-# Install Heroku Toolbelt.
-# https://devcenter.heroku.com/articles/heroku-command-line#download-and-install
-command -v heroku >/dev/null 2>&1 || { echo "-------Setup Heroku-------" >&2; wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh; }
 
 echo
 echo "All done. Your softwares are installed! :)"

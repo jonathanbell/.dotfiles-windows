@@ -295,6 +295,9 @@ alias lazycommit="git add . && git commit -a --allow-empty-message -m '' && git 
 # Add a WTFP Licence to a directory/project.
 alias addwtfpl='wget -O LICENCE http://www.wtfpl.net/txt/copying/'
 
+# List all globally installed NPM packages
+alias globalnpmpackages='npm list -g --depth 0'
+
 # ------------------------------------------------------------------------------
 # | Colorize Things
 # ------------------------------------------------------------------------------

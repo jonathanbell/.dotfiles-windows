@@ -57,6 +57,9 @@ The following installations require special params during installation thus they
 1.  Uninstall unwanted apps by right-clicking them in the Start Menu
 1.  Setup SSH/Rsync on the Linux subsystem by copying your SSH config file to the home directory of your Linux subsytem. To find out that path, run `ubuntuhome` from the GitBash command line.
 
+1.  directory and run: <https://github.com/neilpa/cmd-colors-solarized#update-command-prompt-and-powershell-shortcut-lnks> (search for `bash` at Windows start menu)
+1.  `.\Update-Link.ps1 <copied path> dark`
+
 ## (L)ubuntu
 
 1.  Install Lubuntu

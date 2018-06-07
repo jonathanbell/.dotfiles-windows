@@ -440,12 +440,21 @@ Write-Host "Configuring Powershell. You may be asked some questions..." -Foregro
 if (Test-Path "$profile") { Remove-Item "$profile" }
 New-Item -Path "$profile" -ItemType SymbolicLink -Value "$HOME\.dotfiles\powershell\Microsoft.PowerShell_profile.ps1" -Force
 
+# Link PowerShell color profiles
+New-Item -Path "$(Split-Path -Path $profile)\Set-SolarizedDarkColorDefaults.ps1" -ItemType SymbolicLink -Value "$HOME\.dotfiles\powershell\Set-SolarizedDarkColorDefaults.ps1" -Force
+New-Item -Path "$(Split-Path -Path $profile)\Set-SolarizedLightColorDefaults.ps1" -ItemType SymbolicLink -Value "$HOME\.dotfiles\powershell\Set-SolarizedLightColorDefaults.ps1" -Force
+
 #
 # PowerShell Providers and modules:
 #
 
 # Emojis in PowerShell: https://artofshell.com/2016/04/emojis-in-powershell-yes/
 Install-Module -Name Emojis -Scope CurrentUser -Force
+
+# Better colors in Windows command prompts: https://github.com/neilpa/cmd-colors-solarized
+cd powershell
+regedit /s solarized-dark.reg
+cd ..
 
 ################################################################################
 ### All the softwares! (Brought to you by Chocolatey)                          #
@@ -504,10 +513,25 @@ foreach ($package in $packages) {
 refreshenv
 
 #
-# Now config node:
+# Now config Node and NPM:
 #
 
 npm install --global --production windows-build-tools
+
+[string[]] $npmpackages =
+'create-react-app',
+'gatsby-cli',
+'gatsby',
+'now',
+'sass',
+'surge';
+
+foreach ($package in $npmpackages) {
+  npm install -g $package
+}
+
+if (Test-Path "$HOME\.npmrc") { Remove-Item "$HOME\.npmrc" }
+New-Item -Path "$HOME\.npmrc" -ItemType SymbolicLink -Value "$HOME\.dotfiles\node\.npmrc"
 
 #
 # Now config PHP:
@@ -567,6 +591,8 @@ Write-Host "Finished installing Chocolatey packages..." -ForegroundColor "Yellow
 ################################################################################
 
 refreshenv
+
+cd powershell
 
 Write-Output ''
 Write-Output 'All done!!! Please restart the computer in order for all of these changes to take effect.'
