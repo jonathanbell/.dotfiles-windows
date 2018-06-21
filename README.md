@@ -124,9 +124,10 @@ See: <https://www.npmjs.com/package/cloudinary-cli#global-config> for more infor
 
 Make these changes to `httpd.conf`:
 
-1.  [`Listen 127.0.0.1:8080`](https://serverfault.com/a/276968/325456)
+1.  Change the `Listen` directive to allow localhost traffic only by adding/changing [`Listen 127.0.0.1:8080`](https://serverfault.com/a/276968/325456) and `Listen 127.0.0.1:443`
 1.  `ServerName localhost:8080`
 1.  Edit `DocumentRoot` section and the first `<Directory>` entry to point to your projects root folder
+    1.  Also ensure that `AllowOverride` is set to `All` (in order to allow `.htaccess` files to do their thing)
 1.  Ensure that `mod_rewrite` and `mod_expires` are enabled/uncommented
 1.  Make sure this line is uncommented: `Include conf/extra/httpd-vhosts.conf`
 1.  Ensure `DirectoryIndex` has `index.php` as a value
@@ -140,9 +141,19 @@ LoadModule php7_module "C:/tools/php72/php7apache2_4.dll"
 PHPIniDir "C:/tools/php72"
 ```
 
-Then:
+Then, setup localhost to use a self-signed SSL certificates for each web project by placing a `<VirtualHost>` entry into `httpd-vhost.conf` for each local project app/site. Use the following code block as a guide: 
 
-1.  [Setup localhost to use self-signed SSL certificate](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-ubuntu-16-04)
+```apache
+<VirtualHost *:443>
+  DocumentRoot "C:/Users/you/Sites/projects.jonathanbell.ca/public"
+  ServerName yoursite.com
+  SSLEngine on
+  SSLCertificateFile "C:/Users/you/AppData/Roaming/Apache24/conf/ssl/server.crt"
+  SSLCertificateKeyFile "C:/Users/you/AppData/Roaming/Apache24/conf/ssl/server.key"
+  ErrorLog "C:/Users/you/Sites/_dev/logs/projects.jonathanbell.ca-error.log"
+  CustomLog "C:/Users/you/Sites/_dev/logs/projects.jonathanbell.ca-access.log" common
+</VirtualHost>
+```
 
 Finally:
 
