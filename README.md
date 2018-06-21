@@ -145,13 +145,13 @@ Then, setup localhost to use a self-signed SSL certificates for each web project
 
 ```apache
 <VirtualHost *:443>
-  DocumentRoot "C:/Users/you/Sites/projects.jonathanbell.ca/public"
-  ServerName yoursite.com
+  DocumentRoot "C:/Users/you/Sites/dev.yoursite.com/public"
+  ServerName dev.yoursite.com
   SSLEngine on
   SSLCertificateFile "C:/Users/you/AppData/Roaming/Apache24/conf/ssl/server.crt"
   SSLCertificateKeyFile "C:/Users/you/AppData/Roaming/Apache24/conf/ssl/server.key"
-  ErrorLog "C:/Users/you/Sites/_dev/logs/projects.jonathanbell.ca-error.log"
-  CustomLog "C:/Users/you/Sites/_dev/logs/projects.jonathanbell.ca-access.log" common
+  ErrorLog "C:/Users/you/Sites/_dev/logs/dev.yoursite.com-error.log"
+  CustomLog "C:/Users/you/Sites/_dev/logs/dev.yoursite.com-access.log" common
 </VirtualHost>
 ```
 
