@@ -17,6 +17,7 @@ Inspired by: <https://dotfiles.github.io/> and <https://github.com/jayharris/dot
 - [Manual configurations (all systems)](#manual-configurations-all-systems)
   - [Cloudinary](#cloudinary)
   - [Apache](#apache)
+    - [Finally:](#finally)
   - [MySQL](#mysql)
 
 <!-- /TOC -->
@@ -52,7 +53,7 @@ Inspired by: <https://dotfiles.github.io/> and <https://github.com/jayharris/dot
 The following instructions cannot be scripted via PowerShell and should be done manually.
 
 1.  [Install Ubuntu on Windows 10](https://www.microsoft.com/en-CA/store/p/ubuntu/9nblggh4msv6?rtc=1) from the Windows App Store
-1.  Open Bash (in Windows 10) and symlink Ubuntu's `.bashrc` to the `.bashrc` inside this repo. The command will be something like: `ln -s /mnt/c/Users/jonat/.dotfiles/bash/.bashrc /home/jonathan/.bashrc` (the Windows C drive generally ends up at `/mnt/c/`)
+1.  Open Bash (in Windows 10) and symlink Ubuntu's `.bashrc` to the `.bashrc` inside this repo. The command will be something like: `ln -s /mnt/c/Users/jonat/.dotfiles/bash/.bashrc /home/jonathan/.bashrc` (the Windows C drive ends up being mounted at `/mnt/c/` by default)
 1.  Install Photoshop manually
 1.  Install Lightroom manually
 1.  Install Premier manually
@@ -63,6 +64,11 @@ The following instructions cannot be scripted via PowerShell and should be done 
 1.  In a PowerShell with elevated privileges: `cd $HOME\.dotfiles\powershell`
 1.  As per the instructions [here](https://github.com/neilpa/cmd-colors-solarized#update-command-prompt-and-powershell-shortcut-lnks), search for `bash` at Windows start menu and copy the path to that executable.
 1.  Then run `.\Update-Link.ps1 <copied path from above> dark` inside `~/.dotfiles/powershell`
+1.  _Optional_: You may need to setup permissions for SSH keys to work correctly on the Linux/Windows Subsystem. [Edit `/etc/wsl.conf`](https://blogs.msdn.microsoft.com/commandline/2018/02/07/automatically-configuring-wsl/) (add it if it does not exist) using the following code block and then change the permissions of the private key directory to `700` and all the keys inside the directory to `600`.
+
+```ini
+[automount]                                                                                                                                             enabled = true                                                                                                                                          options = "metadata,umask=22,fmask=11"                                                                                                           mountFsTab = false
+```
 
 ---
 
@@ -141,11 +147,11 @@ LoadModule php7_module "C:/tools/php72/php7apache2_4.dll"
 PHPIniDir "C:/tools/php72"
 ```
 
-Then, setup localhost to use a self-signed SSL certificates for each web project by placing a `<VirtualHost>` entry into `httpd-vhost.conf` for each local project app/site. Use the following code block as a guide: 
+Then, setup localhost to use a self-signed SSL certificates for each web project by placing a `<VirtualHost>` entry into `httpd-vhost.conf` for each local project app/site. Use the following code block as a guide:
 
 ```apache
 <VirtualHost *:443>
-  DocumentRoot "C:/Users/you/Sites/dev.yoursite.com/public"
+  DocumentRoot "C:/Users/you/Sites/yoursite.com/public"
   ServerName dev.yoursite.com
   SSLEngine on
   SSLCertificateFile "C:/Users/you/AppData/Roaming/Apache24/conf/ssl/server.crt"
@@ -155,7 +161,7 @@ Then, setup localhost to use a self-signed SSL certificates for each web project
 </VirtualHost>
 ```
 
-Finally:
+#### Finally:
 
 1.  Add your virtual hosts to `httpd-vhosts.conf`
 1.  Edit your `hosts` file (_Windows_: `C:\Windows\System32\drivers\etc\hosts`; _Linux_: `/etc/hosts`) in order to point local development sites to `127.0.0.1`
