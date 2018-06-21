@@ -67,7 +67,10 @@ The following instructions cannot be scripted via PowerShell and should be done 
 1.  _Optional_: You may need to setup permissions for SSH keys to work correctly on the Linux/Windows Subsystem. [Edit `/etc/wsl.conf`](https://blogs.msdn.microsoft.com/commandline/2018/02/07/automatically-configuring-wsl/) (add it if it does not exist) using the following code block and then change the permissions of the private key directory to `700` and all the keys inside the directory to `600`.
 
 ```ini
-[automount]                                                                                                                                             enabled = true                                                                                                                                          options = "metadata,umask=22,fmask=11"                                                                                                           mountFsTab = false
+[automount]
+enabled = true
+options = "metadata,umask=22,fmask=11"
+mountFsTab = false
 ```
 
 ---
