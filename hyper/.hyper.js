@@ -140,7 +140,7 @@ module.exports = {
   //   `project#1.0.1`
   // Useful, but not in use:
   // 'hyper-material-theme'
-  plugins: ['hyperterm-cobalt2-theme', 'hypercwd', 'hyper-opacity'],
+  plugins: ['hyperterm-cobalt2-theme', 'hyper-opacity'],
   opacity: 0.9,
 
   // in development, you can create a directory under
