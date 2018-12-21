@@ -68,7 +68,6 @@ PACKAGES=(
   npm # do we still need this? is npm included with nodejs nowadays?
   pgadmin3
   php
-  php
   php-cli
   php-mcrypt
   php-mysql

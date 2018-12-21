@@ -449,6 +449,7 @@ refreshenv
 'nodejs',
 'openssl.light',
 'pgadmin3',
+'python',
 'rsync',
 'ruby',
 'slack',

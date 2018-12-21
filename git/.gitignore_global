@@ -37,10 +37,8 @@ error_log
 error.log
 access_log
 access.log
-cache/
 *.sql
 *.sqlite
-*.log
 .well-known/
 
 # Workflow
@@ -53,8 +51,6 @@ tmp/
 .ideas/
 *.tmp
 *.stackdump
-# BC Gov uses 'logs' (not 'log') for webserver stuff
-logs*
 
 # Node
 node_modules
