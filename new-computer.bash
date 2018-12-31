@@ -55,31 +55,24 @@ esac
 PACKAGES=(
   apache2
   curl
+  git
   ffmpeg
-  gnome-terminal
   imagemagick
-  libapache2-mod-php
-  libapache2-mod-php
-  meld
-  mysql-client
   mysql-server
-  mysql-workbench
   nodejs
-  npm # do we still need this? is npm included with nodejs nowadays?
-  pgadmin3
   php
+  libapache2-mod-php
   php-cli
+  php-mbstring
   php-mcrypt
   php-mysql
   python-pip
   ruby
   rubygems
-  skypeforlinux
   sqlite3
-  sqlitebrowser
-  trimage
   wget
   xclip
+  unzip
   youtube-dl
 )
 
@@ -93,12 +86,11 @@ done
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 echo
 
-# Setup Numix theme for use on Ubuntu.
-echo "-------Setup Ubuntu-------"
-sudo add-apt-repository ppa:numix/ppa
-sudo apt-get update
-sudo apt-get install -y numix-gtk-theme numix-icon-theme numix-icon-theme-square
-echo
+# Install Composer
+cd ~
+curl -sS https://getcomposer.org/installer -o composer-setup.php
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+composer --version
 
 # TODO: Remove/uninstall packages that come with (L)ubuntu that we don't want.
 
@@ -112,8 +104,9 @@ done
 echo
 
 # Setup Git.
-# Is Git installed?
-command -v git >/dev/null 2>&1 || { echo "Git is not installed. Please install it before proceeding." >&2; echo "Exiting..."; exit; }
+cd ~/.dotfiles
+chmod +x ./git/git-config.bash
+./git/git-config.bash
 
 echo
 echo "All done. Your softwares are installed! :)"

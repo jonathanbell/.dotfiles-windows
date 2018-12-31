@@ -1,18 +1,5 @@
 #!/bin/bash
 
-windowsC='/mnt/c/'
-startDir="$HOME/Dropbox/"
-
-if [ "$OSTYPE" = 'linux-gnu' ] && [ -d $windowsC ]; then
-  # Assume we are using Bash (Linux subsystem) inside Windows.
-  startDir="${windowsC}Users/jonat/Dropbox/"
-  cd "${startDir}Sites/"
-fi
-
-#if [ "$OSTYPE" = 'msys' ]; then
-  # Assume we are using Cygwin/GitBash.
-#fi
-
 # ------------------------------------------------------------------------------
 # | Functions
 # ------------------------------------------------------------------------------
@@ -85,15 +72,6 @@ webmify() {
   else
     ffmpeg -i "$1" -vcodec libvpx -acodec libvorbis -isync -copyts -aq 80 -threads 3 -qmax 30 -y "$1.webm"
     ffmpeg -ss 00:00:15 -i "$1.webm" -vframes 1 -q:v 2 "$1.jpg"
-
-    if [ "$OSTYPE" = "msys" ]; then
-      start chrome "$1.webm"
-    fi
-
-    if [ "$OSTYPE" = "linux-gnu" ]; then
-      google-chrome "$1.webm"
-    fi
-
   fi
 }
 
@@ -145,7 +123,6 @@ gifify() {
     else
       ffmpeg -i "$1" -pix_fmt rgb24 -r 10 -f gif -vf scale=400:-1 - | gifsicle --optimize=3 --delay=7 > "$1.gif"
     fi
-    google-chrome "$1.gif"
   else
     echo 'Ops. Please enter a filename.'
     echo 'Usage: gifify <input_movie.mov> [ --better | --best | --tumblr ]'
@@ -210,78 +187,39 @@ fi
 # | Aliases
 # ------------------------------------------------------------------------------
 
-# Windows specific
-if [ "$OSTYPE" = "msys" ] && ! [ -d $windowsC ]; then
+# Edit hosts file quickly.
+alias hosts='echo "Visit: https://support.rackspace.com/how-to/modify-your-hosts-file/#windows"'
 
-  # Restart Apache.
-  alias restartapache='powershell restartapache'
-  # Configure VirtualHosts.
-  alias configvhosts="code $HOME/AppData/Roaming/Apache24/conf/extra/httpd-vhosts.conf"
-  # Configure httpd.conf.
-  alias configapache="code $HOME/AppData/Roaming/Apache24/conf/httpd.conf"
+# Show diskspace usage on main volume.
+alias diskspace='df -h | grep /mnt/c && df -h | grep /mnt/s'
 
-  # Edit hosts file quickly.
-  alias hosts='start chrome "https://support.rackspace.com/how-to/modify-your-hosts-file/#windows"'
+# Restart Apache.
+alias restartapache='echo "TODO: Add restartapache instructions for Linux/Ubuntu."'
+# Configure VirtualHosts
+alias configvhosts='echo "TODO: Add configvhosts instructions for Linux/Ubuntu."'
+# Configure httpd.conf.
+alias configapache='echo "TODO: Add configapache instructions for Linux/Ubuntu."'
 
-  # Show diskspace usage on main volume.
-  alias diskspace='df -h'
-
-  # Open Windows Explorer from command line. Usage: `open .` (opens current dir)
-  alias open='start'
-
-  # TODO: This changes with every new install of the Linux subsystem. Find a way
-  # to alias this path dynamically.
-  UBUNTUHOMEDIR="/c/Users/$USERNAME/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/home/jonathan"
-
-  # Change directory to the Ubuntu user `jonathan` home directory.
-  alias ubuntuhome="echo \"Ubuntu home dir is: $UBUNTUHOMEDIR\" && cd $UBUNTUHOMEDIR"
-
-  # Serve a Jekyll site.
-  alias servejekyll='bundle exec jekyll serve --watch'
-
-fi
-
-# L/Ubuntu specific
-if [ "$OSTYPE" = "linux-gnu" ]; then
-
-  # Restart Apache.
-  alias restartapache='echo "TODO: Add restartapache instructions for Linux/Ubuntu."'
-  # Configure VirtualHosts
-  alias configvhosts='echo "TODO: Add configvhosts instructions for Linux/Ubuntu."'
-  # Configure httpd.conf.
-  alias configapache='echo "TODO: Add configapache instructions for Linux/Ubuntu."'
-
-  # Edit hosts file quickly.
-  alias hosts='sudo nano /etc/hosts'
-
-  # Show diskspace usage on main volume.
-  alias diskspace='df -h | grep /dev/sda1'
-
-  # Shutdown.
-  alias done='sudo shutdown now'
-
-  # Update Ubuntu.
-  alias updateubuntu='sudo apt-get update -y && sudo apt-get autoclean -y && sudo apt-get clean -y && sudo apt-get upgrade -y && sudo apt-get autoremove --purge -y'
-
-fi
+# Update Ubuntu.
+alias updateubuntu='sudo apt-get update -y && sudo apt-get autoclean -y && sudo apt-get clean -y && sudo apt-get upgrade -y && sudo apt-get autoremove --purge -y'
 
 # Change directory to your dotfiles directory.
 alias dot='cd ~/.dotfiles'
+
 # Open your notes in code editor.
-alias notes="code ~/Dropbox/Notes"
+alias notes="cd ~/Dropbox/Notes"
+
 # Dropbox directory. : )
 alias d='cd ~/Dropbox'
+
 # Sites folder.
 alias s='cd ~/Dropbox/Sites'
+
 # Desktop
 alias desk='cd ~/Desktop'
 
 # Run a backup.
-alias backup="${startDir}Documents/personal-backup-script.bash"
-
-# Copy a shuggie guy to the clipboard.
-alias shruggie='printf "¯\_(ツ)_/¯" > /dev/clipboard && echo "¯\_(ツ)_/¯"'
-alias smilely='printf "ツ" > /dev/clipboard && echo "ツ"'
+alias backup="~/Dropbox/Documents/personal-backup-script.bash"
 
 # For when you make that typ-o that you *will* make.
 alias cd..='cd ..'
@@ -289,11 +227,10 @@ alias ..='cd ..'
 
 # Quickly clear the Terminal window.
 alias c='clear'
-# Minimal output at the command prompt.
-alias minterm="export PS1=\"\$ \""
 
 # Pretty print Git's history.
 alias gitlog='git log --graph --oneline --all --decorate'
+
 # When you just want to commit some changes to a personal project. Not useful for "real" projects.
 alias lazycommit="git add . && git commit -a --allow-empty-message -m '' && git push"
 
@@ -411,14 +348,8 @@ bind 'set show-all-if-ambiguous on'
 # Immediately add a trailing slash when autocompleting symlinks to directories.
 bind 'set mark-symlinked-directories on'
 
-# If L/Ubuntu or Windows Linux subsystem
-if [ "$OSTYPE" = 'linux-gnu' ]; then
-  # Change the title of the Bash terminal to show the User@Hostname connection.
-  PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
-fi
+# Change the title of the Bash terminal to show the User@Hostname connection.
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
 
-# If not Windows Linux subsystem
-if ! [ -d $windowsC ]; then
-  # Show a random quote at Bash startup.
-  echo $(shuf -n 1 "$HOME/.dotfiles/bash/quotes.txt")
-fi
+# Show a random quote at Bash startup.
+echo $(shuf -n 1 "$HOME/.dotfiles/bash/quotes.txt")

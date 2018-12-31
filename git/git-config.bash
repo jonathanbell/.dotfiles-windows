@@ -31,18 +31,7 @@ git config --global push.default current
 # https://git-scm.com/docs/merge-options#merge-options---no-edit
 git config --global core.mergeoptions --no-edit
 
-# Setup Meld as our difftool and mergetool.
-git config --global diff.guitool meld
-git config --global diff.tool meld
-git config --global diff.external ~/.dotfiles/meld/git-diff.sh
-# Don't prompt after saving the file(s) in Meld.
-git config --global difftool.meld.prompt false
-# Set Meld as the Git mergetool.
-git config --global merge.tool meld
-git config --global mergetool.meld.keepBackup false
-git config --global mergetool.keepBackup false
-git config --global mergetool.meld.keepTemporaries false
-git config --global mergetool.keepTemporaries false
+# TODO: Setup VS Code as our mergetool
 
 # Global .gitignore
 git config --global core.excludesfile ~/.dotfiles/git/.gitignore_global
