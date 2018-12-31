@@ -92,19 +92,19 @@ module.exports = {
     //
     // Default
     // - `""`
-    shell: 'C:\\Program Files\\Git\\git-cmd.exe',
+    shell: 'ubuntu.exe',
 
     // For setting shell arguments (i.e. for using interactive shellArgs: ['-i'])
     //
     // Bash/Ubuntu on Windows
-    // - `[]` || ["-i"]
+    // - `[]`
     //
     // GitBash on Windows
     // - `["--command=usr/bin/bash.exe", "-l", "-i"]`
     //
     // Default
     // - `["--login"]`
-    shellArgs: ['--command=usr/bin/bash.exe', '-l', '-i'],
+    shellArgs: [],
 
     // For environment variables
     //
@@ -116,7 +116,7 @@ module.exports = {
     //
     // Default
     // - `{}`
-    env: { TERM: 'cygwin' },
+    env: {},
 
     // set to false for no bell
     bell: 'SOUND',

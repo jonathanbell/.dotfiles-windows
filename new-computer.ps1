@@ -228,8 +228,8 @@ Get-AppxPackage "Microsoft.WindowsPhone" -AllUsers | Remove-AppxPackage
 Get-AppXProvisionedPackage -Online | Where-Object DisplayNam -like "Microsoft.WindowsPhone" | Remove-AppxProvisionedPackage -Online
 
 # Uninstall XBox
-#Get-AppxPackage "Microsoft.XboxApp" -AllUsers | Remove-AppxPackage
-#Get-AppXProvisionedPackage -Online | Where-Object DisplayNam -like "Microsoft.XboxApp" | Remove-AppxProvisionedPackage -Online
+Get-AppxPackage "Microsoft.XboxApp" -AllUsers | Remove-AppxPackage
+Get-AppXProvisionedPackage -Online | Where-Object DisplayNam -like "Microsoft.XboxApp" | Remove-AppxProvisionedPackage -Online
 
 # Uninstall Zune Music (Groove)
 Get-AppxPackage "Microsoft.ZuneMusic" -AllUsers | Remove-AppxPackage
@@ -354,40 +354,6 @@ if (Test-Path "$HOME\.hyper.js") { Remove-Item "$HOME\.hyper.js" }
 New-Item -Path "$HOME\.hyper.js" -ItemType SymbolicLink -Value "$HOME\.dotfiles\hyper\.hyper.js"
 
 ################################################################################
-### Git, Meld and Bash (GitBash)                                               #
-################################################################################
-
-Write-Host "Configuring Git and Meld..." -ForegroundColor "Yellow"
-
-if (Test-Path "$HOME\.ssh\config") { Remove-Item "$HOME\.ssh\config" }
-New-Item -Path "$HOME\.ssh\config" -ItemType SymbolicLink -Value "$HOME\Dropbox\Sites\.ssh\config"
-
-# Bash, brought to you by GitBash!
-if (Test-Path "$HOME\.bashrc") { Remove-Item "$HOME\.bashrc" }
-New-Item -Path "$HOME\.bashrc" -ItemType SymbolicLink -Value "$HOME\.dotfiles\bash\.bashrc"
-Write-Host "The first time you open GitBash, it will complain after linking .bashrc to the .bashrc in your dotfiles but after that, it will calm down." -ForegroundColor "Yellow"
-
-if (Test-Path "$HOME\.minttyrc") { Remove-Item "$HOME\.minttyrc" }
-New-Item -Path "$HOME\.minttyrc" -ItemType SymbolicLink -Value "$HOME\.dotfiles\gitbash\.minttyrc"
-
-# Git configuration
-if (Test-Path "$HOME\.gitignore_global") { Remove-Item "$HOME\.gitignore_global" }
-# Instead of syslinking the files, we simply tell git directly where our global config files are located.
-git config --global core.excludesfile "$HOME\.dotfiles\git\.gitignore_global"
-if (Test-Path "$HOME\.gitattributes") { Remove-Item "$HOME\.gitattributes" }
-git config --global core.attributesfile "$HOME\.dotfiles\git\.gitattributes_global"
-
-# Git configuration script
-if (Test-Path "$HOME\.dotfiles\git\git-config.ps1") { Remove-Item "$HOME\.dotfiles\git\git-config.ps1" }
-New-Item -Path "$HOME\.dotfiles\git\git-config.ps1" -ItemType SymbolicLink -Value "$HOME\.dotfiles\git\git-config.bash"
-
-& "$HOME\.dotfiles\git\git-config.ps1"
-
-Write-Host "Installing Meld..." -ForegroundColor "Yellow"
-choco install meld -y
-refreshenv
-
-################################################################################
 ### PowerShell                                                                 #
 ################################################################################
 
@@ -422,47 +388,30 @@ Write-Host "Installing lots of software via Chocolatey..." -ForegroundColor "Yel
 choco install dotnet4.5 -y
 refreshenv
 
-# choco install vcredist2015 -y
-# refreshenv
+choco install vcredist2015 -y
+refreshenv
 
 [string[]] $packages =
 '7zip',
-'apache-httpd',
-'awscli',
-'cmake',
-'curl',
+# for VS Code
+'git',
 'discord',
 'droidsansmono',
-'ffmpeg',
 'FileOptimizer',
 'filezilla',
 'firacode',
 'Firefox',
-'gifsicle',
 'GoogleChrome',
-'heroku-cli',
 'hyper',
-'imagemagick',
-'make',
 'mysql.workbench',
-'mysql',
-'nodejs',
 'openssl.light',
 'pgadmin3',
-'python',
-'rsync',
-'ruby',
 'slack',
 'SourceCodePro',
 'sqlite',
 'sqlitebrowser',
-'telegram',
-'transmission',
-'vagrant',
-'virtualbox',
-'vlc',
-'Wget',
-'youtube-dl';
+'lunacy',
+'vlc';
 
 foreach ($package in $packages) {
   choco install $package -y
@@ -470,83 +419,8 @@ foreach ($package in $packages) {
 
 refreshenv
 
-#
-# Now config Node and NPM:
-#
-
-npm install --global --production windows-build-tools
-
-[string[]] $npmpackages =
-'cloudinary-cli',
-'create-react-app',
-'gatsby-cli',
-'gatsby',
-'now',
-'sass',
-'surge';
-
-foreach ($package in $npmpackages) {
-  npm install -g $package
-}
-
-if (Test-Path "$HOME\.npmrc") { Remove-Item "$HOME\.npmrc" }
-New-Item -Path "$HOME\.npmrc" -ItemType SymbolicLink -Value "$HOME\.dotfiles\node\.npmrc"
-
-#
-# Now config PHP:
-#
-
-choco install php -y --params '"/ThreadSafe"'
-refreshenv
-
-choco install composer -y
-refreshenv
-
-Copy-Item "C:\tools\php72\php.ini" "C:\tools\php72\php.ini.bak"
-
-# https://brian.teeman.net/joomla/install-amp-on-windows-with-chocolatey
-(Get-Content "C:\tools\php72\php.ini").replace('date.timezone = UTC', 'date.timezone = "America/Los_Angele
-s"') | Set-Content "C:\tools\php72\php.ini"
-(Get-Content "C:\tools\php72\php.ini").replace('memory_limit = 128M', 'memory_limit = 512M') | Set-Content "C:\tools\php72\php.ini"
-(Get-Content "C:\tools\php72\php.ini").replace('upload_max_filesize = 2M', 'upload_max_filesize = 32M') | Set-Content "C:\tools\php72\php.ini"
-(Get-Content "C:\tools\php72\php.ini").replace('display_errors = Off', 'display_errors = On') | Set-Content "C:\tools\php72\php.ini"
-(Get-Content "C:\tools\php72\php.ini").replace('display_startup_errors = Off', 'display_startup_errors = On') | Set-Content "C:\tools\php72\php.ini"
-(Get-Content "C:\tools\php72\php.ini").replace('post_max_size = 8M', 'post_max_size = 32M') | Set-Content "C:\tools\php72\php.ini"
-
-[string[]] $extensions =
-'curl',
-'exif',
-'fileinfo',
-'gd2',
-'ldap',
-'mbstring',
-'mysqli',
-'openssl',
-'pdo_mysql',
-'pdo_pgsql',
-'pdo_sqlite',
-'sqlite3';
-
-foreach ($extension in $extensions) {
-  (Get-Content "C:\tools\php72\php.ini").replace(";extension=$extension", "extension=$extension") | Set-Content "C:\tools\php72\php.ini"
-}
-
-# Enable these Apache modules.
-[string[]] $modules =
-'expires',
-'rewrite';
-
-foreach ($module in $modules) {
-  (Get-Content "$env:USERPROFILE\AppData\Roaming\Apache24\conf\httpd.conf").replace("#LoadModule $module`_module modules/mod_$module.so", "LoadModule $module`_module modules/mod_$module.so") | Set-Content "$env:USERPROFILE\AppData\Roaming\Apache24\conf\httpd.conf"
-}
-
-(Get-Content "$env:USERPROFILE\AppData\Roaming\Apache24\conf\httpd.conf").replace("#Include conf/extra/httpd-vhosts.conf", "Include conf/extra/httpd-vhosts.conf") | Set-Content "$env:USERPROFILE\AppData\Roaming\Apache24\conf\httpd.conf"
-(Get-Content "$env:USERPROFILE\AppData\Roaming\Apache24\conf\httpd.conf").replace("#Include conf/extra/httpd-default.conf", "Include conf/extra/httpd-default.conf") | Set-Content "$env:USERPROFILE\AppData\Roaming\Apache24\conf\httpd.conf"
-
-Write-Host "Finished installing Chocolatey packages..." -ForegroundColor "Yellow"
-
 ################################################################################
-### Done! Holy shit!                                                           #
+### Done!                                                                      #
 ################################################################################
 
 refreshenv

@@ -8,7 +8,7 @@
 installifnotinstalled() {
   command -v $1 >/dev/null 2>&1 || {
     echo "$1 is not installed. Installing $1..." >&2;
-    sudo apt-get install -y "$1";
+    sudo apt install -y "$1";
   }
 }
 
@@ -31,11 +31,11 @@ if ! [ "$OSTYPE" = "linux-gnu" ]; then
 else
   # OK, the script is running on Linux.
   # Now check if we have 'gawk'.
-  command -v gawk >/dev/null 2>&1 || { echo "Please enter your password so that I can install gawk..." >&2; sudo apt-get install -y gawk; }
+  command -v gawk >/dev/null 2>&1 || { echo "Please enter your password so that I can install gawk..." >&2; sudo apt install -y gawk; }
   # Now that we have 'gawk', we can check if this flavour of Linux is Ubuntu.
   OPERATINGSYSTEM=$(gawk -F= '/^NAME/{print $2}' /etc/os-release)
   if [ ! "$OPERATINGSYSTEM" = "\"Ubuntu\"" ]; then
-    echo "This script is meant to be run on an Ubuntu based system with \"apt-get\" available."
+    echo "This script is meant to be run on an Ubuntu based system with \"apt\" available."
     echo "Exiting..."
     exit
   fi
@@ -46,7 +46,7 @@ fi
 # Update current packages?
 read -p "Before installing some new software packages, do you want to update your existing system? (Y/n?) " choice
 case "$choice" in
-  y|Y ) echo; echo "Sure, why not eh?!"; sudo apt-get update -y; sudo apt-get upgrade -y; sudo apt-get autoremove -y;;
+  y|Y ) echo; echo "Sure, why not eh?!"; sudo apt update -y; sudo apt upgrade -y; sudo apt autoremove -y;;
   n|N ) echo; echo "OK."; echo;;
   * ) echo "Invalid response. Choose Y or N next time, bro."; echo "Exiting..."; exit;;
 esac
@@ -63,6 +63,9 @@ PACKAGES=(
   php
   libapache2-mod-php
   php-cli
+  php-curl
+  php-ldap
+  php-openssl
   php-mbstring
   php-mcrypt
   php-mysql
@@ -73,6 +76,7 @@ PACKAGES=(
   wget
   xclip
   unzip
+  gifsicle
   youtube-dl
 )
 
@@ -86,24 +90,47 @@ done
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 echo
 
+# Install AWS CLI
+echo "-------Setup AWS CLI-------"
+pip install --upgrade pip
+pip install awscli --upgrade --user
+sudo apt install awscli
+
 # Install Composer
+echo "-------Setup Composer-------"
 cd ~
 curl -sS https://getcomposer.org/installer -o composer-setup.php
 sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 composer --version
 
+# Install global NPM packages
+echo "-------Setup NPM-------"
+NPMPACKAGES=(
+  cloudinary-cli
+  create-react-app
+  gatsby-cli
+  gatsby
+  sass
+  surge
+)
+
+for i in "${NPMPACKAGES[@]}"
+do
+  npm i -g "$i"
+done
+
+link "`pwd`/node/.npmrc" "$HOME/.npmrc"
+
 # TODO: Remove/uninstall packages that come with (L)ubuntu that we don't want.
 
 # Setup Bash.
 echo "-------Setup Bash-------"
-for file in `ls -A ./bash`
-do
-  # Link Bash dotfiles.
-  link "`pwd`/bash/$file" "$HOME/$file"
-done
+link "`pwd`/bash/.bashrc" "$HOME/.bashrc"
+link "`pwd`/bash/.bash_profile" "$HOME/.bash_profile"
 echo
 
 # Setup Git.
+echo "-------Setup Git-------"
 cd ~/.dotfiles
 chmod +x ./git/git-config.bash
 ./git/git-config.bash

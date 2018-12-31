@@ -201,7 +201,7 @@ alias configvhosts='echo "TODO: Add configvhosts instructions for Linux/Ubuntu."
 alias configapache='echo "TODO: Add configapache instructions for Linux/Ubuntu."'
 
 # Update Ubuntu.
-alias updateubuntu='sudo apt-get update -y && sudo apt-get autoclean -y && sudo apt-get clean -y && sudo apt-get upgrade -y && sudo apt-get autoremove --purge -y'
+alias updateubuntu='sudo apt update -y && sudo apt autoclean -y && sudo apt clean -y && sudo apt upgrade -y && sudo apt autoremove --purge -y'
 
 # Change directory to your dotfiles directory.
 alias dot='cd ~/.dotfiles'
@@ -212,7 +212,7 @@ alias notes="cd ~/Dropbox/Notes"
 # Dropbox directory. : )
 alias d='cd ~/Dropbox'
 
-# Sites folder.
+# Sites folder
 alias s='cd ~/Dropbox/Sites'
 
 # Desktop
