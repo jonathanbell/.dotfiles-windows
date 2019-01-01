@@ -194,11 +194,11 @@ alias hosts='echo "Visit: https://support.rackspace.com/how-to/modify-your-hosts
 alias diskspace='df -h | grep /mnt/c && df -h | grep /mnt/s'
 
 # Restart Apache.
-alias restartapache='echo "TODO: Add restartapache instructions for Linux/Ubuntu."'
+alias restartapache='sudo service apache2 restart'
 # Configure VirtualHosts
-alias configvhosts='echo "TODO: Add configvhosts instructions for Linux/Ubuntu."'
-# Configure httpd.conf.
-alias configapache='echo "TODO: Add configapache instructions for Linux/Ubuntu."'
+alias configvhosts='sudo nano /etc/apache2/sites-enabled/000-default.conf'
+# Configure Apache.
+alias configapache='sudo nano /etc/apache2/apache2.conf'
 
 # Update Ubuntu.
 alias updateubuntu='sudo apt update -y && sudo apt autoclean -y && sudo apt clean -y && sudo apt upgrade -y && sudo apt autoremove --purge -y'
@@ -242,6 +242,9 @@ alias addwtfpl='wget -O LICENCE http://www.wtfpl.net/txt/copying/'
 
 # List all globally installed NPM packages
 alias globalnpmpackages='npm list -g --depth 0'
+
+# Correct SSH permissions
+alias correctsshpermissions='sudo chmod 700 ~/.ssh && sudo chmod -R 600 ~/.ssh/*'
 
 # ------------------------------------------------------------------------------
 # | Colorize Things
@@ -350,6 +353,11 @@ bind 'set mark-symlinked-directories on'
 
 # Change the title of the Bash terminal to show the User@Hostname connection.
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
+
+# Fix NPM global stuff
+# https://stackoverflow.com/a/41395398/1171790
+export NPM_CONFIG_PREFIX=~/.npm-global
+export PATH=$PATH:~/.npm-global/bin
 
 # Show a random quote at Bash startup.
 echo $(shuf -n 1 "$HOME/.dotfiles/bash/quotes.txt")

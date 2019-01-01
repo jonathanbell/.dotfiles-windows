@@ -12,16 +12,6 @@ installifnotinstalled() {
   }
 }
 
-# Syslink a file to the location where it is normally located.
-# Removes the original file if one exists.
-link() {
-  from="$1"
-  to="$2"
-  echo "Linking $from to $to"
-  rm -f "$to"
-  ln -s "$from" "$to"
-}
-
 # ------------------------------------------------------------------------------
 
 # Check if this script is running on a Linux system.
@@ -52,6 +42,7 @@ case "$choice" in
 esac
 
 # Install all the softwares.
+echo "-------Setup a lot of software...-------"
 PACKAGES=(
   apache2
   curl
@@ -59,6 +50,7 @@ PACKAGES=(
   ffmpeg
   imagemagick
   mysql-server
+  mysql-client
   nodejs
   php
   libapache2-mod-php
@@ -90,6 +82,9 @@ done
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 echo
 
+# Enable SSL w/ Apache
+sudo a2enmod ssl
+
 # Install AWS CLI
 echo "-------Setup AWS CLI-------"
 pip install --upgrade pip
@@ -114,20 +109,17 @@ NPMPACKAGES=(
   surge
 )
 
+# https://stackoverflow.com/a/41395398/1171790
+mkdir ~/.npm-global
+export NPM_CONFIG_PREFIX=~/.npm-global
+export PATH=$PATH:~/.npm-global/bin
+
+npm i -g npm
+
 for i in "${NPMPACKAGES[@]}"
 do
   npm i -g "$i"
 done
-
-link "`pwd`/node/.npmrc" "$HOME/.npmrc"
-
-# TODO: Remove/uninstall packages that come with (L)ubuntu that we don't want.
-
-# Setup Bash.
-echo "-------Setup Bash-------"
-link "`pwd`/bash/.bashrc" "$HOME/.bashrc"
-link "`pwd`/bash/.bash_profile" "$HOME/.bash_profile"
-echo
 
 # Setup Git.
 echo "-------Setup Git-------"
@@ -140,7 +132,7 @@ echo "All done. Your softwares are installed! :)"
 echo
 echo "Your NodeJS version is: $(node -v)"
 echo "Your npm version is: $(npm -v)"
-echo "Do: 'git config --list' to view your Git configuration."
+echo "`git config --list` will display your Git configuration."
 echo
 
 exit

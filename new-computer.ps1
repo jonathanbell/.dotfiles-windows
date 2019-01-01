@@ -380,6 +380,23 @@ regedit /s solarized-dark.reg
 cd ..
 
 ################################################################################
+### Bash                                                                       #
+################################################################################
+
+if (Test-Path "$HOME\.bashrc") { Remove-Item "$HOME\.bashrc" }
+New-Item -Path "$HOME\.bashrc" -ItemType SymbolicLink -Value "$HOME\.dotfiles\bash\.bashrc"
+
+if (Test-Path "$HOME\.bash_profile") { Remove-Item "$HOME\.bash_profile" }
+New-Item -Path "$HOME\.bash_profile" -ItemType SymbolicLink -Value "$HOME\.dotfiles\bash\.bash_profile"
+
+################################################################################
+### NPM                                                                        #
+################################################################################
+
+if (Test-Path "$HOME\.npmrc") { Remove-Item "$HOME\.npmrc" }
+New-Item -Path "$HOME\.npmrc" -ItemType SymbolicLink -Value "$HOME\.dotfiles\node\.npmrc"
+
+################################################################################
 ### All the softwares! (Brought to you by Chocolatey)                          #
 ################################################################################
 
