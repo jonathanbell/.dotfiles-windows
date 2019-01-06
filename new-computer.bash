@@ -61,7 +61,7 @@ PACKAGES=(
   php-mbstring
   php-mcrypt
   php-mysql
-  python-pip
+  python3-pip
   ruby
   rubygems
   sqlite3
@@ -86,10 +86,12 @@ echo
 sudo a2enmod ssl
 
 # Install AWS CLI
-echo "-------Setup AWS CLI-------"
+echo "-------Setup AWS and B2 CLI-------"
 pip install --upgrade pip
 pip install awscli --upgrade --user
 sudo apt install awscli
+# Install Backblaze just because..
+sudo pip install --upgrade --ignore-installed b2
 
 # Install Composer
 echo "-------Setup Composer-------"

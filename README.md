@@ -88,8 +88,8 @@ You can now [upload images to Cloudinary](https://www.npmjs.com/package/cloudina
       SSLEngine on
       SSLCertificateFile "/etc/ssl/certs/ssl-cert-snakeoil.pem"
       SSLCertificateKeyFile "/etc/ssl/private/ssl-cert-snakeoil.key"
-      ErrorLog "/mnt/c/Users/<your username>/path/to/error/logs"
-      CustomLog "/mnt/c/Users/<your username>/path/to/custom/logs" common
+      ErrorLog "/mnt/c/Users/<your username>/path/to/error/logs/dev.localhost.com.errors"
+      CustomLog "/mnt/c/Users/<your username>/path/to/custom/logs/dev.localhost.com.log" common
    </VirtualHost>
    ```
 1. [Edit the `hosts` file on the Windows side of things.](https://support.rackspace.com/how-to/modify-your-hosts-file/#windows) The file will be located in `C:\Windows\System32\Drivers\etc\`.

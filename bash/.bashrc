@@ -61,6 +61,7 @@ trim-video() {
     echo 'Begining to trim video...'
     ffmpeg -i $1 -ss $2 -c copy -t $3 trimmed_$1
     echo 'Complete. Video trimmed.'
+    open chrome trimmed_$1
   fi
 }
 
@@ -72,6 +73,7 @@ webmify() {
   else
     ffmpeg -i "$1" -vcodec libvpx -acodec libvorbis -isync -copyts -aq 80 -threads 3 -qmax 30 -y "$1.webm"
     ffmpeg -ss 00:00:15 -i "$1.webm" -vframes 1 -q:v 2 "$1.jpg"
+    open chrome $1.webm
   fi
 }
 
@@ -123,6 +125,7 @@ gifify() {
     else
       ffmpeg -i "$1" -pix_fmt rgb24 -r 10 -f gif -vf scale=400:-1 - | gifsicle --optimize=3 --delay=7 > "$1.gif"
     fi
+    open chrome $1.gif
   else
     echo 'Ops. Please enter a filename.'
     echo 'Usage: gifify <input_movie.mov> [ --better | --best | --tumblr ]'
@@ -139,6 +142,7 @@ static() {
     aws s3 cp $1 s3://static-jonathanbell-ca --acl public-read --cache-control max-age=7776000
     printf "https://s3-us-west-2.amazonaws.com/static-jonathanbell-ca/$1" > /dev/clipboard
     echo "File available at: https://s3-us-west-2.amazonaws.com/static-jonathanbell-ca/$1 (copied to clipboard)"
+    open chrome https://s3-us-west-2.amazonaws.com/static-jonathanbell-ca/$1
   fi
 }
 
@@ -188,7 +192,7 @@ fi
 # ------------------------------------------------------------------------------
 
 # Edit hosts file quickly.
-alias hosts='echo "Visit: https://support.rackspace.com/how-to/modify-your-hosts-file/#windows"'
+alias hosts='echo "Instructions: https://support.rackspace.com/how-to/modify-your-hosts-file/#windows" && cd /mnt/c/Windows/System32/drivers/etc && open .'
 
 # Show diskspace usage on main volume.
 alias diskspace='df -h | grep /mnt/c && df -h | grep /mnt/s'
@@ -198,10 +202,16 @@ alias restartapache='sudo service apache2 restart'
 # Configure VirtualHosts
 alias configvhosts='sudo nano /etc/apache2/sites-enabled/000-default.conf'
 # Configure Apache.
-alias configapache='sudo nano /etc/apache2/apache2.conf'
+alias configapache='sudo code.exe /etc/apache2/apache2.conf'
+
+# Restart MySQL.
+alias restartmysql='sudo service mysql restart'
 
 # Update Ubuntu.
 alias updateubuntu='sudo apt update -y && sudo apt autoclean -y && sudo apt clean -y && sudo apt upgrade -y && sudo apt autoremove --purge -y'
+
+# Open expoler from the command line. Left over from my OSX days.
+alias open='cmd.exe /c start'
 
 # Change directory to your dotfiles directory.
 alias dot='cd ~/.dotfiles'
