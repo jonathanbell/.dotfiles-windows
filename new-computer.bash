@@ -61,6 +61,7 @@ PACKAGES=(
   php-mbstring
   php-mcrypt
   php-mysql
+  php-xml
   python3-pip
   ruby
   rubygems
