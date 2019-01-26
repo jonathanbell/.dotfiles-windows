@@ -1,6 +1,6 @@
-# .dotfiles
+# Windows .dotfiles
 
-These are my configuration files and setup scripts for new Windows computers. I primarily use Windows 10 with the Ubuntu Windows Linux Subsystem. In most cases these [dotfiles](https://dotfiles.github.io) will work on similar systems. Fork if you wish but keep in mind that a lot of these settings are personalized to me (so you will most likely want to change them before using the scripts). Review the code, and remove things you don't want or need. Do not blindly use these settings.
+These are my configuration files and setup scripts for new Windows computers. If using Windows, I use Windows 10 with the Ubuntu Windows Linux Subsystem. In most cases these [dotfiles](https://dotfiles.github.io) will work on similar systems. Fork if you wish but keep in mind that a lot of these settings are personalized to me (so you will most likely want to change them before using the scripts). Review the code, and remove things you don't want or need. Do not blindly use these settings.
 
 Inspired by: <https://dotfiles.github.io/> and <https://github.com/jayharris/dotfiles-windows>
 
@@ -35,7 +35,7 @@ Inspired by: <https://dotfiles.github.io/> and <https://github.com/jayharris/dot
     1.  Get Gist Token from secret hiding place
     1.  Type `sync` in the Command Palette in VS Code and copy/paste your GitHub token and Gist ID
     1.  Wait for all your extensions and themes to sync up and then close VS Code (your text editor is ready to roll!)
-1.  Using GitBash, clone this repo into your home folder: `cd ~ && git clone git@github.com:jonathanbell/.dotfiles.git && cd ~/.dotfiles`
+1.  Using GitBash, clone this repo into your home folder: `cd ~ && git clone git@github.com:jonathanbell/.dotfiles-windows.git .dotfiles && cd ~/.dotfiles` Important: **(note that we clone `.dotfiles-windows` to the `.dotfiles` directory)**
 1.  [Install Ubuntu on Windows 10](https://www.microsoft.com/en-CA/store/p/ubuntu/9nblggh4msv6?rtc=1) from the Windows App Store
 1.  [Set your Ubuntu/Linux home directory to be the same as your Windows home folder](https://superuser.com/a/1134645/116082)
 1.  Install Photoshop manually
